@@ -35,9 +35,63 @@
     /* Layout */
     --max-width:          1140px;
     --nav-height:         70px;
+    --text-max-width: 68ch;
 
     /* Transitions */
     --transition-base:    0.3s ease;
+
+    /* M3 Type Scale — sizes */
+--typescale-display-large:    3.5625rem;
+--typescale-display-medium:   2.8125rem;
+--typescale-display-small:    2.25rem;
+--typescale-headline-large:   2rem;
+--typescale-headline-medium:  1.75rem;
+--typescale-headline-small:   1.5rem;
+--typescale-title-large:      1.375rem;
+--typescale-title-medium:     1rem;
+--typescale-title-small:      0.875rem;
+--typescale-body-large:       1rem;
+--typescale-body-medium:      0.875rem;
+--typescale-body-small:       0.75rem;
+--typescale-label-large:      0.875rem;
+--typescale-label-medium:     0.75rem;
+--typescale-label-small:      0.6875rem;
+
+/* M3 Type Scale — line heights */
+--lineheight-display-large:   1.12;
+--lineheight-display-medium:  1.16;
+--lineheight-display-small:   1.22;
+--lineheight-headline-large:  1.25;
+--lineheight-headline-medium: 1.29;
+--lineheight-headline-small:  1.33;
+--lineheight-title-large:     1.27;
+--lineheight-title-medium:    1.5;
+--lineheight-title-small:     1.43;
+--lineheight-body-large:      1.5;
+--lineheight-body-medium:     1.43;
+--lineheight-body-small:      1.33;
+--lineheight-label-large:     1.43;
+--lineheight-label-medium:    1.33;
+--lineheight-label-small:     1.45;
+
+/* M3 Type Scale — letter spacing */
+--tracking-display-large:    -0.016em;
+--tracking-headline:          0em;
+--tracking-title-large:       0em;
+--tracking-title-medium:      0.009em;
+--tracking-title-small:       0.006em;
+--tracking-body-large:        0.031em;
+--tracking-body-medium:       0.016em;
+--tracking-label-large:       0.006em;
+--tracking-label-medium:      0.031em;
+--tracking-label-small:       0.031em;
+
+/* M3 Type Scale — font weights */
+--weight-display:   300;
+--weight-headline:  300;
+--weight-title:     400;
+--weight-body:      300;
+--weight-label:     600;
 }
 
 /* ─── RESET & BASE ───────────────────────────── */
@@ -104,21 +158,25 @@ h1, h2, h3 {
 }
 
 h2 {
-    font-size: clamp(2rem, 4vw, 3rem);
-    letter-spacing: 0.04em;
+    font-size: var(--typescale-headline-large);
+    line-height: var(--lineheight-headline-large);
+    letter-spacing: var(--tracking-headline);
     text-transform: uppercase;
     margin-bottom: var(--space-lg);
 }
 
 h3 {
-    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    font-size: var(--typescale-headline-small);
+    line-height: var(--lineheight-headline-small);
+    letter-spacing: var(--tracking-headline);
     text-transform: uppercase;
     margin-bottom: var(--space-sm);
 }
 
 p {
-    font-size: 1.1rem;
-    line-height: 1.8;
+    font-size: var(--typescale-body-large);
+    line-height: var(--lineheight-body-large);
+    letter-spacing: var(--tracking-body-large);
     color: var(--color-text);
 }
 
@@ -166,7 +224,7 @@ p {
 
 .nav-logo {
     font-family: var(--font-serif);
-    font-size: 1.15rem;
+    font-size: var(--typescale-title-large);
     text-transform: uppercase;
     font-weight: 700;
     letter-spacing: 0.05em;
@@ -181,8 +239,8 @@ p {
 
 .nav-links a {
     font-family: var(--font-sans);
-    font-size: 0.9rem;
-    font-weight: 400;
+    font-size: var(--typescale-label-large);
+    font-weight: var(--weight-label);
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--color-text);
@@ -259,10 +317,12 @@ p {
 }
 
 .intro-text p {
-    font-size: 1.1rem;
-    line-height: 1.9;
+    font-family: var(--font-sans);
+    font-size: var(--typescale-body-large);
+    line-height: var(--lineheight-body-large);
+    letter-spacing: var(--tracking-body-large);
     color: var(--color-text);
-    max-width: 48ch;
+    max-width: var(--text-max-width);
 }
 
 .intro-image {
@@ -333,7 +393,8 @@ p {
 .project-card p {
     padding-top: 0;
     padding-bottom: var(--space-md);
-    font-size: 0.85rem;
+    font-size: var(--typescale-label-large);
+    letter-spacing: var(--tracking-label-large);
     color: var(--color-text-muted);
     letter-spacing: 0.04em;
     text-transform: uppercase;
@@ -368,7 +429,8 @@ p {
 
 .service-card h3 {
     font-family: var(--font-serif);
-    font-size: 1.3rem;
+    font-size: var(--typescale-headline-small);
+    line-height: var(--lineheight-headline-small);
     margin-bottom: var(--space-sm);
     letter-spacing: 0.02em;
 }
@@ -378,7 +440,9 @@ p {
 }
 
 .service-card ul li {
-    font-size: 0.9rem;
+    font-family: var(--font-sans);
+    font-size: var(--typescale-body-medium);
+    line-height: var(--lineheight-body-medium);
     color: var(--color-text-muted);
     padding: 0.3rem 0;
     border-bottom: 1px solid var(--color-border);
@@ -405,15 +469,21 @@ p {
 }
 
 .contact-inner p {
-    font-size: 1rem;
+    font-family: var(--font-sans);
+    font-size: var(--typescale-body-large);
+    line-height: var(--lineheight-body-large);
     color: var(--color-text-muted);
     margin-bottom: var(--space-md);
+    max-width: var(--text-max-width);
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .contact-email {
     display: inline-block;
     font-family: var(--font-serif);
-    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    font-size: var(--typescale-headline-medium);
+    line-height: var(--lineheight-headline-medium);
     color: var(--color-accent);
     letter-spacing: 0.02em;
     border-bottom: 1px solid var(--color-accent);
@@ -449,7 +519,9 @@ p {
 }
 
 .footer-nav a {
-    font-size: 0.78rem;
+    font-family: var(--font-sans);
+    font-size: var(--typescale-label-large);
+    letter-spacing: var(--tracking-label-large);
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -483,7 +555,9 @@ p {
 }
 
 .footer-copy {
-    font-size: 0.75rem;
+    font-family: var(--font-sans);
+    font-size: var(--typescale-body-small);
+    line-height: var(--lineheight-body-small);
     color: var(--color-bg-alt);
     opacity: 0.4;
     letter-spacing: 0.04em;
@@ -511,6 +585,10 @@ p {
     :root {
         --space-xl: 4rem;
         --space-lg: 2.5rem;
+        --typescale-headline-large:  1.75rem;
+        --typescale-headline-medium: 1.5rem;
+        --typescale-headline-small:  1.25rem;
+        --typescale-title-large:     1.25rem;
     }
 
     .grid-two-col {
