@@ -11,7 +11,7 @@
     --color-bg-blue:      #ddeff7;
     --color-bg-parchment: #F8ECDD;
     --color-text:         #371b06;
-    --color-text-muted:   #706E6C;
+    --color-text-muted:   #5c402a;
     --color-accent:       #BE8656; 
     --color-green-lt:     #A4AD6C;
     --color-green:        #79774D;
@@ -19,11 +19,12 @@
     --color-blue:         #8CCAE3;
     --color-brown:        #BE8656;
     --color-brown-lt:     #D09B72;
+    --color-grey:         #706E6C;
     --color-border:       rgba(57, 55, 51, 0.12);
 
     /* Typography */
-    --font-serif:         'Libre Baskerville', Garamond, serif;
-    --font-sans:          'Lexend', 'Helvetica Neue', sans-serif;
+    --font-serif:         'Libre Baskerville', 'Newsreader', Garamond, serif;
+    --font-sans:          'Lexend', 'Open Sans', 'Helvetica Neue', sans-serif;
 
     /* Spacing */
     --space-xs:           0.5rem;
@@ -41,57 +42,57 @@
     --transition-base:    0.3s ease;
 
     /* M3 Type Scale — sizes */
---typescale-display-large:    3.5625rem;
---typescale-display-medium:   2.8125rem;
---typescale-display-small:    2.25rem;
---typescale-headline-large:   2rem;
---typescale-headline-medium:  1.75rem;
---typescale-headline-small:   1.5rem;
---typescale-title-large:      1.375rem;
---typescale-title-medium:     1rem;
---typescale-title-small:      0.875rem;
---typescale-body-large:       1rem;
---typescale-body-medium:      0.875rem;
---typescale-body-small:       0.75rem;
---typescale-label-large:      0.875rem;
---typescale-label-medium:     0.75rem;
---typescale-label-small:      0.6875rem;
+    --typescale-display-large:    3.5625rem;
+    --typescale-display-medium:   2.8125rem;
+    --typescale-display-small:    2.25rem;
+    --typescale-headline-large:   2rem;
+    --typescale-headline-medium:  1.75rem;
+    --typescale-headline-small:   1.5rem;
+    --typescale-title-large:      1.375rem;
+    --typescale-title-medium:     1rem;
+    --typescale-title-small:      0.875rem;
+    --typescale-body-large:       1rem;
+    --typescale-body-medium:      0.875rem;
+    --typescale-body-small:       0.75rem;
+    --typescale-label-large:      0.875rem;
+    --typescale-label-medium:     0.75rem;
+    --typescale-label-small:      0.6875rem;
 
-/* M3 Type Scale — line heights */
---lineheight-display-large:   1.12;
---lineheight-display-medium:  1.16;
---lineheight-display-small:   1.22;
---lineheight-headline-large:  1.25;
---lineheight-headline-medium: 1.29;
---lineheight-headline-small:  1.33;
---lineheight-title-large:     1.27;
---lineheight-title-medium:    1.5;
---lineheight-title-small:     1.43;
---lineheight-body-large:      1.5;
---lineheight-body-medium:     1.43;
---lineheight-body-small:      1.33;
---lineheight-label-large:     1.43;
---lineheight-label-medium:    1.33;
---lineheight-label-small:     1.45;
+    /* M3 Type Scale — line heights */
+    --lineheight-display-large:   1.12;
+    --lineheight-display-medium:  1.16;
+    --lineheight-display-small:   1.22;
+    --lineheight-headline-large:  1.25;
+    --lineheight-headline-medium: 1.29;
+    --lineheight-headline-small:  1.33;
+    --lineheight-title-large:     1.27;
+    --lineheight-title-medium:    1.5;
+    --lineheight-title-small:     1.43;
+    --lineheight-body-large:      1.5;
+    --lineheight-body-medium:     1.43;
+    --lineheight-body-small:      1.33;
+    --lineheight-label-large:     1.43;
+    --lineheight-label-medium:    1.33;
+    --lineheight-label-small:     1.45;
 
-/* M3 Type Scale — letter spacing */
---tracking-display-large:    -0.016em;
---tracking-headline:          0em;
---tracking-title-large:       0em;
---tracking-title-medium:      0.009em;
---tracking-title-small:       0.006em;
---tracking-body-large:        0.031em;
---tracking-body-medium:       0.016em;
---tracking-label-large:       0.006em;
---tracking-label-medium:      0.031em;
---tracking-label-small:       0.031em;
+    /* M3 Type Scale — letter spacing */
+    --tracking-display-large:    -0.016em;
+    --tracking-headline:          0em;
+    --tracking-title-large:       0em;
+    --tracking-title-medium:      0.009em;
+    --tracking-title-small:       0.006em;
+    --tracking-body-large:        0.031em;
+    --tracking-body-medium:       0.016em;
+    --tracking-label-large:       0.006em;
+    --tracking-label-medium:      0.031em;
+    --tracking-label-small:       0.031em;
 
-/* M3 Type Scale — font weights */
---weight-display:   300;
---weight-headline:  300;
---weight-title:     400;
---weight-body:      300;
---weight-label:     600;
+    /* M3 Type Scale — font weights */
+    --weight-display:   300;
+    --weight-headline:  300;
+    --weight-title:     400;
+    --weight-body:      300;
+    --weight-label:     600;
 }
 
 /* ─── RESET & BASE ───────────────────────────── */
@@ -110,7 +111,7 @@ body {
     background-color: var(--color-bg);
     color: var(--color-text);
     font-family: var(--font-sans);
-    font-weight: 400;
+    font-weight: var(--weight-body);
     line-height: 1.7;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -152,7 +153,7 @@ a:hover {
 /* ─── TYPOGRAPHY ─────────────────────────────── */
 h1, h2, h3 {
     font-family: var(--font-serif);
-    font-weight: 700;
+    font-weight: var(--weight-headline);
     line-height: 1.2;
     color: var(--color-text);
 }
@@ -387,7 +388,7 @@ p {
 
 .project-card h3 {
     padding-bottom: 0.25rem;
-    font-size: 1.1rem;
+    font-size: var(--typescale-headline-small);
 }
 
 .project-card p {
@@ -396,7 +397,6 @@ p {
     font-size: var(--typescale-label-large);
     letter-spacing: var(--tracking-label-large);
     color: var(--color-text-muted);
-    letter-spacing: 0.04em;
     text-transform: uppercase;
 }
 
@@ -446,7 +446,6 @@ p {
     color: var(--color-text-muted);
     padding: 0.3rem 0;
     border-bottom: 1px solid var(--color-border);
-    line-height: 1.5;
 }
 
 .service-card ul li:last-child {
@@ -523,7 +522,6 @@ p {
     font-size: var(--typescale-label-large);
     letter-spacing: var(--tracking-label-large);
     font-weight: 600;
-    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--color-bg-alt);
     opacity: 0.7;
@@ -622,7 +620,7 @@ p {
     }
 
     .nav-links a {
-        font-size: 0.72rem;
+        font-size: var(--typescale-label-medium);
     }
 
     /* Project cards full width */
