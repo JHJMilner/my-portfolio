@@ -6,15 +6,17 @@
 :root {
     /* Colours */
     --color-bg:           #FDF9F4;
-    --color-bg-alt:       #f9ebdc;
+    --color-bg-alt:       #FFFCF9;
     --color-bg-tan:       #E4B378;
     --color-bg-blue:      #ddeff7;
-    --color-text:         #251204;
+    --color-bg-parchment: #F8ECDD;
+    --color-text:         #371b06;
     --color-text-muted:   #706E6C;
-    --color-accent:       #8CCAE3;
+    --color-accent:       #BE8656; 
     --color-green-lt:     #A4AD6C;
     --color-green:        #79774D;
     --color-blue-lt:      #F0F9FE;
+    --color-blue:         #8CCAE3;
     --color-brown:        #BE8656;
     --color-brown-lt:     #D09B72;
     --color-border:       rgba(57, 55, 51, 0.12);
@@ -115,7 +117,7 @@ h3 {
 }
 
 p {
-    font-size: 1rem;
+    font-size: 1.1rem;
     line-height: 1.8;
     color: var(--color-text);
 }
@@ -179,8 +181,8 @@ p {
 
 .nav-links a {
     font-family: var(--font-sans);
-    font-size: 0.8rem;
-    font-weight: 600;
+    font-size: 0.9rem;
+    font-weight: 400;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--color-text);
@@ -355,7 +357,7 @@ p {
 }
 
 .service-card:hover {
-    background-color: var(--color-bg-blue);
+    background-color: var(--color-bg-parchment);
 }
 
 .service-icon {
@@ -390,7 +392,7 @@ p {
 /* ─── CONTACT SECTION ────────────────────────── */
 .section-contact {
     padding: var(--space-xl) 0;
-    background-color: var(--color-bg-blue);
+    background-color: var(--color-bg-parchment);
     text-align: center;
 }
 
