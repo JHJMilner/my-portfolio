@@ -20,10 +20,10 @@
     --color-brown:        #BE8656;
     --color-brown-lt:     #D09B72;
     --color-grey:         #706E6C;
-    --color-border:       rgba(57, 55, 51, 0.12);
+    --color-border:       rgba(59, 44, 27, 0.122);
 
     /* Typography */
-    --font-serif:         'Libre Baskerville', 'Newsreader', Garamond, serif;
+    --font-serif:         'Crimson Pro', 'Newsreader', Georgia, serif;
     --font-sans:          'Lexend', 'Open Sans', 'Helvetica Neue', sans-serif;
 
     /* Spacing */
@@ -294,9 +294,12 @@ p {
     object-position: center top;
 }
 
-.hero-mid,
-.hero-fg {
-    /* Placeholder styling until illustration layers are added */
+.hero-mid img,
+.hero-fg img {
+    width: 100%;
+    height: 110%;
+    object-fit: cover;
+    object-position: center top;
     pointer-events: none;
 }
 
