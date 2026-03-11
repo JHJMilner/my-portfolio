@@ -204,6 +204,7 @@ p {
     height: var(--nav-height);
     z-index: 100;
     background-color: transparent;
+    overflow: visible;
     transition: background-color var(--transition-base),
                 box-shadow var(--transition-base);
 }
@@ -221,6 +222,7 @@ p {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-color: transparent;
 }
 
 .nav-logo {
@@ -230,6 +232,14 @@ p {
     font-weight: 700;
     letter-spacing: 0.05em;
     color: var(--color-text);
+}
+
+.nav-logo-initials {
+    display: none;
+}
+
+.nav-logo-full {
+    display: inline;
 }
 
 .nav-links {
@@ -266,6 +276,14 @@ p {
 
 .nav-links a:hover {
     color: var(--color-text);
+}
+
+.nav-hamburger {
+    display: none;
+}
+
+.nav-mobile-menu {
+    display: none;
 }
 
 /* ─── HERO SECTION ───────────────────────────── */
@@ -644,6 +662,113 @@ p {
     /* Footer */
     .footer-nav {
         gap: var(--space-sm);
+    }
+
+    /* Nav — show initials, hide full name */
+    .nav-logo-full {
+        display: none;
+    }
+
+    .nav-logo-initials {
+        display: inline;
+    }
+
+    /* Nav — hide desktop links, show hamburger */
+    .nav-links {
+        display: none;
+    }
+
+    .nav-hamburger {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 28px;
+        height: 14px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        z-index: 200;
+    }
+
+    .nav-hamburger span {
+        display: block;
+        width: 100%;
+        height: 1.5px;
+        background-color: var(--color-text);
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        transform-origin: center;
+    }
+
+    /* Hamburger animates to X when open */
+    .nav-hamburger.is-open span:nth-child(1) {
+        transform: translateY(6.25px) rotate(45deg);
+    }
+
+    .nav-hamburger.is-open span:nth-child(2) {
+        transform: translateY(-6.25px) rotate(-45deg);
+    }
+
+    /* Mobile menu overlay */
+    .nav-mobile-menu {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--color-bg);
+        opacity: 0;
+        visibility: hidden;
+        transition: transform 0.4s ease, visibility 0.4s ease;
+        z-index: 98;
+    }
+
+    .nav-mobile-menu.is-open {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .nav-mobile-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-md);
+        padding: 0;
+    }
+
+    .nav-mobile-links li a {
+        display: block;
+        font-family: var(--font-serif);
+        font-size: var(--typescale-display-small);
+        font-weight: var(--weight-headline);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--color-text);
+        transition: color var(--transition-base);
+        opacity: 0;
+        transform: translateY(12px);
+        transition: color var(--transition-base),
+                    opacity 0.4s ease,
+                    transform 0.4s ease;
+    }
+
+    .nav-mobile-menu.is-open .nav-mobile-links li a {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Stagger each link's entrance */
+    .nav-mobile-menu.is-open .nav-mobile-links li:nth-child(1) a { transition-delay: 0.1s; }
+    .nav-mobile-menu.is-open .nav-mobile-links li:nth-child(2) a { transition-delay: 0.18s; }
+    .nav-mobile-menu.is-open .nav-mobile-links li:nth-child(3) a { transition-delay: 0.26s; }
+    .nav-mobile-menu.is-open .nav-mobile-links li:nth-child(4) a { transition-delay: 0.34s; }
+
+    .nav-mobile-links li a:hover {
+        color: var(--color-accent);
     }
 }
 

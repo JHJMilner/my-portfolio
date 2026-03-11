@@ -38,6 +38,41 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+/* ─── HAMBURGER MENU ─────────────────────────── */
+const hamburger = document.querySelector('.nav-hamburger');
+const mobileMenu = document.querySelector('.nav-mobile-menu');
+const mobileLinks = document.querySelectorAll('.nav-mobile-links a');
+
+if (hamburger && mobileMenu) {
+
+    // Toggle menu open/closed
+    hamburger.addEventListener('click', () => {
+        const isOpen = hamburger.classList.toggle('is-open');
+        mobileMenu.classList.toggle('is-open');
+        hamburger.setAttribute('aria-expanded', isOpen);
+        mobileMenu.setAttribute('aria-hidden', !isOpen);
+    });
+
+    // Close menu when a link is tapped
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('is-open');
+            mobileMenu.classList.remove('is-open');
+            hamburger.setAttribute('aria-expanded', false);
+            mobileMenu.setAttribute('aria-hidden', true);
+        });
+    });
+
+    // Close menu when tapping outside
+    document.addEventListener('click', (e) => {
+        if (!nav.contains(e.target)) {
+            hamburger.classList.remove('is-open');
+            mobileMenu.classList.remove('is-open');
+            hamburger.setAttribute('aria-expanded', false);
+            mobileMenu.setAttribute('aria-hidden', true);
+        }
+    });
+}
 
 /* ─── HERO PARALLAX ──────────────────────────── */
 // Uses GSAP ScrollTrigger to move each hero layer
