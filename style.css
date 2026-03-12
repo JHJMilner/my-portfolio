@@ -347,6 +347,42 @@ p {
     50%       { transform: translateX(-50%) translateY(8px); }
 }
 
+/* ─── ELEVATOR PITCH SECTION ─────────────────── */
+.section-pitch {
+    padding: var(--space-xl) 0;
+    background-color: var(--color-text);
+    text-align: center;
+}
+
+.pitch-inner {
+    max-width: 780px;
+}
+
+.pitch-inner h2 {
+    color: var(--color-bg);
+    margin-bottom: var(--space-md);
+    letter-spacing: 0.02em;
+}
+
+.pitch-inner p {
+    color: var(--color-bg-alt);
+    opacity: 0.8;
+    font-size: var(--typescale-title-medium);
+    line-height: var(--lineheight-title-medium);
+    max-width: var(--text-max-width);
+    margin: 0 auto;
+}
+
+.pitch-closing {
+    margin-top: var(--space-md) !important;
+    font-family: var(--font-serif);
+    font-size: var(--typescale-headline-small) !important;
+    font-style: italic;
+    opacity: 1 !important;
+    color: var(--color-accent) !important;
+    line-height: var(--lineheight-headline-small) !important;
+}
+
 /* ─── INTRODUCTION SECTION ───────────────────── */
 .section-introduction {
     padding: var(--space-xl) 0;

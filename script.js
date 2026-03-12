@@ -144,8 +144,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Sections fade up into view as the user scrolls
     // down to them. Staggers nicely on card grids.
 
-    // General section headings
-    gsap.utils.toArray('section h2').forEach(heading => {
+    // General section headings (excluding pitch which has its own animation)
+    gsap.utils.toArray('section h2:not(.pitch-inner h2)').forEach(heading => {
         gsap.from(heading, {
             opacity: 0,
             y: 30,
@@ -158,6 +158,39 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // Elevator pitch section
+    const pitchHeading = document.querySelector('.pitch-inner h2');
+    const pitchBody    = document.querySelectorAll('.pitch-inner p');
+
+    if (pitchHeading) {
+        gsap.from(pitchHeading, {
+            opacity: 0,
+            y: 30,
+            duration: 0.9,
+            ease: 'power2.out',
+            scrollTrigger: {
+                trigger: pitchHeading,
+                start: 'top 85%',
+                toggleActions: 'play none none none'
+            }
+        });
+    }
+
+    if (pitchBody.length) {
+        gsap.from(pitchBody, {
+            opacity: 0,
+            y: 20,
+            duration: 0.9,
+            ease: 'power2.out',
+            stagger: 0.2,
+            scrollTrigger: {
+                trigger: '.pitch-inner',
+                start: 'top 85%',
+                toggleActions: 'play none none none'
+            }
+        });
+    }
 
     // Introduction text and image
     const introText  = document.querySelector('.intro-text');
