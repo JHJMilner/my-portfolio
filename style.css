@@ -6,7 +6,7 @@
 :root {
     /* Colours */
     --color-bg:           #FDF9F4;
-    --color-bg-alt:       #FFFCF9;
+    --color-bg-alt:       #E5D8C7;
     --color-bg-tan:       #E4B378;
     --color-bg-blue:      #ddeff7;
     --color-bg-parchment: #F8ECDD;
@@ -381,6 +381,79 @@ p {
     opacity: 1 !important;
     color: var(--color-accent) !important;
     line-height: var(--lineheight-headline-small) !important;
+}
+
+/* ─── CRED BAR SECTION ───────────────────────── */
+.section-cred {
+    padding: var(--space-md) 0;
+    background-color: var(--color-bg-alt);
+    overflow: hidden;
+}
+
+.cred-track-wrapper {
+    position: relative;
+    width: 100%;
+    /* Edge fade using mask */
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        black 12%,
+        black 88%,
+        transparent 100%
+    );
+    mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        black 12%,
+        black 88%,
+        transparent 100%
+    );
+}
+
+.cred-track {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    width: max-content;
+    animation: cred-scroll 35s linear infinite;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+.cred-track:hover {
+    animation-play-state: paused;
+}
+
+.cred-logo {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.cred-logo img {
+    height: 36px;
+    width: auto;
+    max-width: 140px;
+    object-fit: contain;
+    filter: grayscale(100%) opacity(65%);
+    transition: filter var(--transition-base);
+}
+
+.cred-logo img:hover {
+    filter: grayscale(100%) opacity(70%);
+}
+
+@keyframes cred-scroll {
+    0%   { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-50%, 0, 0); }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .cred-track {
+        animation: none;
+    }
 }
 
 /* ─── INTRODUCTION SECTION ───────────────────── */
