@@ -179,6 +179,7 @@ p {
     line-height: var(--lineheight-body-large);
     letter-spacing: var(--tracking-body-large);
     color: var(--color-text);
+     margin-bottom: var(--space-sm);
 }
 
 /* ─── LAYOUT UTILITIES ───────────────────────── */
@@ -349,7 +350,7 @@ p {
 
 /* ─── ELEVATOR PITCH SECTION ─────────────────── */
 .section-pitch {
-    padding: var(--space-xl) 0;
+    padding: var(--space-lg) 0;
     background-color: var(--color-text);
     text-align: center;
 }
@@ -489,6 +490,7 @@ p {
 .intro-image img {
     width: 100%;
     height: 520px;
+    border-radius: 16px;
     object-fit: cover;
     object-position: center;
 }
@@ -502,11 +504,12 @@ p {
     height: 100%;
     border: 1px solid var(--color-border);
     z-index: -1;
+    border-radius: 16px;
 }
 
 /* ─── PROJECTS SECTION ───────────────────────── */
 .section-projects {
-    padding: var(--space-xl) 0;
+    padding: var(--space-lg) 0;
     background-color: var(--color-bg-alt);
 }
 
@@ -517,6 +520,7 @@ p {
 .project-card {
     background-color: var(--color-bg);
     overflow: hidden;
+    border-radius: 16px;
     transition: transform var(--transition-base), box-shadow var(--transition-base);
     cursor: pointer;
 }
