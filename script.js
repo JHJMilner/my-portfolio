@@ -86,13 +86,13 @@ if (canvas) {
     // Each entry is [R, G, B]
     const palette = [
         [253, 249, 244],  // --color-bg
-        [221, 239, 247],  // --color-bg-blue
         [229, 216, 199],  // --color-bg-alt
         [221, 239, 247],  // --color-bg-blue
         [140, 202, 227],  // --color-blue
+        [253, 249, 244],  // --color-bg
         [208, 155, 114],  // --color-brown-lt
         [248, 236, 221],  // --color-bg-parchment
-        [221, 239, 247],  // --color-bg-blue
+        [253, 249, 244],  // --color-bg
         [164, 173, 108],  // --color-green-lt
     ];
 
@@ -123,7 +123,7 @@ if (canvas) {
     const pixels   = imgData.data;
 
     function drawFrame() {
-        animTime += 0.002;
+        animTime += 0.003;
         const t = animTime;
 
         for (let y = 0; y < H; y++) {

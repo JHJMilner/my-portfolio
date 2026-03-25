@@ -330,6 +330,7 @@ p {
     inset: 0;
     z-index: 2;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     pointer-events: none;
@@ -341,10 +342,22 @@ p {
     font-weight: 700;
     line-height: 1;
     letter-spacing: 0.01em;
-    color: var(--color-bg-blue);
+    color: var(--color-bg);
     text-align: center;
     mix-blend-mode: multiply;
 }
+.hero-subhead {
+    font-family: var(--font-sans);
+    font-size: clamp(1.25rem, 2vw, 1.75rem); /* scales to 28px at wide screens */
+    font-weight: var(--weight-title);
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+    color: var(--color-green-lt);
+    text-align: center;
+    margin-top: var(--space-lg);
+    mix-blend-mode: multiply;
+}
+
 
 /* ─── HERO SCROLL INDICATOR ──────────────────── */
 .hero-scroll-indicator {
@@ -352,7 +365,7 @@ p {
     bottom: var(--space-md);
     left: 50%;
     transform: translateX(-50%);
-    color: white;
+    color: var(--color-green-lt);
     opacity: 0.8;
     z-index: 10;
     display: flex;
