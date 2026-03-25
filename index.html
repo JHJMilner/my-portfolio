@@ -54,29 +54,27 @@
         </div>
     </nav>
 
-    <!-- =====================
-         HERO SECTION
-    ========================== -->
-    <section id="hero" aria-label="Julia Milner, UX Researcher, Service Designer">
-        <div class="hero-layer hero-bg">
-            <img src="images/hero-bg.png" alt="" aria-hidden="true" />
-        </div>
-        <div class="hero-layer hero-mid">
-            <img src="images/hero-mid.png" alt="" aria-hidden="true" />
-        </div>
-        <div class="hero-layer hero-fg">
-            <img src="images/hero-fg.png" alt="" aria-hidden="true" />
-        </div>  
-        <!-- Screen-reader accessible text for hero -->
-        <span class="sr-only">Julia Milner, UX Researcher, Service Designer</span>
 
-         <!-- Scroll down indicator -->
-        <a href="#introduction" class="hero-scroll-indicator" aria-label="Scroll to introduction">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-        </a>
-    </section>
+
+    <!-- =====================
+     HERO SECTION
+========================== -->
+<section id="hero" aria-label="Julia Milner, UX Researcher, Service Designer">
+    <div id="aura-hero">
+        <canvas id="aura-canvas" width="32" height="32" aria-hidden="true"></canvas>
+        <div class="aura-mask" aria-hidden="true"></div>
+    </div>
+    <div class="hero-text-overlay"> 
+        <h1 class="hero-headline">Find clarity.</h1>
+    </div>
+    <span class="sr-only">Julia Milner, UX Researcher, Service Designer</span>
+    <!-- Scroll down indicator -->
+    <a href="#pitch" class="hero-scroll-indicator" aria-label="Scroll down">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+    </a>
+</section>
 
 
     <!-- =====================

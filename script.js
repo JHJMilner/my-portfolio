@@ -74,71 +74,103 @@ if (hamburger && mobileMenu) {
     });
 }
 
-/* ─── HERO PARALLAX ──────────────────────────── */
-// Uses GSAP ScrollTrigger to move each hero layer
-// at a different speed as the user scrolls,
-// creating a sense of depth.
-//
-// NOTE: This section will have full effect once
-// all three illustration layers are in place.
-// The background layer is active now using placeholder.png.
+/* ─── AURA CANVAS ANIMATION ─────────────────── */
+const canvas  = document.getElementById('aura-canvas');
 
-document.addEventListener('DOMContentLoaded', () => {
+if (canvas) {
+    const ctx = canvas.getContext('2d');
+    const W   = 32;
+    const H   = 32;
 
-    // Check GSAP is loaded before running
-    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-        console.warn('GSAP or ScrollTrigger not loaded.');
-        return;
+    // Palette derived from site colour variables
+    // Each entry is [R, G, B]
+    const palette = [
+        [253, 249, 244],  // --color-bg
+        [221, 239, 247],  // --color-bg-blue
+        [229, 216, 199],  // --color-bg-alt
+        [221, 239, 247],  // --color-bg-blue
+        [140, 202, 227],  // --color-blue
+        [208, 155, 114],  // --color-brown-lt
+        [248, 236, 221],  // --color-bg-parchment
+        [221, 239, 247],  // --color-bg-blue
+        [164, 173, 108],  // --color-green-lt
+    ];
+
+    // Blend between two palette colours by a 0–1 factor
+    function lerpColor(a, b, t) {
+        return [
+            Math.round(a[0] + (b[0] - a[0]) * t),
+            Math.round(a[1] + (b[1] - a[1]) * t),
+            Math.round(a[2] + (b[2] - a[2]) * t),
+        ];
     }
 
-    gsap.registerPlugin(ScrollTrigger);
+    // Map a -1..1 sine value to a palette blend
+    function plasmaColor(v, t) {
+        // Shift v into 0..1
+        const n = (v + 1) * 0.5;
+        // Slowly rotate which palette pair we blend between
+        const shift  = (Math.sin(t * 0.07) + 1) * 0.5;
+        const idxA   = Math.floor((n + shift) * (palette.length - 1)) % palette.length;
+        const idxB   = (idxA + 1) % palette.length;
+        const blend  = ((n + shift) * (palette.length - 1)) % 1;
+        return lerpColor(palette[idxA], palette[idxB], blend);
+    }
 
-    const heroBg  = document.querySelector('.hero-bg');
-    const heroMid = document.querySelector('.hero-mid');
-    const heroFg  = document.querySelector('.hero-fg');
+    let animTime   = 0;
+    let rafId      = null;
+    const imgData  = ctx.createImageData(W, H);
+    const pixels   = imgData.data;
 
-    // Background layer — moves slowest
-    if (heroBg) {
-        gsap.to(heroBg, {
-            yPercent: 30,
-            ease: 'none',
-            scrollTrigger: {
-                trigger: '#hero',
-                start: 'top top',
-                end: 'bottom top',
-                scrub: true
+    function drawFrame() {
+        animTime += 0.002;
+        const t = animTime;
+
+        for (let y = 0; y < H; y++) {
+            for (let x = 0; x < W; x++) {
+
+                // Plasma formula — layered sine waves across x, y, and time
+                const cx  = x + 0.5 * Math.sin(t * 0.3);
+                const cy  = y + 0.5 * Math.cos(t * 0.2);
+                const v1  = Math.sin(cx * 0.3 + t);
+                const v2  = Math.sin(0.3 * (cx * Math.sin(t * 0.5) + cy * Math.cos(t * 0.33)) + t);
+                const r   = Math.sqrt((cx - W * 0.5) ** 2 + (cy - H * 0.5) ** 2);
+                const v3  = Math.sin(Math.sqrt(r + 1) + t);
+                const val = (v1 + v2 + v3) / 3;
+
+                const [R, G, B] = plasmaColor(val, t);
+                const i = (y * W + x) * 4;
+                pixels[i]     = R;
+                pixels[i + 1] = G;
+                pixels[i + 2] = B;
+                pixels[i + 3] = 255;
             }
-        });
+        }
+
+        ctx.putImageData(imgData, 0, 0);
+        rafId = requestAnimationFrame(drawFrame);
     }
 
-    // Midground layer — moves at medium speed
-    if (heroMid) {
-        gsap.to(heroMid, {
-            yPercent: 55,
-            ease: 'none',
-            scrollTrigger: {
-                trigger: '#hero',
-                start: 'top top',
-                end: 'bottom top',
-                scrub: true
-            }
-        });
+    // Respect prefers-reduced-motion
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    if (prefersReduced.matches) {
+        // Draw a single static frame and stop
+        drawFrame();
+        cancelAnimationFrame(rafId);
+    } else {
+        drawFrame();
     }
 
-    // Foreground layer — moves fastest
-    if (heroFg) {
-        gsap.to(heroFg, {
-            yPercent: 80,
-            ease: 'none',
-            scrollTrigger: {
-                trigger: '#hero',
-                start: 'top top',
-                end: 'bottom top',
-                scrub: true
-            }
-        });
-    }
-
+    // Pause animation when tab is not visible (saves CPU)
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            cancelAnimationFrame(rafId);
+        } else {
+            drawFrame();
+        }
+    });
+}
 
     /* ─── SCROLL-IN ANIMATIONS ───────────────── */
     // Sections fade up into view as the user scrolls
@@ -274,7 +306,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-});
+
 
 
 /* ─── REDUCED MOTION: DISABLE ANIMATIONS ─────── */

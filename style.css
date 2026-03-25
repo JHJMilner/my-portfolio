@@ -297,29 +297,53 @@ p {
     background-color: var(--color-bg-alt);
 }
 
-.hero-layer {
+/* ─── AURA HERO ──────────────────────────────── */
+#aura-hero {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100%;
     height: 100%;
-    will-change: transform;
+    filter: blur(8vw);
+    z-index: 0;
 }
 
-.hero-bg img {
+#aura-canvas {
     width: 100%;
-    height: 110%;
-    object-fit: cover;
-    object-position: center top;
+    height: 100%;
+    display: block;
 }
 
-.hero-mid img,
-.hero-fg img {
-    width: 100%;
-    height: 110%;
-    object-fit: cover;
-    object-position: center top;
+.aura-mask {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        transparent 55%,
+        var(--color-bg) 100%
+    );
+    z-index: 1;
+}
+
+.hero-text-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     pointer-events: none;
+}
+
+.hero-headline {
+    font-family: var(--font-serif);
+    font-size: clamp(3.5rem, 12vw, 9.6875rem); /* scales to ~155px at wide screens */
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    color: var(--color-bg-blue);
+    text-align: center;
+    mix-blend-mode: multiply;
 }
 
 /* ─── HERO SCROLL INDICATOR ──────────────────── */
