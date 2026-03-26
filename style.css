@@ -744,10 +744,11 @@ p {
 
 .footer-social a {
     color: var(--color-bg-alt);
-    opacity: 0.7;
+    opacity: 0.6;
     transition: opacity var(--transition-base), color var(--transition-base);
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .footer-social a:hover {
