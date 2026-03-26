@@ -86,14 +86,11 @@ if (canvas) {
     // Each entry is [R, G, B]
     const palette = [
         [253, 249, 244],  // --color-bg
-        [229, 216, 199],  // --color-bg-alt
+        [208, 155, 114],  // --color-brown-lt
+        [253, 249, 244],  // --color-bg
         [221, 239, 247],  // --color-bg-blue
         [140, 202, 227],  // --color-blue
         [253, 249, 244],  // --color-bg
-        [208, 155, 114],  // --color-brown-lt
-        [248, 236, 221],  // --color-bg-parchment
-        [253, 249, 244],  // --color-bg
-        [164, 173, 108],  // --color-green-lt
     ];
 
     // Blend between two palette colours by a 0–1 factor
