@@ -159,16 +159,17 @@ h1, h2, h3 {
 }
 
 h2 {
-    font-size: var(--typescale-headline-large);
-    line-height: var(--lineheight-headline-large);
+    font-size: var(--typescale-display-small);
+    line-height: var(--lineheight-display-small);
     letter-spacing: var(--tracking-headline);
     text-transform: uppercase;
     margin-bottom: var(--space-lg);
+    text-align: center;
 }
 
 h3 {
-    font-size: var(--typescale-headline-small);
-    line-height: var(--lineheight-headline-small);
+    font-size: var(--typescale-headline-medium);
+    line-height: var(--lineheight-headline-medium);
     letter-spacing: var(--tracking-headline);
     text-transform: uppercase;
     margin-bottom: var(--space-sm);
@@ -180,6 +181,10 @@ p {
     letter-spacing: var(--tracking-body-large);
     color: var(--color-text);
      margin-bottom: var(--space-sm);
+}
+
+.intro-text h2 {
+    text-align: left;
 }
 
 /* ─── LAYOUT UTILITIES ───────────────────────── */
