@@ -618,14 +618,14 @@ p {
 
 .service-card {
     padding: var(--space-md) var(--space-md);
-    background-color: var(--color-bg-alt);
+    background-color: var(--color-bg-parchment);
     border-top: 2px solid var(--color-accent);
     border-radius: 16px;
     transition: background-color var(--transition-base);
 }
 
 .service-card:hover {
-    background-color: var(--color-bg-parchment);
+    background-color: var(--color-bg-alt);
 }
 
 .service-card-header {
@@ -642,7 +642,7 @@ p {
     flex-shrink: 0;
     width: 44px;
     height: 44px;
-    background-color: var(--color-bg-parchment);
+    background-color: var(--color-bg-alt);
     border-radius: 10px;
     color: var(--color-accent);
 }
