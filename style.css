@@ -292,6 +292,227 @@ p {
     display: none;
 }
 
+/* Override nav link styles when btn-primary is used in nav */
+.nav-links .btn-secondary {
+    margin-left: var(--space-sm);
+}
+
+.nav-links .btn-secondary::after {
+    display: none;
+}
+
+/* - BUTTON HEIRARCHY -
+   Primary: .btn-primary — for main CTAs, bold and filled
+   Secondary: .btn-secondary — for less critical actions, outlined
+   Text: .btn-text — for subtle links, with animated underline
+*/
+
+/* ─── PRIMARY BUTTON ─────────────────────────── */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-sans);
+    font-size: var(--typescale-label-large);
+    font-weight: var(--weight-label);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-bg);
+    background-color: var(--color-text);
+    border: 2px solid var(--color-text);
+    border-radius: 100px;
+    padding: 0.5rem 1.25rem;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.25s ease,
+                color 0.25s ease,
+                border-color 0.25s ease,
+                transform 0.15s ease,
+                box-shadow 0.25s ease;
+
+    /* Prevent text selection on click */
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Hover state — inverts to outlined style */
+.btn-primary:hover {
+    background-color: transparent;
+    color: var(--color-text);
+    border-color: var(--color-text);
+    box-shadow: 0 4px 16px rgba(55, 27, 6, 0.15);
+}
+
+/* Active / clicked state — slight press effect */
+.btn-primary:active {
+    transform: scale(0.97);
+    box-shadow: none;
+    background-color: var(--color-bg-alt);
+    color: var(--color-text);
+}
+
+/* Focus state — keyboard navigation */
+.btn-primary:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+    background-color: transparent;
+    color: var(--color-text);
+}
+
+/* Disabled state */
+.btn-primary:disabled,
+.btn-primary[aria-disabled="true"] {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* ─── SECONDARY BUTTON ───────────────────────── */
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-sans);
+    font-size: var(--typescale-label-large);
+    font-weight: var(--weight-label);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    background-color: transparent;
+    border: 1.5px solid var(--color-text-muted);
+    border-radius: 100px;
+    padding: 0.5rem 1.25rem;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.25s ease,
+                color 0.25s ease,
+                border-color 0.25s ease,
+                transform 0.15s ease,
+                box-shadow 0.25s ease;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Hover state — subtle fill appears */
+.btn-secondary:hover {
+    background-color: var(--color-bg-alt);
+    border-color: var(--color-text);
+    color: var(--color-text);
+    box-shadow: 0 4px 16px rgba(55, 27, 6, 0.08);
+}
+
+/* Active / clicked state */
+.btn-secondary:active {
+    transform: scale(0.97);
+    box-shadow: none;
+    background-color: var(--color-bg-tan);
+    border-color: var(--color-text);
+}
+
+/* Focus state — keyboard navigation */
+.btn-secondary:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+}
+
+/* Disabled state */
+.btn-secondary:disabled,
+.btn-secondary[aria-disabled="true"] {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* ─── TEXT BUTTON ────────────────────────────── */
+.btn-text {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35em;
+    font-family: var(--font-sans);
+    font-size: var(--typescale-label-large);
+    font-weight: var(--weight-label);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0.25rem 0;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    transition: color 0.25s ease,
+                transform 0.15s ease,
+                gap 0.25s ease;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Animated underline */
+.btn-text::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: var(--color-text);
+    transition: width 0.25s ease;
+}
+
+/* Hover state — underline grows, arrow nudges right */
+.btn-text:hover {
+    color: var(--color-text);
+    gap: 0.55em;
+}
+
+.btn-text:hover::after {
+    width: 100%;
+}
+
+/* Active / clicked state */
+.btn-text:active {
+    transform: scale(0.97);
+    color: var(--color-text-muted);
+}
+
+/* Focus state */
+.btn-text:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+}
+
+/* Disabled state */
+.btn-text:disabled,
+.btn-text[aria-disabled="true"] {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Arrow variant — adds a → that nudges on hover */
+.btn-text.btn-text--arrow::before {
+    content: none;
+}
+
+.btn-text.btn-text--arrow::after {
+    display: none;
+}
+
+.btn-text.btn-text--arrow .btn-arrow {
+    display: inline-block;
+    transition: transform 0.25s ease;
+}
+
+.btn-text.btn-text--arrow:hover .btn-arrow {
+    transform: translateX(4px);
+}
+
 /* ─── HERO SECTION ───────────────────────────── */
 #hero {
     position: relative;
