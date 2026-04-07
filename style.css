@@ -12,7 +12,8 @@
     --color-bg-parchment: #F8ECDD;
     --color-text:         #371b06;
     --color-text-muted:   #5c402a;
-    --color-accent:       #BE8656; 
+    --color-accent:       #A56E3A;
+    --color-accent-dk:    #9C6A42;  
     --color-green-lt:     #A4AD6C;
     --color-green:        #79774D;
     --color-blue-lt:      #F0F9FE;
@@ -88,10 +89,10 @@
     --tracking-label-small:       0.031em;
 
     /* M3 Type Scale — font weights */
-    --weight-display:   300;
-    --weight-headline:  300;
-    --weight-title:     400;
-    --weight-body:      300;
+    --weight-display:   700;
+    --weight-headline:  500;
+    --weight-title:     600;
+    --weight-body:      400;
     --weight-label:     600;
 }
 
