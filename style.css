@@ -28,7 +28,7 @@
 
     /* Typography */
     --font-serif:         'Crimson Pro', 'Newsreader', Georgia, serif;
-    --font-sans:          'Lexend', 'Open Sans', 'Helvetica Neue', sans-serif;
+    --font-sans:          'Inter', 'Public Sans', system-ui, sans-serif;
 
     /* Spacing */
     --space-xs:           0.5rem;
@@ -40,63 +40,46 @@
     /* Layout */
     --max-width:          1140px;
     --nav-height:         70px;
-    --text-max-width: 68ch;
+    --text-max-width:     68ch;
 
     /* Transitions */
     --transition-base:    0.3s ease;
 
-    /* M3 Type Scale — sizes */
-    --typescale-display-large:    3.5625rem;
-    --typescale-display-medium:   2.8125rem;
-    --typescale-display-small:    2.25rem;
-    --typescale-headline-large:   2rem;
-    --typescale-headline-medium:  1.75rem;
-    --typescale-headline-small:   1.5rem;
-    --typescale-title-large:      1.375rem;
-    --typescale-title-medium:     1rem;
-    --typescale-title-small:      0.875rem;
-    --typescale-body-large:       1rem;
-    --typescale-body-medium:      0.875rem;
-    --typescale-body-small:       0.75rem;
-    --typescale-label-large:      0.875rem;
-    --typescale-label-medium:     0.75rem;
-    --typescale-label-small:      0.6875rem;
+   /* Typescales (modified from M3) */
+    --typescale-display:    clamp(3.5rem, 8vw, 5rem);  /* Fluid scaling for the Hero */
 
-    /* M3 Type Scale — line heights */
-    --lineheight-display-large:   1.12;
-    --lineheight-display-medium:  1.16;
-    --lineheight-display-small:   1.22;
-    --lineheight-headline-large:  1.25;
-    --lineheight-headline-medium: 1.29;
-    --lineheight-headline-small:  1.33;
-    --lineheight-title-large:     1.27;
-    --lineheight-title-medium:    1.5;
-    --lineheight-title-small:     1.43;
-    --lineheight-body-large:      1.5;
-    --lineheight-body-medium:     1.43;
-    --lineheight-body-small:      1.33;
-    --lineheight-label-large:     1.43;
-    --lineheight-label-medium:    1.33;
-    --lineheight-label-small:     1.45;
+    --typescale-display-large: 3.5625rem;
+    --typescale-display-medium: 2.8125rem; /* H2 */
+    --typescale-display-small: 2.25rem;
+    --typescale-headline-large: 2rem; /* H3 */
+    --typescale-headline-medium: 1.75rem;
+    --typescale-headline-small: 1.5rem;
+    --typescale-title-large: 1.375rem;
+    --typescale-title-medium: 1rem;
+    --typescale-title-small: 0.875rem;
+    --typescale-body-large: 1rem; /* Paragraph / Body */
+    --typescale-body-medium: 0.875rem;
+    --typescale-body-small: 0.75rem;
+    --typescale-label-large: 0.875rem; /* Nav */
+    --typescale-label-medium: 0.75rem; /* Eyebrow */
+    --typescale-label-small: 0.6875rem; 
 
-    /* M3 Type Scale — letter spacing */
-    --tracking-display-large:    -0.016em;
-    --tracking-headline:          0em;
-    --tracking-title-large:       0em;
-    --tracking-title-medium:      0.009em;
-    --tracking-title-small:       0.006em;
-    --tracking-body-large:        0.031em;
-    --tracking-body-medium:       0.016em;
-    --tracking-label-large:       0.006em;
-    --tracking-label-medium:      0.031em;
-    --tracking-label-small:       0.031em;
+    /* Spacing */
+    --lineheight-display:   1.1;
+    --lineheight-heading:   1.3;
+    --lineheight-body:      1.7; 
 
-    /* M3 Type Scale — font weights */
-    --weight-display:   700;
-    --weight-headline:  500;
-    --weight-title:     600;
-    --weight-body:      400;
-    --weight-label:     600;
+     /* Font weights */
+    --weight-display: 700;
+    --weight-headline: 500;
+    --weight-title: 600;
+    --weight-body: 400;
+    --weight-label: 600; 
+    
+    /* Tracking */
+    --tracking-display:    -0.02em;  /* Tighten large text for a "locked-in" look */
+    --tracking-body:        0.02em;  /* Slightly loosen body text for readability */
+    --tracking-label:       0.04em;  /* Open up small labels for an airy feel */
 }
 
 /* ─── RESET & BASE ───────────────────────────── */
@@ -155,36 +138,54 @@ a:hover {
 }
 
 /* ─── TYPOGRAPHY ─────────────────────────────── */
-h1, h2, h3 {
+h1 {
     font-family: var(--font-serif);
-    font-weight: var(--weight-headline);
-    line-height: 1.2;
-    color: var(--color-text);
+    font-size: var(--typescale-display);
+    font-weight: var(--weight-display);
+    line-height: var(--lineheight-display);
+    letter-spacing: var(--tracking-display);
+    /* Try italics for a "human" touch */
+    font-style: none; 
 }
 
 h2 {
-    font-size: var(--typescale-display-small);
-    line-height: var(--lineheight-display-small);
-    letter-spacing: var(--tracking-headline);
-    text-transform: uppercase;
-    margin-bottom: var(--space-lg);
-    text-align: center;
+    font-family: var(--font-serif);
+    font-size: var(--typescale-display-medium);
+    text-transform: none;
+    font-weight: var(--weight-headline);
+    color: var(--color-text);
+    margin-bottom: var(--space-lg); 
 }
 
 h3 {
-    font-size: var(--typescale-headline-medium);
-    line-height: var(--lineheight-headline-medium);
-    letter-spacing: var(--tracking-headline);
+    font-family: var(--font-sans);
+    font-size: var(--typescale-headline-large);
+    text-transform: none;
+    font-weight: var(--weight-headline);
+    color: var(--color-accent-dk);
+    margin-bottom: var(--space-sm); 
+}
+
+/* Use a "Label" style for eyebrow text */
+.label-eyebrow {
+    font-family: var(--font-sans);
+    font-size: var(--typescale-label-medium);
+    font-weight: var(--weight-display);
     text-transform: uppercase;
-    margin-bottom: var(--space-sm);
+    letter-spacing: var(--tracking-label);
+    color: var(--color-accent-dk);
+    margin-bottom: 0.5rem;
+    display: block;
 }
 
 p {
+    font-family: var(--font-sans);
     font-size: var(--typescale-body-large);
-    line-height: var(--lineheight-body-large);
-    letter-spacing: var(--tracking-body-large);
-    color: var(--color-text);
-     margin-bottom: var(--space-sm);
+    font-weight: var(--weight-body);
+    line-height: var(--lineheight-body);
+    color: var(--color-text-muted); /* Slightly softer than pure black/brown */
+    max-width: 65ch; /* Limit line length for comfortable reading */
+    margin-bottom: var(--space-sm); 
 }
 
 .intro-text h2 {
@@ -237,10 +238,10 @@ p {
 
 .nav-logo {
     font-family: var(--font-serif);
-    font-size: var(--typescale-title-large);
+    font-size: 1.5rem;
     text-transform: uppercase;
     font-weight: 700;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.001em;
     color: var(--color-text);
 }
 
@@ -261,7 +262,7 @@ p {
 .nav-links a {
     font-family: var(--font-sans);
     font-size: var(--typescale-label-large);
-    font-weight: var(--weight-label);
+    font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--color-text);
@@ -571,7 +572,7 @@ p {
 .hero-headline {
     font-family: var(--font-serif);
     font-size: clamp(3.5rem, 12vw, 9.6875rem); /* scales to ~155px at wide screens */
-    font-weight: 700;
+    font-weight: var(--weight-display);
     line-height: 1;
     letter-spacing: 0.01em;
     color: var(--color-bg);
@@ -581,14 +582,14 @@ p {
 .hero-subhead {
     font-family: var(--font-sans);
     font-size: clamp(1rem, 2vw, 1.375rem);
-    font-weight: var(--weight-title);
+    font-weight: var(--weight-display);
     line-height: var(--lineheight-title-large);
-    letter-spacing: var(--tracking-title-large);
+    letter-spacing: var(--tracking-body);
     color: var(--color-text-muted);
     text-align: center;
     margin-top: var(--space-lg);
     padding: 0 var(--space-md);
-    max-width: 640px;
+    max-width: 700px;
     mix-blend-mode: multiply;
 }
 
@@ -599,7 +600,7 @@ p {
     bottom: var(--space-md);
     left: 50%;
     transform: translateX(-50%);
-    color: var(--color-text-muted);
+    color: var(--color-blue);
     opacity: 0.8;
     z-index: 10;
     display: flex;
@@ -749,7 +750,7 @@ p {
     font-family: var(--font-sans);
     font-size: var(--typescale-body-large);
     line-height: var(--lineheight-body-large);
-    letter-spacing: var(--tracking-body-large);
+    letter-spacing: var(--tracking-body);
     color: var(--color-text);
     max-width: var(--text-max-width);
 }
@@ -826,7 +827,8 @@ p {
     padding-top: 0;
     padding-bottom: var(--space-md);
     font-size: var(--typescale-label-large);
-    letter-spacing: var(--tracking-label-large);
+    font-weight: var(--weight-headline);
+    letter-spacing: var(--tracking-body);
     color: var(--color-text-muted);
     text-transform: none;
 }
@@ -882,7 +884,8 @@ p {
 
 .service-card p {
     font-family: var(--font-sans);
-    font-size: var(--typescale-body-medium);
+    font-size: var(--typescale-label-large);
+    font-weight: var(--weight-headline);
     line-height: var(--lineheight-body-medium);
     color: var(--color-text-muted);
     padding: 0.3rem 0;
@@ -971,7 +974,7 @@ p {
 .footer-nav a {
     font-family: var(--font-sans);
     font-size: var(--typescale-label-large);
-    letter-spacing: var(--tracking-label-large);
+    letter-spacing: var(--tracking-label);
     font-weight: 600;
     text-transform: uppercase;
     color: var(--color-bg-alt);

@@ -64,10 +64,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // Each entry is [R, G, B]
             const palette = [
                 [253, 249, 244],  // --color-bg
-                [208, 155, 114],  // --color-brown-lt
+                [245, 230, 211],  // --color-bg-alt
                 [253, 249, 244],  // --color-bg
-                [221, 239, 247],  // --color-bg-blue
-                [140, 202, 227],  // --color-blue
+                [235, 242, 245],  // --color-bg-blue
+                [142, 171, 184],  // --color-blue-lt
                 [253, 249, 244],  // --color-bg
             ];
 
@@ -158,8 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Just two colours — base background and a warm cream
             // blending gently into one another
-            const colorA = [253, 249, 244];  // --color-bg        #FDF9F4
-            const colorB = [228, 179, 120];  // --color-bg-tan     #E4B378
+            const colorA = [253, 249, 244];  // --color-bg        
+            const colorB = [217, 179, 140];  // --color-bg-tan  
 
             let cTime = 0;
             let cRafId = null;
