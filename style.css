@@ -5,23 +5,26 @@
 /* ─── CSS VARIABLES ─────────────────────────── */
 :root {
     /* Colours */
-    --color-bg:           #FDF9F4;
-    --color-bg-alt:       #E5D8C7;
-    --color-bg-tan:       #E4B378;
-    --color-bg-blue:      #ddeff7;
-    --color-bg-parchment: #F8ECDD;
-    --color-text:         #371b06;
-    --color-text-muted:   #5c402a;
-    --color-accent:       #A56E3A;
-    --color-accent-dk:    #9C6A42;  
-    --color-green-lt:     #A4AD6C;
-    --color-green:        #79774D;
-    --color-blue-lt:      #F0F9FE;
-    --color-blue:         #8CCAE3;
-    --color-brown:        #BE8656;
-    --color-brown-lt:     #D09B72;
+    --color-white:        #FFFFFF; /* Pure white for maximum contrast highlights*/
+    --color-bg:           #FDF9F4; /* Main: Clean and bright */
+    --color-bg-alt:       #F5E6D3; /* Brown - Soft section transitions */
+    --color-bg-tan:       #D9B38C; /* Brown - Card backgrounds or emphasized blocks */
+    --color-text:         #371B06; /* High-contrast body text */
+    --color-text-muted:   #5C402A; /* Secondary info and meta-text */
+    --color-accent:       #96633E; /* Brown - Primary brand color/Buttons */
+    --color-accent-dk:    #7A4D2E; /* Brown - Accessible icons, links, and bold UI */
+    --color-green-lt:     #A4AD6C; /* Green - soft backgrounds */
+    --color-green:        #79774D; /* Green - large UI elements/buttons */
+    --color-green-text:   #5B6043; /* Green - success messages and accessible text/icons */
+    --color-green-dk:     #4D5640; /* Green - high-contrast editorial moments */
+    --color-bg-blue:      #EBF2F5; /* Blue - soft backgrounds */ 
+    --color-blue-lt:      #8EABB8; /* Blue - large UI elements, borders, decorations */
+    --color-blue:         #4B6573; /* Blue - accessible text/icons */
+    --color-blue-dk:      #32424A; /* Blue - high-contrast editorial moments */
     --color-grey:         #706E6C;
+    --color-red:          #91463D; /* Red - error states and critical accents */
     --color-border:       rgba(59, 44, 27, 0.122);
+
 
     /* Typography */
     --font-serif:         'Crimson Pro', 'Newsreader', Georgia, serif;
@@ -758,7 +761,7 @@ p {
 .intro-image img {
     width: 100%;
     height: 520px;
-    border-radius: 16px;
+    border-radius: 32px;
     object-fit: cover;
     object-position: center;
 }
@@ -772,7 +775,7 @@ p {
     height: 100%;
     border: 1px solid var(--color-border);
     z-index: -1;
-    border-radius: 16px;
+    border-radius: 32px;
 }
 
 /* ─── PROJECTS SECTION ───────────────────────── */
@@ -788,7 +791,7 @@ p {
 .project-card {
     background-color: var(--color-bg);
     overflow: hidden;
-    border-radius: 16px;
+    border-radius: 20px;
     transition: transform var(--transition-base), box-shadow var(--transition-base);
     cursor: pointer;
 }
@@ -840,9 +843,9 @@ p {
 
 .service-card {
     padding: var(--space-md) var(--space-md);
-    background-color: var(--color-bg-parchment);
+    background-color: var(--color-bg-alt);
     border-top: 2px solid var(--color-accent);
-    border-radius: 16px;
+    border-radius: 20px;
     transition: background-color var(--transition-base);
 }
 
@@ -865,7 +868,7 @@ p {
     width: 44px;
     height: 44px;
     background-color: var(--color-bg-alt);
-    border-radius: 10px;
+    border-radius: 14px;
     color: var(--color-accent);
 }
 
@@ -890,7 +893,7 @@ p {
 .section-contact {
     position: relative;
     padding: var(--space-xl) 0;
-    background-color: var(--color-bg-parchment);
+    background-color: var(--color-bg-alt);
     text-align: center;
     overflow: hidden;
 }
