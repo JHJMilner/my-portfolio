@@ -352,7 +352,7 @@ document.addEventListener('DOMContentLoaded', () => {
             y: 40,
             duration: 0.7,
             ease: 'power2.out',
-            stagger: 0.15,
+            stagger: 0.06,
             scrollTrigger: {
                 trigger: '.card-grid',
                 start: 'top 85%',
