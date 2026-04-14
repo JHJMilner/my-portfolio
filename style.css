@@ -815,7 +815,13 @@ p {
     cursor: pointer;
 }
 
-.project-card:hover {
+.project-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.project-card-link:hover .project-card {
     transform: translateY(-6px);
     box-shadow: 0 20px 48px rgba(42, 43, 47, 0.10);
 }
