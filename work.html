@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Julia Milner — UX research case studies spanning product strategy, clinical research, service design, and AI evaluation." />
+    <title>Work | Julia Milner — UX Researcher & Service Designer</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+
+    <!-- Stylesheets: base first, then page extensions -->
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="work-styles.css" />
+</head>
+
+<body>
+
+    <!-- =====================
+         NAVIGATION
+    ========================== -->
+    <nav id="main-nav" aria-label="Main navigation">
+        <div class="nav-inner">
+            <!-- Logo links back to homepage from all sub-pages -->
+            <a href="index.html" class="nav-logo">
+                <span class="nav-logo-full">JULIA MILNER</span>
+                <span class="nav-logo-initials">JM</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html#introduction">About</a></li>
+                <!-- aria-current="page" marks the active section for screen readers -->
+                <li><a href="work.html" aria-current="page">Work</a></li>
+                <li><a href="#contact" class="btn-secondary">Contact</a></li>
+            </ul>
+            <button class="nav-hamburger" aria-label="Open navigation menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        <!-- Mobile menu overlay -->
+        <div class="nav-mobile-menu" aria-hidden="true">
+            <ul class="nav-mobile-links">
+                <li><a href="index.html#introduction">About</a></li>
+                <li><a href="work.html" aria-current="page">Work</a></li>
+                <li><a href="#contact" class="btn-secondary">Contact</a></li>
+            </ul>
+            <div class="nav-mobile-social">
+                <a href="https://www.linkedin.com/in/juliamilner/" target="_blank" rel="noopener noreferrer" aria-label="Visit Julia's LinkedIn profile">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                </a>
+                <a href="https://medium.com/@JuliaMilner" target="_blank" rel="noopener noreferrer" aria-label="Visit Julia's Medium profile">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M4.21 0A4.201 4.201 0 0 0 0 4.21v15.58A4.201 4.201 0 0 0 4.21 24h15.58A4.201 4.201 0 0 0 24 19.79v-1.093c-.137.013-.278.02-.422.02-2.577 0-4.027-2.146-4.09-4.832a7.592 7.592 0 0 1 .022-.708c.093-1.186.475-2.241 1.105-3.022a3.885 3.885 0 0 1 1.395-1.1c.468-.237 1.127-.367 1.664-.367h.023c.101 0 .202.004.303.01V4.211A4.201 4.201 0 0 0 19.79 0Zm.198 5.583h4.165l3.588 8.435 3.59-8.435h3.864v.146l-.019.004c-.705.16-1.063.397-1.063 1.254h-.003l.003 10.274c.06.676.424.885 1.063 1.03l.02.004v.145h-4.923v-.145l.019-.005c.639-.144.994-.353 1.054-1.03V7.267l-4.745 11.15h-.261L6.15 7.569v9.445c0 .857.358 1.094 1.063 1.253l.02.004v.147H4.405v-.147l.019-.004c.705-.16 1.065-.397 1.065-1.253V6.987c0-.857-.358-1.094-1.064-1.254l-.018-.004zm19.25 3.668c-1.086.023-1.733 1.323-1.813 3.124H24V9.298a1.378 1.378 0 0 0-.342-.047Zm-1.862 3.632c-.1 1.756.86 3.239 2.204 3.634v-3.634z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- =====================
+         HERO SECTION
+         Reuses the aura canvas animation from index.html
+    ========================== -->
+    <section id="hero" aria-label="Julia Milner, Work and Case Studies">
+        <div id="aura-hero">
+            <canvas id="aura-canvas" width="32" height="32" aria-hidden="true"></canvas>
+            <div class="aura-mask" aria-hidden="true"></div>
+        </div>
+        <div class="hero-text-overlay">
+            <h1 class="hero-headline">Work.</h1>
+            <p class="hero-subhead">Research across healthcare, wellness, and AI — a selection of projects spanning product strategy, clinical validation, and AI evaluation.</p>
+        </div>
+        <a href="#featured-work" class="hero-scroll-indicator" aria-label="Scroll to projects">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        </a>
+    </section>
+
+
+    <!-- =====================
+         CRED BAR
+         Identical to the homepage
+    ========================== -->
+    <section class="section-cred" aria-label="Clients and organisations">
+        <div class="cred-track-wrapper">
+            <div class="cred-track">
+                <!-- Set 1 -->
+                <div class="cred-logo"><img src="images/logo-aetna.svg"       alt="Aetna" /></div>
+                <div class="cred-logo"><img src="images/logo-ahm.png"         alt="ActiveHealth Management" /></div>
+                <div class="cred-logo"><img src="images/logo-cvs.svg"         alt="CVS" /></div>
+                <div class="cred-logo"><img src="images/logo-emids.svg"       alt="Emids" /></div>
+                <div class="cred-logo"><img src="images/logo-ewb.png"         alt="Engineers Without Borders Canada" /></div>
+                <div class="cred-logo"><img src="images/logo-ihcs.png"        alt="Integrated Home Care Services" /></div>
+                <div class="cred-logo"><img src="images/logo-kite.png"        alt="Kite Pharma" /></div>
+                <div class="cred-logo"><img src="images/logo-quest.png"       alt="Quest Diagnostics" /></div>
+                <div class="cred-logo"><img src="images/logo-roche.svg"       alt="Roche Therapeutics" /></div>
+                <div class="cred-logo"><img src="images/logo-stc.svg"         alt="Statistics Canada" /></div>
+                <div class="cred-logo"><img src="images/logo-surescripts.svg" alt="Surescripts" /></div>
+                <div class="cred-logo"><img src="images/logo-tt.svg"          alt="Tetra Tech" /></div>
+                <div class="cred-logo"><img src="images/logo-win.svg"         alt="WIN Family" /></div>
+                <!-- Set 2 — duplicate for seamless loop -->
+                <div class="cred-logo"><img src="images/logo-aetna.svg"       alt="" aria-hidden="true" /></div>
+                <div class="cred-logo"><img src="images/logo-ahm.png"         alt="" aria-hidden="true" /></div>
+                <div class="cred-logo"><img src="images/logo-cvs.svg"         alt="" aria-hidden="true" /></div>
+                <div class="cred-logo"><img src="images/logo-emids.svg"       alt="" aria-hidden="true" /></div>
+                <div class="cred-logo"><img src="images/logo-ewb.png"         alt="" aria-hidden="true" /></div>
+                <div class="cred-logo"><img src="images/logo-ihcs.png"        alt="" aria-hidden="true" /></div>
+                <div class="cred-logo"><img src="images/logo-kite.png"        alt="" aria-hidden="true" /></div>
+                <div class="cred-logo"><img src="images/logo-quest.png"       alt="" aria-hidden="true" /></div>
+                <div class="cred-logo"><img src="images/logo-roche.svg"       alt="" aria-hidden="true" /></div>
+                <div class="cred-logo"><img src="images/logo-stc.svg"         alt="" aria-hidden="true" /></div>
+                <div class="cred-logo"><img src="images/logo-surescripts.svg" alt="" aria-hidden="true" /></div>
+                <div class="cred-logo"><img src="images/logo-tt.svg"          alt="" aria-hidden="true" /></div>
+                <div class="cred-logo"><img src="images/logo-win.svg"         alt="" aria-hidden="true" /></div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =====================
+         FEATURED WORK SECTION
+         4-column grid: 4 active case studies + 4 coming soon
+    ========================== -->
+    <section id="featured-work" class="section-featured-work" aria-labelledby="featured-work-heading">
+        <div class="container">
+
+            <!-- Section header: heading left, CTA right -->
+            <div class="featured-work-header">
+                <div>
+                    <span class="label-eyebrow">Case Studies</span>
+                    <h2 id="featured-work-heading">Featured Work</h2>
+                </div>
+                <a href="#contact" class="btn-secondary">Work with me</a>
+            </div>
+
+            <!-- Card grid -->
+            <!-- 
+                PLACEHOLDER NOTE: Thumbnail SVGs below are abstract placeholder art
+                sized to 400×200 viewBox. Replace each <svg> with an <img> once 
+                real cover images are ready:
+                <img src="images/cover-roadmap.jpg" alt="[Descriptive alt text]" />
+            -->
+            <div class="card-grid-4" role="list">
+
+                <!-- ── Card 1: Clarifying a Product Roadmap ── -->
+                <a href="case-study-roadmap.html" class="work-card" role="listitem">
+                    <div class="work-card-thumb" aria-hidden="true">
+                        <!-- PLACEHOLDER: Warm convergence lines — replace with real image -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                            <defs>
+                                <linearGradient id="g-roadmap" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0%" stop-color="#F5E6D3"/>
+                                    <stop offset="100%" stop-color="#D9B38C"/>
+                                </linearGradient>
+                            </defs>
+                            <rect width="400" height="200" fill="url(#g-roadmap)"/>
+                            <!-- Rays converging to focal point -->
+                            <line x1="0"   y1="0"   x2="300" y2="100" stroke="#96633E" stroke-width="1.5" opacity="0.22"/>
+                            <line x1="0"   y1="40"  x2="300" y2="100" stroke="#96633E" stroke-width="1"   opacity="0.18"/>
+                            <line x1="0"   y1="80"  x2="300" y2="100" stroke="#96633E" stroke-width="1"   opacity="0.16"/>
+                            <line x1="0"   y1="100" x2="300" y2="100" stroke="#96633E" stroke-width="1.5" opacity="0.20"/>
+                            <line x1="0"   y1="120" x2="300" y2="100" stroke="#96633E" stroke-width="1"   opacity="0.16"/>
+                            <line x1="0"   y1="160" x2="300" y2="100" stroke="#96633E" stroke-width="1"   opacity="0.18"/>
+                            <line x1="0"   y1="200" x2="300" y2="100" stroke="#96633E" stroke-width="1.5" opacity="0.22"/>
+                            <!-- Secondary faint rays -->
+                            <line x1="0"   y1="20"  x2="300" y2="100" stroke="#96633E" stroke-width="0.5" opacity="0.10"/>
+                            <line x1="0"   y1="60"  x2="300" y2="100" stroke="#96633E" stroke-width="0.5" opacity="0.10"/>
+                            <line x1="0"   y1="140" x2="300" y2="100" stroke="#96633E" stroke-width="0.5" opacity="0.10"/>
+                            <line x1="0"   y1="180" x2="300" y2="100" stroke="#96633E" stroke-width="0.5" opacity="0.10"/>
+                            <!-- Focal point: dot + rings -->
+                            <circle cx="300" cy="100" r="5"  fill="#96633E" opacity="0.5"/>
+                            <circle cx="300" cy="100" r="16" fill="none" stroke="#96633E" stroke-width="1"   opacity="0.22"/>
+                            <circle cx="300" cy="100" r="30" fill="none" stroke="#96633E" stroke-width="0.5" opacity="0.12"/>
+                        </svg>
+                    </div>
+                    <div class="work-card-body">
+                        <span class="work-card-eyebrow">Product Strategy</span>
+                        <h3>Clarifying a Product Roadmap</h3>
+                        <p>Aligned leadership on what to build next—reducing wasted effort and refocusing on real user value.</p>
+                    </div>
+                </a>
+
+                <!-- ── Card 2: Improving Clinical Workflows ── -->
+                <a href="case-study-clinical.html" class="work-card" role="listitem">
+                    <div class="work-card-thumb" aria-hidden="true">
+                        <!-- PLACEHOLDER: Blue connected-node network — replace with real image -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                            <defs>
+                                <linearGradient id="g-clinical" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0%" stop-color="#EBF2F5"/>
+                                    <stop offset="100%" stop-color="#8EABB8"/>
+                                </linearGradient>
+                            </defs>
+                            <rect width="400" height="200" fill="url(#g-clinical)"/>
+                            <!-- Network connections -->
+                            <line x1="60"  y1="50"  x2="140" y2="100" stroke="#4B6573" stroke-width="1"   opacity="0.22"/>
+                            <line x1="140" y1="100" x2="200" y2="60"  stroke="#4B6573" stroke-width="1"   opacity="0.22"/>
+                            <line x1="200" y1="60"  x2="270" y2="110" stroke="#4B6573" stroke-width="1"   opacity="0.22"/>
+                            <line x1="270" y1="110" x2="340" y2="70"  stroke="#4B6573" stroke-width="1"   opacity="0.22"/>
+                            <line x1="60"  y1="50"  x2="200" y2="60"  stroke="#4B6573" stroke-width="0.5" opacity="0.12"/>
+                            <line x1="140" y1="100" x2="270" y2="110" stroke="#4B6573" stroke-width="0.5" opacity="0.12"/>
+                            <line x1="200" y1="60"  x2="340" y2="70"  stroke="#4B6573" stroke-width="0.5" opacity="0.10"/>
+                            <line x1="100" y1="150" x2="140" y2="100" stroke="#4B6573" stroke-width="1"   opacity="0.18"/>
+                            <line x1="100" y1="150" x2="200" y2="160" stroke="#4B6573" stroke-width="1"   opacity="0.18"/>
+                            <line x1="200" y1="160" x2="270" y2="110" stroke="#4B6573" stroke-width="1"   opacity="0.18"/>
+                            <line x1="200" y1="160" x2="310" y2="155" stroke="#4B6573" stroke-width="0.5" opacity="0.12"/>
+                            <!-- Nodes -->
+                            <circle cx="60"  cy="50"  r="5" fill="#4B6573" opacity="0.45"/>
+                            <circle cx="140" cy="100" r="6" fill="#4B6573" opacity="0.50"/>
+                            <circle cx="200" cy="60"  r="7" fill="#4B6573" opacity="0.55"/>
+                            <circle cx="270" cy="110" r="6" fill="#4B6573" opacity="0.50"/>
+                            <circle cx="340" cy="70"  r="5" fill="#4B6573" opacity="0.45"/>
+                            <circle cx="100" cy="150" r="4" fill="#4B6573" opacity="0.38"/>
+                            <circle cx="200" cy="160" r="5" fill="#4B6573" opacity="0.42"/>
+                            <circle cx="310" cy="155" r="4" fill="#4B6573" opacity="0.38"/>
+                        </svg>
+                    </div>
+                    <div class="work-card-body">
+                        <span class="work-card-eyebrow">Healthcare Research</span>
+                        <h3>Improving Clinical Workflows</h3>
+                        <p>Validated a new diagnostic tool and reduced error risk in high-pressure clinical settings.</p>
+                    </div>
+                </a>
+
+                <!-- ── Card 3: Defining an AI UX Evaluation Method ── -->
+                <a href="case-study-ai-audit.html" class="work-card" role="listitem">
+                    <div class="work-card-thumb" aria-hidden="true">
+                        <!-- PLACEHOLDER: Dark concentric evaluation circles — replace with real image -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                            <defs>
+                                <linearGradient id="g-ai-audit" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0%" stop-color="#32424A"/>
+                                    <stop offset="100%" stop-color="#1E2E35"/>
+                                </linearGradient>
+                            </defs>
+                            <rect width="400" height="200" fill="url(#g-ai-audit)"/>
+                            <!-- Concentric circles centred slightly right -->
+                            <circle cx="210" cy="100" r="18"  fill="none" stroke="#8EABB8" stroke-width="1.5" opacity="0.55"/>
+                            <circle cx="210" cy="100" r="42"  fill="none" stroke="#8EABB8" stroke-width="1"   opacity="0.38"/>
+                            <circle cx="210" cy="100" r="68"  fill="none" stroke="#8EABB8" stroke-width="0.75" opacity="0.25"/>
+                            <circle cx="210" cy="100" r="96"  fill="none" stroke="#8EABB8" stroke-width="0.5" opacity="0.15"/>
+                            <circle cx="210" cy="100" r="126" fill="none" stroke="#8EABB8" stroke-width="0.5" opacity="0.08"/>
+                            <!-- Centre dot -->
+                            <circle cx="210" cy="100" r="4" fill="#8EABB8" opacity="0.65"/>
+                            <!-- Radial tick marks at 45° intervals on the 68px ring -->
+                            <line x1="210" y1="31"  x2="210" y2="22"  stroke="#8EABB8" stroke-width="1" opacity="0.45"/>
+                            <line x1="258" y1="51"  x2="265" y2="44"  stroke="#8EABB8" stroke-width="1" opacity="0.45"/>
+                            <line x1="278" y1="100" x2="288" y2="100" stroke="#8EABB8" stroke-width="1" opacity="0.45"/>
+                            <line x1="258" y1="149" x2="265" y2="156" stroke="#8EABB8" stroke-width="1" opacity="0.45"/>
+                            <line x1="210" y1="169" x2="210" y2="178" stroke="#8EABB8" stroke-width="1" opacity="0.45"/>
+                            <line x1="162" y1="149" x2="155" y2="156" stroke="#8EABB8" stroke-width="1" opacity="0.45"/>
+                            <line x1="142" y1="100" x2="132" y2="100" stroke="#8EABB8" stroke-width="1" opacity="0.45"/>
+                            <line x1="162" y1="51"  x2="155" y2="44"  stroke="#8EABB8" stroke-width="1" opacity="0.45"/>
+                            <!-- Scattered data points -->
+                            <circle cx="50"  cy="35"  r="2" fill="#8EABB8" opacity="0.35"/>
+                            <circle cx="360" cy="165" r="2" fill="#8EABB8" opacity="0.35"/>
+                            <circle cx="370" cy="55"  r="1.5" fill="#8EABB8" opacity="0.25"/>
+                            <circle cx="30"  cy="155" r="1.5" fill="#8EABB8" opacity="0.25"/>
+                        </svg>
+                    </div>
+                    <div class="work-card-body">
+                        <span class="work-card-eyebrow">Innovation Leadership</span>
+                        <h3>Defining an AI UX Evaluation Method</h3>
+                        <p>Created a new research offering to evaluate and design AI-powered healthcare experiences.</p>
+                    </div>
+                </a>
+
+                <!-- ── Card 4: Improving a Core Product Feature ── -->
+                <a href="case-study-challenges.html" class="work-card" role="listitem">
+                    <div class="work-card-thumb" aria-hidden="true">
+                        <!-- PLACEHOLDER: Green growth progression — replace with real image -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                            <defs>
+                                <linearGradient id="g-challenges" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0%" stop-color="#EEF1DC"/>
+                                    <stop offset="100%" stop-color="#A4AD6C"/>
+                                </linearGradient>
+                            </defs>
+                            <rect width="400" height="200" fill="url(#g-challenges)"/>
+                            <!-- Overlapping organic circles suggesting engagement over time -->
+                            <circle cx="120" cy="130" r="85" fill="#79774D" opacity="0.12"/>
+                            <circle cx="200" cy="105" r="70" fill="#79774D" opacity="0.10"/>
+                            <circle cx="290" cy="120" r="80" fill="#79774D" opacity="0.12"/>
+                            <circle cx="175" cy="115" r="50" fill="#79774D" opacity="0.14"/>
+                            <!-- Upward trend line: subtle growth motif -->
+                            <polyline points="30,165 90,148 170,120 255,90 330,62 400,48"
+                                      fill="none" stroke="#5B6043" stroke-width="2"
+                                      opacity="0.38" stroke-linecap="round" stroke-linejoin="round"/>
+                            <!-- Data points on trend line -->
+                            <circle cx="90"  cy="148" r="3.5" fill="#5B6043" opacity="0.50"/>
+                            <circle cx="170" cy="120" r="3.5" fill="#5B6043" opacity="0.50"/>
+                            <circle cx="255" cy="90"  r="3.5" fill="#5B6043" opacity="0.50"/>
+                            <circle cx="330" cy="62"  r="3.5" fill="#5B6043" opacity="0.50"/>
+                        </svg>
+                    </div>
+                    <div class="work-card-body">
+                        <span class="work-card-eyebrow">Product Research</span>
+                        <h3>Improving a Core Product Feature</h3>
+                        <p>Drove multi-phase improvements to a key engagement feature, increasing its potential to retain and motivate users.</p>
+                    </div>
+                </a>
+
+                <!-- ── Cards 5–8: Coming soon placeholders ──────────
+                     These are intentionally dimmed and not interactive.
+                     Replace with real case studies as they are completed.
+                     Update card count in aria-label when cards are activated.
+                ──────────────────────────────────────────────────── -->
+
+                <!-- Card 5 -->
+                <div class="work-card work-card--coming-soon" role="listitem" aria-label="Case study coming soon">
+                    <div class="work-card-thumb" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
+                            <rect width="400" height="200" fill="#F5E6D3"/>
+                            <circle cx="200" cy="100" r="32" fill="none" stroke="#96633E" stroke-width="1" stroke-dasharray="5 4" opacity="0.3"/>
+                            <circle cx="200" cy="100" r="4" fill="#96633E" opacity="0.25"/>
+                        </svg>
+                    </div>
+                    <div class="work-card-body">
+                        <span class="work-card-eyebrow">Service Design</span>
+                        <h3>Coming soon</h3>
+                        <p>This case study is in progress.</p>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="work-card work-card--coming-soon" role="listitem" aria-label="Case study coming soon">
+                    <div class="work-card-thumb" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
+                            <rect width="400" height="200" fill="#EBF2F5"/>
+                            <circle cx="200" cy="100" r="32" fill="none" stroke="#4B6573" stroke-width="1" stroke-dasharray="5 4" opacity="0.3"/>
+                            <circle cx="200" cy="100" r="4" fill="#4B6573" opacity="0.25"/>
+                        </svg>
+                    </div>
+                    <div class="work-card-body">
+                        <span class="work-card-eyebrow">Research Operations</span>
+                        <h3>Coming soon</h3>
+                        <p>This case study is in progress.</p>
+                    </div>
+                </div>
+
+                <!-- Card 7 -->
+                <div class="work-card work-card--coming-soon" role="listitem" aria-label="Case study coming soon">
+                    <div class="work-card-thumb" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
+                            <rect width="400" height="200" fill="#32424A"/>
+                            <circle cx="200" cy="100" r="32" fill="none" stroke="#8EABB8" stroke-width="1" stroke-dasharray="5 4" opacity="0.3"/>
+                            <circle cx="200" cy="100" r="4" fill="#8EABB8" opacity="0.25"/>
+                        </svg>
+                    </div>
+                    <div class="work-card-body">
+                        <span class="work-card-eyebrow">AI Product Design</span>
+                        <h3>Coming soon</h3>
+                        <p>This case study is in progress.</p>
+                    </div>
+                </div>
+
+                <!-- Card 8 -->
+                <div class="work-card work-card--coming-soon" role="listitem" aria-label="Case study coming soon">
+                    <div class="work-card-thumb" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
+                            <rect width="400" height="200" fill="#EEF1DC"/>
+                            <circle cx="200" cy="100" r="32" fill="none" stroke="#5B6043" stroke-width="1" stroke-dasharray="5 4" opacity="0.3"/>
+                            <circle cx="200" cy="100" r="4" fill="#5B6043" opacity="0.25"/>
+                        </svg>
+                    </div>
+                    <div class="work-card-body">
+                        <span class="work-card-eyebrow">Healthcare Strategy</span>
+                        <h3>Coming soon</h3>
+                        <p>This case study is in progress.</p>
+                    </div>
+                </div>
+
+            </div><!-- /.card-grid-4 -->
+        </div><!-- /.container -->
+    </section>
+
+
+    <!-- =====================
+         TESTIMONIALS SECTION
+         PLACEHOLDER: Replace copy and avatar initials
+         once real testimonials are confirmed.
+    ========================== -->
+    <section id="testimonials" class="section-testimonials" aria-labelledby="testimonials-heading">
+        <div class="container">
+            <span class="label-eyebrow">Testimonials</span>
+            <h2 id="testimonials-heading">What clients say</h2>
+
+            <div class="testimonials-grid">
+
+                <!-- PLACEHOLDER testimonial 1 -->
+                <article class="testimonial-card">
+                    <p class="testimonial-quote">
+                        Julia brought structure to a process that had none. Her ability to connect disparate data into a clear, actionable narrative made all the difference for our team.
+                    </p>
+                    <div class="testimonial-attribution">
+                        <div class="testimonial-avatar" aria-hidden="true">S.M.</div>
+                        <div class="testimonial-meta">
+                            <span class="testimonial-name">Sarah M.</span>
+                            <span class="testimonial-role">Director of Product Management</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- PLACEHOLDER testimonial 2 -->
+                <article class="testimonial-card">
+                    <p class="testimonial-quote">
+                        She is the kind of researcher who doesn't just deliver findings—she makes sure the insights land, stick, and actually change how the team makes decisions.
+                    </p>
+                    <div class="testimonial-attribution">
+                        <div class="testimonial-avatar" aria-hidden="true">J.L.</div>
+                        <div class="testimonial-meta">
+                            <span class="testimonial-name">James L.</span>
+                            <span class="testimonial-role">VP of UX and Design</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- PLACEHOLDER testimonial 3 -->
+                <article class="testimonial-card">
+                    <p class="testimonial-quote">
+                        Working with Julia meant that by the time we walked out of the readout, everyone in the room understood the problem the same way. That is not a small thing.
+                    </p>
+                    <div class="testimonial-attribution">
+                        <div class="testimonial-avatar" aria-hidden="true">R.T.</div>
+                        <div class="testimonial-meta">
+                            <span class="testimonial-name">Rachel T.</span>
+                            <span class="testimonial-role">Senior Product Manager</span>
+                        </div>
+                    </div>
+                </article>
+
+            </div><!-- /.testimonials-grid -->
+        </div><!-- /.container -->
+    </section>
+
+
+    <!-- =====================
+         EXPANDED SERVICES SECTION
+         Dark background — detailed version of the homepage
+         services section with descriptions and method tags.
+    ========================== -->
+    <section id="services" class="section-services-expanded" aria-labelledby="services-expanded-heading">
+        <div class="container">
+            <span class="label-eyebrow">Services</span>
+            <h2 id="services-expanded-heading">What I offer</h2>
+            <p class="services-intro">From early-stage discovery to strategic synthesis, I bring structure and clarity to complex research problems—whether I'm embedded with your team or leading a standalone engagement.</p>
+
+            <div class="services-expanded-grid">
+
+                <!-- Service 1: UX Research -->
+                <article class="service-card-expanded">
+                    <div class="service-card-header">
+                        <div class="service-icon" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="116" cy="116" r="84"/>
+                                <line x1="175.4" y1="175.4" x2="224" y2="224"/>
+                            </svg>
+                        </div>
+                        <h3>User Experience Research</h3>
+                    </div>
+                    <p class="service-desc">I plan and run research studies that answer your most pressing product questions—then turn what we learn into direction your team can act on.</p>
+                    <div class="service-tags">
+                        <span class="service-tag">User interviews</span>
+                        <span class="service-tag">Usability testing</span>
+                        <span class="service-tag">Surveys</span>
+                        <span class="service-tag">Analytics</span>
+                        <span class="service-tag">Heuristic evaluation</span>
+                        <span class="service-tag">A/B testing</span>
+                        <span class="service-tag">Diary studies</span>
+                    </div>
+                </article>
+
+                <!-- Service 2: Service Design -->
+                <article class="service-card-expanded">
+                    <div class="service-card-header">
+                        <div class="service-icon" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="128" cy="48" r="24"/>
+                                <circle cx="48" cy="208" r="24"/>
+                                <circle cx="208" cy="208" r="24"/>
+                                <line x1="128" y1="72" x2="128" y2="120"/>
+                                <path d="M128,120 C128,160 48,160 48,184"/>
+                                <path d="M128,120 C128,160 208,160 208,184"/>
+                            </svg>
+                        </div>
+                        <h3>Service Design</h3>
+                    </div>
+                    <p class="service-desc">I map end-to-end service experiences across teams, tools, and touchpoints—surfacing the gaps between what organisations intend and what users actually encounter.</p>
+                    <div class="service-tags">
+                        <span class="service-tag">Service blueprinting</span>
+                        <span class="service-tag">Journey mapping</span>
+                        <span class="service-tag">Stakeholder engagement</span>
+                        <span class="service-tag">Co-design facilitation</span>
+                        <span class="service-tag">Jobs-to-be-done</span>
+                    </div>
+                </article>
+
+                <!-- Service 3: Product Strategy -->
+                <article class="service-card-expanded">
+                    <div class="service-card-header">
+                        <div class="service-icon" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="128" cy="128" r="96"/>
+                                <circle cx="128" cy="128" r="12"/>
+                                <line x1="128" y1="32" x2="128" y2="56"/>
+                                <line x1="128" y1="200" x2="128" y2="224"/>
+                                <line x1="32" y1="128" x2="56" y2="128"/>
+                                <line x1="200" y1="128" x2="224" y2="128"/>
+                                <line x1="128" y1="128" x2="168" y2="88"/>
+                            </svg>
+                        </div>
+                        <h3>Product Strategy</h3>
+                    </div>
+                    <p class="service-desc">I help teams move from reactive feature-building to deliberate, evidence-based decisions—connecting user needs to business priorities and creating a foundation for confident roadmap choices.</p>
+                    <div class="service-tags">
+                        <span class="service-tag">Product discovery</span>
+                        <span class="service-tag">Roadmap development</span>
+                        <span class="service-tag">Competitive analysis</span>
+                        <span class="service-tag">Metric evaluation</span>
+                        <span class="service-tag">Feature prioritisation</span>
+                    </div>
+                </article>
+
+                <!-- Service 4: Speaking & Education -->
+                <article class="service-card-expanded">
+                    <div class="service-card-header">
+                        <div class="service-icon" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M128,176a80,80,0,1,0-80-80A80,80,0,0,0,128,176Z" />
+                                <rect x="88" y="176" width="80" height="24" rx="8"/>
+                                <line x1="128" y1="200" x2="128" y2="224"/>
+                                <line x1="96" y1="224" x2="160" y2="224"/>
+                                <line x1="128" y1="96" x2="128" y2="136"/>
+                                <line x1="108" y1="116" x2="148" y2="116"/>
+                            </svg>
+                        </div>
+                        <h3>Speaking &amp; Education</h3>
+                    </div>
+                    <p class="service-desc">I speak at industry events and run workshops and training sessions designed to build research capability within your team—from foundational skills to advanced methods.</p>
+                    <div class="service-tags">
+                        <span class="service-tag">Conference talks</span>
+                        <span class="service-tag">Panel participation</span>
+                        <span class="service-tag">Workshop facilitation</span>
+                        <span class="service-tag">Corporate training</span>
+                        <span class="service-tag">Course instruction</span>
+                    </div>
+                </article>
+
+            </div><!-- /.services-expanded-grid -->
+        </div><!-- /.container -->
+    </section>
+
+
+    <!-- =====================
+         CONTACT SECTION
+         Identical to homepage version
+    ========================== -->
+    <section id="contact" class="section-contact" aria-labelledby="contact-heading">
+        <canvas id="contact-canvas" width="32" height="32" aria-hidden="true"></canvas>
+        <div class="container contact-inner">
+            <h2 id="contact-heading">Let's work together</h2>
+            <p>If you are working through ambiguity, making a critical decision, or need a clearer understanding of your users, I can help.</p>
+            <a href="mailto:jhjmilner@gmail.com" class="contact-email">jhjmilner@gmail.com</a>
+        </div>
+    </section>
+
+
+    <!-- =====================
+         FOOTER
+    ========================== -->
+    <footer id="footer" aria-label="Site footer">
+        <div class="container footer-inner">
+            <nav class="footer-nav" aria-label="Footer navigation">
+                <a href="index.html">Home</a>
+                <a href="index.html#introduction">About</a>
+                <a href="work.html">Work</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <div class="footer-social">
+                <a href="mailto:jhjmilner@gmail.com" aria-label="Send Julia an email">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+                    </svg>
+                </a>
+                <a href="https://www.linkedin.com/in/juliamilner/" target="_blank" rel="noopener noreferrer" aria-label="Visit Julia's LinkedIn profile">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                </a>
+                <a href="https://medium.com/@JuliaMilner" target="_blank" rel="noopener noreferrer" aria-label="Visit Julia's Medium profile">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M4.21 0A4.201 4.201 0 0 0 0 4.21v15.58A4.201 4.201 0 0 0 4.21 24h15.58A4.201 4.201 0 0 0 24 19.79v-1.093c-.137.013-.278.02-.422.02-2.577 0-4.027-2.146-4.09-4.832a7.592 7.592 0 0 1 .022-.708c.093-1.186.475-2.241 1.105-3.022a3.885 3.885 0 0 1 1.395-1.1c.468-.237 1.127-.367 1.664-.367h.023c.101 0 .202.004.303.01V4.211A4.201 4.201 0 0 0 19.79 0Zm.198 5.583h4.165l3.588 8.435 3.59-8.435h3.864v.146l-.019.004c-.705.16-1.063.397-1.063 1.254h-.003l.003 10.274c.06.676.424.885 1.063 1.03l.02.004v.145h-4.923v-.145l.019-.005c.639-.144.994-.353 1.054-1.03V7.267l-4.745 11.15h-.261L6.15 7.569v9.445c0 .857.358 1.094 1.063 1.253l.02.004v.147H4.405v-.147l.019-.004c.705-.16 1.065-.397 1.065-1.253V6.987c0-.857-.358-1.094-1.064-1.254l-.018-.004zm19.25 3.668c-1.086.023-1.733 1.323-1.813 3.124H24V9.298a1.378 1.378 0 0 0-.342-.047Zm-1.862 3.632c-.1 1.756.86 3.239 2.204 3.634v-3.634z"/>
+                    </svg>
+                </a>
+            </div>
+            <p class="footer-copy">&copy; 2026 Julia Milner.</p>
+        </div>
+    </footer>
+
+
+    <!-- =====================
+         SCRIPTS
+         script.js handles: nav scroll, smooth scroll,
+         hamburger menu, canvas animations, section heading
+         fade-ups, and the contact canvas ripple.
+    ========================== -->
+    <script src="script.js"></script>
+
+    <!-- Work-page-specific GSAP animations -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+        // registerPlugin is idempotent — safe to call again
+        gsap.registerPlugin(ScrollTrigger);
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+        // Work cards — stagger in from below, reading order
+        const workCards = gsap.utils.toArray('.work-card');
+        if (workCards.length) {
+            gsap.from(workCards, {
+                opacity: 0,
+                y: 40,
+                duration: 0.65,
+                ease: 'power2.out',
+                stagger: {
+                    amount: 0.7,
+                    grid: 'auto',
+                    from: 'start'
+                },
+                scrollTrigger: {
+                    trigger: '.card-grid-4',
+                    start: 'top 85%',
+                    toggleActions: 'play none none none'
+                }
+            });
+        }
+
+        // Testimonial cards — stagger in
+        const testimonialCards = gsap.utils.toArray('.testimonial-card');
+        if (testimonialCards.length) {
+            gsap.from(testimonialCards, {
+                opacity: 0,
+                y: 30,
+                duration: 0.7,
+                ease: 'power2.out',
+                stagger: 0.15,
+                scrollTrigger: {
+                    trigger: '.testimonials-grid',
+                    start: 'top 85%',
+                    toggleActions: 'play none none none'
+                }
+            });
+        }
+
+        // Expanded service cards — stagger in
+        const expandedCards = gsap.utils.toArray('.service-card-expanded');
+        if (expandedCards.length) {
+            gsap.from(expandedCards, {
+                opacity: 0,
+                y: 30,
+                duration: 0.7,
+                ease: 'power2.out',
+                stagger: 0.12,
+                scrollTrigger: {
+                    trigger: '.services-expanded-grid',
+                    start: 'top 85%',
+                    toggleActions: 'play none none none'
+                }
+            });
+        }
+
+        // Services intro paragraph
+        const servicesIntro = document.querySelector('.services-intro');
+        if (servicesIntro) {
+            gsap.from(servicesIntro, {
+                opacity: 0,
+                y: 20,
+                duration: 0.8,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: servicesIntro,
+                    start: 'top 88%',
+                    toggleActions: 'play none none none'
+                }
+            });
+        }
+    });
+    </script>
+
+</body>
+</html>

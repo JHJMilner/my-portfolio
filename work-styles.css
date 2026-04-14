@@ -1,0 +1,706 @@
+/* =============================================
+   JULIA MILNER — WORK PAGE & CASE STUDY STYLES
+   Extension of style.css — link both stylesheets
+   ============================================= */
+
+
+/* ─── WORK PAGE: FEATURED WORK ───────────────── */
+
+.section-featured-work {
+    padding: var(--space-xl) 0;
+    background-color: var(--color-bg-alt);
+}
+
+/* Header row: heading left, CTA right */
+.featured-work-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: var(--space-lg);
+    gap: var(--space-md);
+    flex-wrap: wrap;
+}
+
+.featured-work-header h2 {
+    margin-bottom: 0;
+}
+
+/* 4-column card grid for Work page */
+.card-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-md);
+}
+
+/* ─── WORK CARD ───────────────────────────────── */
+/* Extends the homepage .project-card pattern;
+   uses <a> as the root so the whole card is clickable */
+
+.work-card {
+    background-color: var(--color-bg);
+    overflow: hidden;
+    border-radius: 20px;
+    transition: transform var(--transition-base),
+                box-shadow var(--transition-base);
+    text-decoration: none;
+    display: block;
+    color: inherit;
+}
+
+.work-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 48px rgba(42, 43, 47, 0.10);
+    color: inherit;
+}
+
+/* Thumbnail — holds inline SVG placeholder art */
+.work-card-thumb {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+    display: block;
+}
+
+.work-card-thumb svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.work-card:hover .work-card-thumb svg {
+    transform: scale(1.04);
+}
+
+/* Card body */
+.work-card-body {
+    padding: var(--space-sm) var(--space-md) var(--space-md);
+}
+
+.work-card-eyebrow {
+    font-family: var(--font-sans);
+    font-size: var(--typescale-label-medium);
+    font-weight: var(--weight-label);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    color: var(--color-accent);
+    display: block;
+    margin-bottom: 0.35rem;
+}
+
+.work-card h3 {
+    font-size: var(--typescale-headline-small);
+    margin-bottom: 0.4rem;
+    color: var(--color-text);
+}
+
+.work-card p {
+    font-size: var(--typescale-label-large);
+    font-weight: var(--weight-headline);
+    letter-spacing: var(--tracking-body);
+    color: var(--color-text-muted);
+    padding: 0;
+    margin: 0;
+    max-width: none;
+    line-height: 1.5;
+}
+
+/* Coming soon variant — visually dimmed, not interactive */
+.work-card--coming-soon {
+    opacity: 0.42;
+    cursor: default;
+    pointer-events: none;
+}
+
+.work-card--coming-soon .work-card-thumb {
+    background-color: var(--color-bg);
+}
+
+.work-card--coming-soon .work-card-eyebrow {
+    color: var(--color-text-muted);
+}
+
+
+/* ─── WORK PAGE: TESTIMONIALS ─────────────────── */
+
+.section-testimonials {
+    padding: var(--space-xl) 0;
+    background-color: var(--color-bg);
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+}
+
+.testimonial-card {
+    background-color: var(--color-bg-alt);
+    border-radius: 20px;
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+/* The quote itself */
+.testimonial-quote {
+    font-family: var(--font-serif);
+    font-size: var(--typescale-title-large);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--color-text);
+    line-height: 1.55;
+    margin: 0;
+    max-width: none;
+    padding: 0;
+    flex: 1;
+}
+
+.testimonial-quote::before {
+    content: '\201C';
+    color: var(--color-accent);
+}
+
+.testimonial-quote::after {
+    content: '\201D';
+    color: var(--color-accent);
+}
+
+/* Name + role block */
+.testimonial-attribution {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-top: auto;
+    padding-top: var(--space-sm);
+    border-top: 1px solid var(--color-border);
+}
+
+.testimonial-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--color-bg-tan);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent-dk);
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.testimonial-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.testimonial-name {
+    font-family: var(--font-sans);
+    font-size: var(--typescale-label-large);
+    font-weight: var(--weight-label);
+    color: var(--color-text);
+    display: block;
+    margin: 0;
+    max-width: none;
+    padding: 0;
+    line-height: 1.3;
+}
+
+.testimonial-role {
+    font-size: var(--typescale-label-medium);
+    color: var(--color-text-muted);
+    display: block;
+    margin: 0;
+    max-width: none;
+    padding: 0;
+    line-height: 1.3;
+}
+
+
+/* ─── WORK PAGE: EXPANDED SERVICES ────────────── */
+/* Dark background variant — inverts the colour scheme */
+
+.section-services-expanded {
+    padding: var(--space-xl) 0;
+    background-color: var(--color-text);
+}
+
+.section-services-expanded .label-eyebrow {
+    color: var(--color-accent);
+}
+
+.section-services-expanded h2 {
+    color: var(--color-bg);
+}
+
+.services-intro {
+    color: var(--color-bg-alt);
+    opacity: 0.8;
+    margin-bottom: var(--space-lg);
+    font-size: var(--typescale-body-large);
+    line-height: var(--lineheight-body);
+    max-width: 56ch;
+}
+
+.services-expanded-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+}
+
+.service-card-expanded {
+    padding: var(--space-md);
+    background-color: rgba(255, 255, 255, 0.05);
+    border-top: 2px solid var(--color-accent);
+    border-radius: 20px;
+    transition: background-color var(--transition-base);
+}
+
+.service-card-expanded:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.service-card-expanded .service-card-header {
+    margin-bottom: var(--space-sm);
+}
+
+.service-card-expanded .service-icon {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: var(--color-accent);
+}
+
+.service-card-expanded h3 {
+    color: var(--color-bg);
+    margin-bottom: 0.5rem;
+}
+
+.service-card-expanded .service-desc {
+    color: var(--color-bg-alt);
+    opacity: 0.75;
+    font-size: var(--typescale-body-large);
+    line-height: 1.6;
+    margin-bottom: var(--space-sm);
+    max-width: none;
+    padding: 0;
+}
+
+/* Method tags */
+.service-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.service-tag {
+    font-family: var(--font-sans);
+    font-size: var(--typescale-label-medium);
+    font-weight: var(--weight-label);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--color-bg-alt);
+    background-color: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 0.2rem 0.55rem;
+    border-radius: 100px;
+    opacity: 0.7;
+}
+
+
+/* ─── CASE STUDY: HERO ────────────────────────── */
+
+.cs-hero {
+    padding-top: calc(var(--nav-height) + var(--space-xl));
+    padding-bottom: var(--space-lg);
+    background-color: var(--color-bg);
+}
+
+.cs-hero-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+}
+
+/* Breadcrumb */
+.cs-breadcrumb {
+    font-family: var(--font-sans);
+    font-size: var(--typescale-label-large);
+    font-weight: 400;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-md);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+}
+
+.cs-breadcrumb a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-base);
+}
+
+.cs-breadcrumb a:hover {
+    color: var(--color-accent);
+}
+
+.cs-breadcrumb-sep {
+    opacity: 0.4;
+}
+
+/* Title */
+.cs-title {
+    font-family: var(--font-serif);
+    font-size: var(--typescale-display-large);
+    font-weight: var(--weight-display);
+    line-height: 1.05;
+    letter-spacing: var(--tracking-display);
+    color: var(--color-text);
+    max-width: 16ch;
+    margin-bottom: var(--space-sm);
+}
+
+/* Subtitle */
+.cs-subtitle {
+    font-family: var(--font-sans);
+    font-size: var(--typescale-title-large);
+    font-weight: var(--weight-body);
+    line-height: 1.5;
+    color: var(--color-text-muted);
+    max-width: 54ch;
+    margin-bottom: 0;
+}
+
+/* Cover image placeholder */
+.cs-cover {
+    max-width: var(--max-width);
+    margin: var(--space-lg) auto 0;
+    padding: 0 var(--space-md);
+}
+
+.cs-cover-inner {
+    width: 100%;
+    height: 440px;
+    overflow: hidden;
+    border-radius: 24px;
+    display: block;
+}
+
+.cs-cover-inner svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+
+/* ─── CASE STUDY: SNAPSHOT STRIP ──────────────── */
+
+.cs-snapshot {
+    background-color: var(--color-bg-alt);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-md) 0;
+}
+
+.cs-snapshot-grid {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: var(--space-md) var(--space-sm);
+}
+
+.cs-snapshot-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.cs-snapshot-label {
+    font-family: var(--font-sans);
+    font-size: var(--typescale-label-medium);
+    font-weight: var(--weight-label);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    color: var(--color-accent);
+    display: block;
+}
+
+.cs-snapshot-value {
+    font-family: var(--font-sans);
+    font-size: var(--typescale-label-large);
+    font-weight: var(--weight-body);
+    color: var(--color-text);
+    line-height: 1.4;
+    display: block;
+}
+
+
+/* ─── CASE STUDY: BODY CONTENT ────────────────── */
+
+.cs-body {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: var(--space-xl) var(--space-md);
+}
+
+.cs-section {
+    margin-bottom: calc(var(--space-xl) * 0.8);
+}
+
+/* Last section before closing needs no extra margin */
+.cs-section:last-child {
+    margin-bottom: 0;
+}
+
+/* Section eyebrow label */
+.cs-section-label {
+    font-family: var(--font-sans);
+    font-size: var(--typescale-label-medium);
+    font-weight: var(--weight-label);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    color: var(--color-accent);
+    display: block;
+    margin-bottom: 0.6rem;
+}
+
+/* Section heading — overrides the global h2 scale to
+   something appropriate for article body text */
+.cs-section h2 {
+    font-family: var(--font-serif);
+    font-size: var(--typescale-headline-large);
+    font-weight: var(--weight-headline);
+    color: var(--color-text);
+    margin-bottom: var(--space-sm);
+    /* Reset from global h2 which is much larger */
+    font-size: var(--typescale-headline-large);
+}
+
+.cs-section p {
+    font-size: var(--typescale-body-large);
+    line-height: var(--lineheight-body);
+    color: var(--color-text-muted);
+    max-width: none;
+    margin-bottom: var(--space-sm);
+}
+
+.cs-section p:last-child {
+    margin-bottom: 0;
+}
+
+/* Bulleted lists in the body */
+.cs-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.cs-list li {
+    padding-left: 1.4rem;
+    position: relative;
+    font-family: var(--font-sans);
+    font-size: var(--typescale-body-large);
+    line-height: var(--lineheight-body);
+    color: var(--color-text-muted);
+}
+
+/* Accent dot bullet */
+.cs-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    flex-shrink: 0;
+}
+
+/* Impact section — highlighted background treatment */
+.cs-section--impact {
+    background-color: var(--color-bg-alt);
+    border-left: 3px solid var(--color-accent);
+    border-radius: 0 20px 20px 0;
+    padding: var(--space-md);
+}
+
+.cs-section--impact h2 {
+    color: var(--color-accent-dk);
+}
+
+
+/* ─── CASE STUDY: CLOSING ─────────────────────── */
+
+.cs-closing {
+    background-color: var(--color-text);
+    padding: var(--space-lg) 0;
+    text-align: center;
+}
+
+.cs-closing-text {
+    font-family: var(--font-serif);
+    font-size: var(--typescale-headline-medium);
+    font-style: italic;
+    color: var(--color-bg-alt);
+    max-width: 44ch;
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+    line-height: 1.45;
+}
+
+
+/* ─── CASE STUDY: PAGINATION ──────────────────── */
+
+.cs-pagination {
+    padding: var(--space-lg) 0;
+    background-color: var(--color-bg);
+    border-top: 1px solid var(--color-border);
+}
+
+.cs-pagination-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.cs-pagination-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    text-decoration: none;
+    color: inherit;
+    transition: opacity var(--transition-base);
+    max-width: 28ch;
+}
+
+.cs-pagination-link:hover {
+    opacity: 0.65;
+    color: inherit;
+}
+
+.cs-pagination-link--next {
+    text-align: right;
+    margin-left: auto;
+}
+
+.cs-pagination-direction {
+    font-family: var(--font-sans);
+    font-size: var(--typescale-label-medium);
+    font-weight: var(--weight-label);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    color: var(--color-accent);
+    display: block;
+}
+
+.cs-pagination-title {
+    font-family: var(--font-serif);
+    font-size: var(--typescale-headline-small);
+    color: var(--color-text);
+    line-height: 1.2;
+}
+
+.cs-back-to-work {
+    font-family: var(--font-sans);
+    font-size: var(--typescale-label-large);
+    font-weight: var(--weight-label);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 2px;
+    transition: color var(--transition-base),
+                border-color var(--transition-base);
+}
+
+.cs-back-to-work:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
+
+/* ─── RESPONSIVE: TABLET ──────────────────────── */
+
+@media (max-width: 1100px) {
+    .card-grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .featured-work-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .cs-snapshot-grid {
+        grid-template-columns: repeat(3, 1fr);
+        row-gap: var(--space-sm);
+    }
+
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+        max-width: 560px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .services-expanded-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ─── RESPONSIVE: MOBILE ──────────────────────── */
+
+@media (max-width: 640px) {
+    .card-grid-4 {
+        grid-template-columns: 1fr;
+    }
+
+    .cs-snapshot-grid {
+        grid-template-columns: repeat(2, 1fr);
+        row-gap: var(--space-sm);
+    }
+
+    .cs-title {
+        font-size: var(--typescale-display-medium);
+    }
+
+    .cs-cover-inner {
+        height: 260px;
+        border-radius: 16px;
+    }
+
+    .cs-pagination-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-md);
+    }
+
+    .cs-pagination-link--next {
+        text-align: left;
+        margin-left: 0;
+    }
+
+    .cs-closing-text {
+        font-size: var(--typescale-headline-small);
+    }
+}
