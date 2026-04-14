@@ -349,12 +349,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (projectCards.length) {
         gsap.from(projectCards, {
             opacity: 0,
-            y: 40,
+            y: 20,
             duration: 0.7,
             ease: 'power2.out',
             stagger: 0.06,
             scrollTrigger: {
-                trigger: '.card-grid',
+                trigger: '.projects-grid',
                 start: 'top 85%',
                 toggleActions: 'play none none none'
             }
