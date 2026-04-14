@@ -881,6 +881,7 @@ p {
     mix-blend-mode: color;
     pointer-events: none;
     transition: transform 0.5s ease;
+    transform: scale(1.01);
 }
 
 /* Colour variants */
@@ -890,6 +891,7 @@ p {
 .project-card[data-color="blue"] .project-card-media::after {
     background-color: var(--color-blue-lt);
 }
+
 .project-card[data-color="brown"] .project-card-media::after {
     background-color: var(--color-text-muted);
 }
