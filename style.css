@@ -145,20 +145,20 @@ h1 {
     line-height: var(--lineheight-display);
     letter-spacing: var(--tracking-display);
     /* Try italics for a "human" touch */
-    font-style: none; 
+    font-style: normal; 
 }
 
 h2 {
     font-family: var(--font-serif);
-    font-size: var(--typescale-display-medium);
+    font-size: var(--typescale-display-large);
     text-transform: none;
     font-weight: var(--weight-headline);
     color: var(--color-text);
-    margin-bottom: var(--space-lg); 
+    margin-bottom: var(--space-md); 
 }
 
 h3 {
-    font-family: var(--font-sans);
+    font-family: var(--font-serif);
     font-size: var(--typescale-headline-large);
     text-transform: none;
     font-weight: var(--weight-headline);
@@ -583,7 +583,7 @@ p {
     font-family: var(--font-sans);
     font-size: clamp(1rem, 2vw, 1.375rem);
     font-weight: var(--weight-display);
-    line-height: var(--lineheight-title-large);
+    line-height: var(--lineheight-heading);
     letter-spacing: var(--tracking-body);
     color: var(--color-text-muted);
     text-align: center;
@@ -633,6 +633,7 @@ p {
 
 .pitch-inner h2 {
     color: var(--color-bg);
+    font-size: var(--typescale-display-medium);
     margin-bottom: var(--space-md);
     letter-spacing: 0.02em;
 }
@@ -641,7 +642,7 @@ p {
     color: var(--color-bg-alt);
     opacity: 0.8;
     font-size: var(--typescale-title-medium);
-    line-height: var(--lineheight-title-medium);
+    line-height: var(--lineheight-heading);
     max-width: var(--text-max-width);
     margin: 0 auto;
 }
@@ -749,7 +750,7 @@ p {
 .intro-text p {
     font-family: var(--font-sans);
     font-size: var(--typescale-body-large);
-    line-height: var(--lineheight-body-large);
+    line-height: var(--lineheight-body);
     letter-spacing: var(--tracking-body);
     color: var(--color-text);
     max-width: var(--text-max-width);
@@ -835,7 +836,7 @@ p {
 
 /* ─── SERVICES SECTION ───────────────────────── */
 .section-services {
-    padding: var(--space-xl) 0;
+    padding: var(--space-lg) 0;
     background-color: var(--color-bg);
 }
 
@@ -877,7 +878,7 @@ p {
 .service-card h3 {
     font-family: var(--font-serif);
     font-size: var(--typescale-headline-small);
-    line-height: var(--lineheight-headline-small);
+    line-height: var(--lineheight-heading);
     margin-bottom: 0;
     letter-spacing: 0.02em;
 }
@@ -886,7 +887,7 @@ p {
     font-family: var(--font-sans);
     font-size: var(--typescale-label-large);
     font-weight: var(--weight-headline);
-    line-height: var(--lineheight-body-medium);
+    line-height: var(--lineheight-body);
     color: var(--color-text-muted);
     padding: 0.3rem 0;
     border-bottom: none;
@@ -923,7 +924,7 @@ p {
 .contact-inner p {
     font-family: var(--font-sans);
     font-size: var(--typescale-body-large);
-    line-height: var(--lineheight-body-large);
+    line-height: var(--lineheight-body);
     color: var(--color-text-muted);
     margin-bottom: var(--space-md);
     max-width: var(--text-max-width);
@@ -935,7 +936,7 @@ p {
     display: inline-block;
     font-family: var(--font-serif);
     font-size: var(--typescale-headline-medium);
-    line-height: var(--lineheight-headline-medium);
+    line-height: var(--lineheight-heading);
     color: var(--color-green);
     letter-spacing: 0.02em;
     border-bottom: 1px solid var(--color-accent);
@@ -1010,7 +1011,7 @@ p {
 .footer-copy {
     font-family: var(--font-sans);
     font-size: var(--typescale-body-small);
-    line-height: var(--lineheight-body-small);
+    line-height: var(--lineheight-body);
     color: var(--color-bg-alt);
     opacity: 0.4;
     letter-spacing: 0.04em;
