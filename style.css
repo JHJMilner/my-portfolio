@@ -874,6 +874,20 @@ p {
     }
 }
 
+/* Better touch feedback for all interactive elements on mobile */
+@media (hover: none) and (pointer: coarse) {
+    .project-card-link:active .project-card {
+        background-color: var(--color-bg-alt);
+        transition: background-color 0.05s ease;
+    }
+    
+    .btn-primary:active,
+    .btn-secondary:active,
+    .btn-text:active {
+        transform: scale(0.97);
+    }
+}
+
 /* Project card media container (image + overlay) */
 .project-card-media {
     position: relative;
@@ -950,6 +964,7 @@ p {
 .project-card:last-child {
     margin-bottom: 0;
 }
+
 
 /* ─── SERVICES SECTION ───────────────────────── */
 .section-services {
