@@ -840,13 +840,38 @@ p {
     display: flex;
     height: 100%;
     width: 100%;
-    margin: 0; 
-    padding: 0; 
+    border-radius: 20px;
+    outline: none;
+    transition: outline-offset 0.2s ease;
 }
 
-.project-card-link:hover .project-card {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 48px rgba(42, 43, 47, 0.10);
+/* Focus visible for keyboard/tap */
+.project-card-link:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+    border-radius: 20px;
+}
+
+/* Hover: scale image AND overlay together */
+/* ONLY apply hover effects on devices that support hover (desktop) */
+@media (hover: hover) and (pointer: fine) {
+    .project-card-link:hover .project-card {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 48px rgba(42, 43, 47, 0.10);
+    }
+    
+    .project-card:hover .project-card-media img,
+    .project-card:hover .project-card-media::after {
+        transform: scale(1.03);
+    }
+}
+
+/* Remove hover effect on touch devices to prevent glitch */
+@media (hover: none) and (pointer: coarse) {
+    .project-card:active {
+        transform: scale(0.98);
+        transition: transform 0.05s ease;
+    }
 }
 
 /* Project card media container (image + overlay) */
@@ -856,7 +881,7 @@ p {
     aspect-ratio: 4 / 3; 
     flex-shrink: 0;
     min-height: 0;
-    background-color: var(--color-accent);  /* fallback for the gap */
+    background-color: var(--color-accent);  /* fallback for image gaps */
 }
 
 .project-card-media img {
@@ -864,7 +889,7 @@ p {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center; 
+    object-position: top center; 
     transition: transform 0.5s ease;
     transform: translateZ(0);
 }
@@ -878,7 +903,7 @@ p {
     width: 100%;
     height: 100%;
     background-color: var(--color-accent);
-    mix-blend-mode: color;
+    mix-blend-mode: overlay;
     pointer-events: none;
     transition: transform 0.5s ease;
     transform: scale(1.01);
@@ -896,31 +921,30 @@ p {
     background-color: var(--color-text-muted);
 }
 
-/* Hover: scale image AND overlay together */
-.project-card:hover .project-card-media img,
-.project-card:hover .project-card-media::after {
-    transform: scale(1.03);
-}
-
-.project-card h3,
-.project-card p {
-    padding: var(--space-sm) var(--space-md);
-}
-
+/* Adjusted text spacing for better mobile readability */
 .project-card h3 {
-    padding-bottom: 0.25rem;
+    padding: var(--space-sm) var(--space-md) 0.25rem var(--space-md);
     font-size: var(--typescale-headline-small);
 }
 
 .project-card p {
-    padding-top: 0;
-    padding-bottom: var(--space-md);
+    padding: 0 var(--space-md) var(--space-md) var(--space-md);
     font-size: var(--typescale-label-large);
     font-weight: var(--weight-headline);
     letter-spacing: var(--tracking-body);
     color: var(--color-text-muted);
     text-transform: none;
     flex: 1 0 auto;
+    line-height: 1.5;
+}
+
+/* Smaller padding on very narrow screens (under 400px) */
+@media (max-width: 400px) {
+    .project-card h3,
+    .project-card p {
+        padding-left: var(--space-sm);
+        padding-right: var(--space-sm);
+    }
 }
 
 .project-card:last-child {
