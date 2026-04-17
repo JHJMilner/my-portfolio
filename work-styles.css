@@ -120,7 +120,7 @@
         circle at center,
         var(--color-bg-blue) 1px,
         transparent 1px,
-        rgba(var(--color-bg-alt-rgb), 0.03) 2px,s
+        rgba(var(--color-bg-alt-rgb), 0.03) 2px,
         rgba(var(--color-accent-dk-rgb), 0.03) 4px
     );
     background-size: 24px 24px;
@@ -148,7 +148,7 @@
     .work-hero-grid {
         grid-template-columns: 1fr;
         gap: var(--space-md);
-        text-align: center;
+        text-align: left;
     }
 
     .work-hero-content {
