@@ -128,7 +128,21 @@
 
 /* ─── RESPONSIVE: TABLET & MOBILE ─────────────── */
 
+@media (max-width: 1100px) {
+    .card-grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (max-width: 900px) {
+   
+    .work-hero {
+        min-height: auto;
+        align-items: flex-start;    /* content flows from top padding down */
+        padding-top: calc(var(--nav-height) + var(--space-xl));
+        padding-bottom: var(--space-xl);
+    }
+
     .work-hero-grid {
         grid-template-columns: 1fr;
         gap: var(--space-md);
@@ -154,7 +168,7 @@
 @media (max-width: 640px) {
     .work-hero {
         padding-top: calc(var(--nav-height) + var(--space-lg));
-        padding-bottom: var(--space-lg);
+        padding-bottom: var(--space-xl);
         min-height: auto;
     }
 
@@ -166,9 +180,6 @@
         max-width: 260px;
     }
 
-    .work-hero-image svg {
-        border-radius: 24px;
-    }
 }
 
 /* ─── WORK PAGE: FEATURED WORK ───────────────── */
