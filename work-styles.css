@@ -3,6 +3,173 @@
    Extension of style.css — link both stylesheets
    ============================================= */
 
+/* ─── WORK PAGE: NEW HERO (text + image) ──────── */
+
+.work-hero {
+    position: relative;
+    padding-top: calc(var(--nav-height) + var(--space-lg));
+    padding-bottom: var(--space-xl);
+    background-color: var(--color-bg-alt);
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    isolation: isolate;  /* keeps pseudo-element behind content */
+}
+
+.work-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+    align-items: center;
+}
+
+.work-hero-content {
+    max-width: 580px;
+}
+
+.work-hero-headline {
+    font-family: var(--font-serif);
+    font-size: var(--typescale-display-large);
+    font-weight: var(--weight-display);
+    line-height: 1.15;
+    letter-spacing: var(--tracking-display);
+    color: var(--color-text);
+    margin: var(--space-sm) 0 var(--space-sm) 0;
+}
+
+.work-hero-subhead {
+    font-family: var(--font-sans);
+    font-size: var(--typescale-body-large);
+    line-height: 1.6;
+    color: var(--color-text-muted);
+    margin: 0;
+    max-width: 52ch;
+    margin-bottom: var(--space-sm); 
+}
+
+.work-hero-image {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    margin-left: auto;
+    border-radius: 32px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(42, 43, 47, 0.08);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.work-hero-image:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 28px 48px rgba(42, 43, 47, 0.12);
+}
+
+/* The image itself – greyscale via CSS filter (optional) */
+.work-hero-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    filter: grayscale(100%);   /* ensures greyscale even if original is colour */
+    transition: filter 0.4s ease;
+}
+
+/* Overlay pseudo-element – brand colour with mix-blend-mode */
+.work-hero-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-accent);
+    mix-blend-mode: soft-light;
+    pointer-events: none;
+    border-radius: 32px;
+    transition: background-color 0.4s ease;
+}
+
+/* Optional: change overlay colour on hover for a subtle effect */
+.work-hero-image:hover::after {
+    background-color: var(--color-accent-dk);
+}
+
+/* Background gradient & texture behind hero content */
+/* Modify the effect by adjusting: gradient type (radial, linear, conic), colour stops (use any --color-*-rgb variable), opacity values (0.12, 0.05, etc.)*/
+.work-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(
+        circle at 70% 30%,
+        rgba(var(--color-bg-tan-rgb), 0.2) 0%,
+        rgba(var(--color-accent-rgb), 0.05) 60%,
+        transparent 100%
+    );
+    pointer-events: none;
+}
+
+.work-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 2px,
+        rgba(var(--color-bg-alt-rgb), 0.03) 2px,
+        rgba(var(--color-accent-dk-rgb), 0.03) 4px
+    );
+    pointer-events: none;
+}
+
+/* ─── RESPONSIVE: TABLET & MOBILE ─────────────── */
+
+@media (max-width: 900px) {
+    .work-hero-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+        text-align: center;
+    }
+
+    .work-hero-content {
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .work-hero-subhead {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .work-hero-image {
+        max-width: 320px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 640px) {
+    .work-hero {
+        padding-top: calc(var(--nav-height) + var(--space-lg));
+        padding-bottom: var(--space-lg);
+        min-height: auto;
+    }
+
+    .work-hero-headline {
+        font-size: var(--typescale-display-medium);
+    }
+
+    .work-hero-image {
+        max-width: 260px;
+    }
+
+    .work-hero-image svg {
+        border-radius: 24px;
+    }
+}
 
 /* ─── WORK PAGE: FEATURED WORK ───────────────── */
 
@@ -16,7 +183,7 @@
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-md);
     gap: var(--space-md);
     flex-wrap: wrap;
 }
@@ -53,7 +220,7 @@
     color: inherit;
 }
 
-/* Thumbnail — holds inline SVG placeholder art */
+/* Thumbnail — some still hold inline SVG placeholder art */
 .work-card-thumb {
     width: 100%;
     height: 200px;
@@ -62,6 +229,16 @@
     display: block;
 }
 
+/* Style the img (replaces svg) */
+.work-card-thumb img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;          /* crops to fill the 200px height while preserving aspect ratio */
+    transition: transform 0.5s ease;
+}
+
+/* Style svg placeholders - remove svpg-specific rules when images are available */
 .work-card-thumb svg {
     width: 100%;
     height: 100%;
@@ -71,6 +248,38 @@
 
 .work-card:hover .work-card-thumb svg {
     transform: scale(1.04);
+}
+
+/* Overlay pseudo-element for work card thumbnails */
+.work-card-thumb::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-accent);  /* default fallback */
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    transition: transform 0.5s ease;
+}
+
+/* Hover – scale overlay together with image */
+.work-card:hover .work-card-thumb::after {
+    transform: scale(1.04);
+}
+
+/* Colour variants – match your brand palette */
+.work-card[data-color="brown"] .work-card-thumb::after {
+    background-color: var(--color-accent);
+}
+
+.work-card[data-color="blue"] .work-card-thumb::after {
+    background-color: var(--color-blue-lt);
+}
+
+.work-card[data-color="green"] .work-card-thumb::after {
+    background-color: var(--color-green);
 }
 
 /* Card body */
@@ -91,6 +300,7 @@
 
 .work-card h3 {
     font-size: var(--typescale-headline-small);
+    line-height: var(--lineheight-display);
     margin-bottom: 0.4rem;
     color: var(--color-text);
 }

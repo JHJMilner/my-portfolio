@@ -25,6 +25,14 @@
     --color-red:          #91463D; /* Red - error states and critical accents */
     --color-border:       rgba(59, 44, 27, 0.122);
 
+    /* RGB component versions (for rgba() use) */
+    --color-accent-rgb:   150, 99, 62;
+    --color-accent-dk-rgb: 122, 77, 46;
+    --color-bg-alt-rgb:   245, 230, 211;
+    --color-bg-tan-rgb:   217, 179, 140;
+    --color-blue-lt-rgb: 142, 171, 184;
+    --color-blue-rgb:    75, 101, 115;
+
 
     /* Typography */
     --font-serif:         'Crimson Pro', 'Newsreader', Georgia, serif;
@@ -140,7 +148,7 @@ a:hover {
 /* ─── TYPOGRAPHY ─────────────────────────────── */
 h1 {
     font-family: var(--font-serif);
-    font-size: var(--typescale-display);
+    font-size: var(--typescale-display-large);
     font-weight: var(--weight-display);
     line-height: var(--lineheight-display);
     letter-spacing: var(--tracking-display);
@@ -190,6 +198,16 @@ p {
 
 .intro-text h2 {
     text-align: left;
+}
+
+.italic-text-primary {
+    font-family: var(--font-serif);
+    font-size: var(--typescale-display-large);
+    font-weight: var(--weight-display);
+    line-height: var(--lineheight-display);
+    letter-spacing: var(--tracking-display);
+    font-style: italic; 
+    color: var(--color-accent);
 }
 
 /* ─── LAYOUT UTILITIES ───────────────────────── */
@@ -305,6 +323,7 @@ p {
 .nav-links .btn-secondary::after {
     display: none;
 }
+
 
 /* - BUTTON HEIRARCHY -
    Primary: .btn-primary — for main CTAs, bold and filled
@@ -1305,7 +1324,7 @@ p {
     .nav-mobile-links li a {
         display: block;
         font-family: var(--font-serif);
-        font-size: var(--typescale-display-small);
+        font-size: var(--typescale-headline-large);
         font-weight: var(--weight-headline);
         letter-spacing: 0.06em;
         text-transform: uppercase;
@@ -1316,6 +1335,11 @@ p {
         transition: color var(--transition-base),
                     opacity 0.4s ease,
                     transform 0.4s ease;
+    }
+    
+    .nav-mobile-links li:first-child a {
+        font-weight: var(--weight-display);
+        letter-spacing: var(--tracking-display);
     }
 
     .nav-mobile-menu.is-open .nav-mobile-links li a {
