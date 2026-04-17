@@ -26,12 +26,14 @@
     --color-border:       rgba(59, 44, 27, 0.122);
 
     /* RGB component versions (for rgba() use) */
-    --color-accent-rgb:   150, 99, 62;
-    --color-accent-dk-rgb: 122, 77, 46;
-    --color-bg-alt-rgb:   245, 230, 211;
-    --color-bg-tan-rgb:   217, 179, 140;
-    --color-blue-lt-rgb: 142, 171, 184;
-    --color-blue-rgb:    75, 101, 115;
+    --color-bg-rgb:         253, 249, 244;
+    --color-accent-rgb:     150, 99, 62;
+    --color-accent-dk-rgb:  122, 77, 46;
+    --color-bg-alt-rgb:     245, 230, 211;
+    --color-bg-tan-rgb:     217, 179, 140;
+    --color-bg-blue-rgb:    235, 242, 245;
+    --color-blue-lt-rgb:    142, 171, 184;
+    --color-blue-rgb:       75, 101, 115;
 
 
     /* Typography */
