@@ -548,6 +548,66 @@
     padding: 0 var(--space-md);
 }
 
+.cs-hero-body {
+    display: grid;
+    grid-template-columns: 1fr 220px;
+    gap: var(--space-lg);
+    align-items: start;
+    margin-top: var(--space-sm);
+}
+
+.cs-hero-thumb {
+    width: 220px;
+    aspect-ratio: 1 / 1;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+    box-shadow: 0 12px 32px rgba(55, 27, 6, 0.12);
+}
+
+.cs-hero-thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Colour overlay - use same data-color attribute in html as Work cards to swap in brown or green */
+.cs-hero-thumb::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-blue-lt);
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    border-radius: 20px;
+}
+
+/* On tablet: shrink thumbnail slightly */
+@media (max-width: 900px) {
+    .cs-hero-body {
+        grid-template-columns: 1fr 180px;
+        gap: var(--space-md);
+    }
+ 
+    .cs-hero-thumb {
+        width: 180px;
+    }
+}
+ 
+/* On mobile: hide the thumbnail entirely. */
+@media (max-width: 640px) {
+    .cs-hero-body {
+        grid-template-columns: 1fr;
+    }
+ 
+    .cs-hero-thumb {
+        display: none;
+    }
+}
+
 /* Breadcrumb */
 .cs-breadcrumb {
     font-family: var(--font-sans);
@@ -635,19 +695,25 @@
     margin: 0 auto;
     padding: 0 var(--space-md);
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: var(--space-md) var(--space-sm);
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-sm) var(--space-sm);
 }
 
 .cs-snapshot-item {
     display: flex;
     flex-direction: column;
-    gap: 0.3rem;
+    gap: 0.4rem;
+    background-color: var(--color-bg);
+    border-top: 2px solid var(--color-accent);
+    border-radius: 0 0 12px 12px;
+    padding: var(--space-sm) var(--space-md);
+    /* Ensure items align to the tops of their rows, not stretch */
+    align-self: start;
 }
 
 .cs-snapshot-label {
     font-family: var(--font-sans);
-    font-size: var(--typescale-label-medium);
+    font-size: var(--typescale-label-small);
     font-weight: var(--weight-label);
     text-transform: uppercase;
     letter-spacing: var(--tracking-label);
@@ -657,11 +723,30 @@
 
 .cs-snapshot-value {
     font-family: var(--font-sans);
-    font-size: var(--typescale-label-large);
-    font-weight: var(--weight-body);
+    font-size: var(--typescale-body-large);
+    font-weight: var(--weight-headline);
     color: var(--color-text);
-    line-height: 1.4;
+    line-height: 1.5;
     display: block;
+}
+
+/* Tablet: stays 3-column (override the existing 3-col rule to keep card styles) */
+@media (max-width: 900px) {
+    .cs-snapshot-grid {
+        grid-template-columns: repeat(3, 1fr);
+        row-gap: var(--space-sm);
+    }
+}
+ 
+/* Mobile: 2-column (unchanged in count, but now uses card style) */
+@media (max-width: 640px) {
+    .cs-snapshot-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+ 
+    .cs-snapshot-item {
+        padding: var(--space-sm);
+    }
 }
 
 
@@ -760,6 +845,121 @@
 
 .cs-section--impact h2 {
     color: var(--color-accent-dk);
+}
+
+/* ─── SECTION BODY: TWO-COLUMN WITH INLINE IMAGE ─ */
+/*
+   Used in sections that have an optional inline image alongside prose.
+   Currently applied to "The Challenge" section.
+   Remove the .cs-section-body wrapper and <figure> from the HTML
+   to revert to the standard full-width prose layout.
+*/
+ 
+.cs-section-body {
+    display: grid;
+    grid-template-columns: 1fr 240px;
+    gap: var(--space-lg);
+    align-items: start;
+}
+ 
+/* The prose column — paragraphs fill available width */
+.cs-section-prose p {
+    max-width: none;
+}
+ 
+/* The inline figure — square image + caption */
+.cs-inline-figure {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 0; /* reset browser default figure margin */
+    flex-shrink: 0;
+}
+ 
+/* The image itself (or placeholder) */
+.cs-inline-figure img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 16px;
+}
+ 
+/* On tablet: narrow the image slightly */
+@media (max-width: 900px) {
+    .cs-section-body {
+        grid-template-columns: 1fr 200px;
+        gap: var(--space-md);
+    }
+}
+ 
+/* On mobile: stack vertically, prose first, image second */
+@media (max-width: 640px) {
+    .cs-section-body {
+        grid-template-columns: 1fr;
+    }
+ 
+    .cs-inline-figure {
+        order: 2; /* image appears after prose on mobile */
+    }
+}
+ 
+/* ─── APPROACH: THREE-IMAGE GRID ─────────────── */
+/*
+   A three-column image grid that sits beneath the Approach
+   bullet list. Each figure holds an image + caption.
+   Remove the .cs-trio-images block from HTML to hide this area.
+*/
+ 
+.cs-trio-images {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+}
+ 
+.cs-trio-figure {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin: 0;
+}
+ 
+.cs-trio-figure img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 12px;
+}
+ 
+/* On mobile: two columns then one */
+@media (max-width: 640px) {
+    .cs-trio-images {
+        grid-template-columns: repeat(2, 1fr);
+    }
+ 
+    /* Stack to single column on very narrow screens */
+    @media (max-width: 400px) {
+        .cs-trio-images {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+ 
+/* ─── SHARED: FIGURE CAPTION ──────────────────── */
+/*
+   Used on both the inline challenge image and the trio images.
+*/
+ 
+.cs-figure-caption {
+    font-family: var(--font-sans);
+    font-size: var(--typescale-label-medium);
+    font-weight: var(--weight-body);
+    line-height: 1.5;
+    color: var(--color-text-muted);
+    font-style: italic;
+    opacity: 0.8;
 }
 
 
@@ -925,4 +1125,37 @@
     .cs-closing-text {
         font-size: var(--typescale-headline-small);
     }
+}
+
+/* ─── UPDATE AND MOVE - SHARED IMAGE PLACEHOLDERS ─────────────── */
+/*
+   Visible placeholder boxes shown until real images are added.
+   Replace the <div class="cs-img-placeholder"> in the HTML with
+   a real <img> tag — the placeholder styles can then be removed.
+*/
+ 
+.cs-img-placeholder {
+    width: 100%;
+    aspect-ratio: 1 / 1;  /* square — for the challenge image */
+    background-color: var(--color-bg-alt);
+    border: 2px dashed var(--color-border);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-muted);
+    font-family: var(--font-sans);
+    font-size: var(--typescale-label-medium);
+    font-weight: var(--weight-label);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    text-align: center;
+    line-height: 1.6;
+    opacity: 0.6;
+}
+ 
+/* Smaller variant for the 4:3 trio images */
+.cs-img-placeholder--sm {
+    aspect-ratio: 4 / 3;
+    border-radius: 12px;
 }
