@@ -995,10 +995,9 @@
     max-width: var(--max-width);
     margin: 0 auto;
     padding: 0 var(--space-md);
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr; /* left column, center (auto width), right column */
     align-items: center;
-    gap: var(--space-md);
 }
 
 .cs-pagination-link {
@@ -1016,9 +1015,14 @@
     color: inherit;
 }
 
+.cs-pagination-link--prev {
+    justify-self: start;
+    text-align: left;
+}
+
 .cs-pagination-link--next {
+    justify-self: end;
     text-align: right;
-    margin-left: auto;
 }
 
 .cs-pagination-direction {
@@ -1049,7 +1053,9 @@
     border-bottom: 1px solid var(--color-border);
     padding-bottom: 2px;
     transition: color var(--transition-base),
-                border-color var(--transition-base);
+    border-color var(--transition-base);
+    justify-self: center;
+    text-align: center;
 }
 
 .cs-back-to-work:hover {
@@ -1057,6 +1063,17 @@
     border-color: var(--color-accent);
 }
 
+@media (max-width: 640px) {
+    .cs-pagination-inner {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-md);
+        text-align: center;
+    }
+    .cs-pagination-link--next {
+        text-align: center;
+    }
+}
 
 /* ─── RESPONSIVE: TABLET ──────────────────────── */
 
