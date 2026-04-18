@@ -533,7 +533,7 @@
     opacity: 0.7;
 }
 
-
+/* ─── STYLES FOR CASE STUDY PAGES ────────────────────────── */
 /* ─── CASE STUDY: HERO ────────────────────────── */
 
 .cs-hero {
@@ -563,7 +563,6 @@
     overflow: hidden;
     position: relative;
     flex-shrink: 0;
-    box-shadow: 0 12px 32px rgba(55, 27, 6, 0.12);
 }
 
 .cs-hero-thumb img {
@@ -644,7 +643,7 @@
     line-height: 1.05;
     letter-spacing: var(--tracking-display);
     color: var(--color-text);
-    max-width: 16ch;
+    max-width: 24ch;
     margin-bottom: var(--space-sm);
 }
 
@@ -704,7 +703,7 @@
     flex-direction: column;
     gap: 0.4rem;
     background-color: var(--color-bg);
-    border-top: 2px solid var(--color-accent);
+    border-top: 2px solid var(--color-bg-tan);
     border-radius: 0 0 12px 12px;
     padding: var(--space-sm) var(--space-md);
     /* Ensure items align to the tops of their rows, not stretch */
@@ -746,6 +745,16 @@
  
     .cs-snapshot-item {
         padding: var(--space-sm);
+    }
+
+ /* Hide the Timeline card on mobile */
+    .cs-snapshot-item:nth-child(3) {
+        display: none;
+    }
+
+    /* Methods is the 4th item — expand it to fill the full row */
+    .cs-snapshot-item:nth-child(4) {
+        grid-column: span 2;
     }
 }
 
@@ -913,24 +922,18 @@
  
 .cs-trio-images {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--space-sm);
-    margin-top: var(--space-md);
+    margin-top: var(--space-lg);
 }
  
-.cs-trio-figure {
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-    margin: 0;
+.cs-trio-figure:nth-child(3) {
+    grid-column: span 2;
 }
- 
-.cs-trio-figure img {
-    display: block;
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    border-radius: 12px;
+
+.cs-trio-figure:nth-child(3) img,
+.cs-trio-figure:nth-child(3) .cs-img-placeholder--sm {
+    aspect-ratio: 16 / 9;
 }
  
 /* On mobile: two columns then one */
@@ -956,7 +959,7 @@
     font-family: var(--font-sans);
     font-size: var(--typescale-label-medium);
     font-weight: var(--weight-body);
-    line-height: 1.5;
+    line-height: 2;
     color: var(--color-text-muted);
     font-style: italic;
     opacity: 0.8;
