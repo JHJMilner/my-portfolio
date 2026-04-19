@@ -108,7 +108,7 @@
                 </div>
                 <!-- Right: card thumbnail (decorative — aria-hidden) -->
                 <!-- REPLACE: swap the src for the card image used on the Work page and Index Projects section.
-                     Suggested size: square crop, 600 × 600 px minimum. -->
+                     Suggested size: square crop, 400 × 301 px works, for reuse of "sm" version of card image. -->
                 <div class="cs-hero-thumb" aria-hidden="true">
                     <img src="images/product-roadmap-collab.jpg" alt="Colleagues working together in a brainstorming session." />
                 </div>
@@ -117,8 +117,8 @@
         </div>
 
         <!-- Cover image placeholder
-             REPLACE: swap the <svg> below for an <img> once a real cover is ready.
-             Suggested size: 1200 × 440 px. Use descriptive alt text.
+             REPLACE: swap the <svg> below for an <img> once a real cover is ready. Use descriptive alt text.
+             Suggested size: 1200 × 440 px. Watch out for file size (try to keep under 200 KB) for good performance.
              Example: <img src="images/cover-roadmap.jpg" alt="Workshop session showing sticky notes grouped by theme on a whiteboard" />
         -->
         <div class="cs-cover" aria-hidden="true">
@@ -216,32 +216,24 @@
             <section class="cs-section" aria-labelledby="cs-challenge">
                 <span class="cs-section-label">The problem</span>
                 <h2 id="cs-challenge">The challenge</h2>
-                <!-- cs-section-body creates the two-column layout on desktop.
-                     Remove this wrapper and the <figure> below if no image is available
-                     for this section — the prose will then span the full width as before. -->
-                <div class="cs-section-body">
- 
-                    <!-- Left: prose -->
-                    <div class="cs-section-prose">
-                        <p>Direct access to end users was limited, and internal perspectives were heavily influenced by sales pressure and competitor activity.</p>
-                        <p>The team needed clear direction—but lacked the evidence and shared understanding required to make confident, strategic decisions.</p>
+
+                <p>Direct access to end users was limited, and internal perspectives were heavily influenced by sales pressure and competitor activity.</p>
+                <p>The team needed clear direction—but lacked the evidence and shared understanding required to make confident, strategic decisions.</p>
+
+                <!-- REPLACE: swap the placeholder div for a real <img> when ready.
+                    Best size: 1200 × 675 px (16:9 ratio).
+                    Example:
+                    <img src="images/your-challenge-image.jpg"
+                        alt="Descriptive alt text explaining what the image shows"
+                        width="1200" height="675" /> -->
+                <figure class="cs-inline-figure">
+                    <div class="cs-img-placeholder" aria-hidden="true">
+                        <span>Image placeholder — 1200 × 675 px (16:9)</span>
                     </div>
- 
-                    <!-- Right: square image with caption.
-                         REPLACE: swap the placeholder div for a real <img> when ready.
-                         Best size: square crop, 600 × 600 px minimum.
-                         Example:
-                         <img src="images/your-challenge-image.jpg"
-                              alt="Descriptive alt text explaining what the image shows"
-                              width="600" height="600" /> -->
-                    <figure class="cs-inline-figure">
-                        <div class="cs-img-placeholder" aria-hidden="true">
-                            <span>Image placeholder<br/>600 × 600 px</span>
-                        </div>
-                        <figcaption class="cs-figure-caption">Caption — describe what this image shows and why it is relevant to the challenge.</figcaption>
-                    </figure>
- 
-                </div><!-- /.cs-section-body -->
+                    <figcaption class="cs-figure-caption">Caption — describe what this image shows and why it is relevant to the challenge.</figcaption>
+                </figure>
+
+            </section>
             </section>
 
             <!-- Approach -->
@@ -272,7 +264,7 @@
 
                 <!-- Three supporting images below the list.
                      Remove this entire block if no images are available for this section.
-                     Best size: 4:3 ratio (e.g. 800 × 600 px).
+                     Best size: 4:3 ratio (e.g. 800 × 600 px) for first two, 16:9 ratio (e.g. 1200 × 675 px) for the third.
                      REPLACE each placeholder div with a real <img>, e.g.:
                      <img src="images/approach-survey.jpg"
                           alt="Survey response summary showing key themes"
