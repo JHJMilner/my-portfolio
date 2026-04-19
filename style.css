@@ -853,6 +853,9 @@ p {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    isolation: isolate;
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+    mask-image: radial-gradient(white, black);
 }
 
 .project-card-link {
@@ -862,6 +865,7 @@ p {
     height: 100%;
     width: 100%;
     border-radius: 20px;
+    overflow: hidden;
     outline: none;
     transition: outline-offset 0.2s ease;
 }
@@ -917,6 +921,7 @@ p {
     flex-shrink: 0;
     min-height: 0;
     background-color: var(--color-accent);  /* fallback for image gaps */
+    border-radius: 20px 20px 0 0;
 }
 
 .project-card-media img {
