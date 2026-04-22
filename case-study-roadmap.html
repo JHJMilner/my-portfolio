@@ -110,7 +110,7 @@
                 <!-- REPLACE: swap the src for the card image used on the Work page and Index Projects section.
                      Suggested size: square crop, 400 × 301 px works, for reuse of "sm" version of card image. -->
                 <div class="cs-hero-thumb" aria-hidden="true">
-                    <img src="images/product-roadmap-collab.jpg" alt="Colleagues working together in a brainstorming session." />
+                    <img src="images/product-roadmap-collab.jpg" alt="Colleagues working together in a brainstorming session." loading="lazy"/>
                 </div>
  
             </div>
@@ -121,43 +121,9 @@
              Suggested size: 1200 × 440 px. Watch out for file size (try to keep under 200 KB) for good performance.
              Example: <img src="images/cover-roadmap.jpg" alt="Workshop session showing sticky notes grouped by theme on a whiteboard" />
         -->
-        <div class="cs-cover" aria-hidden="true">
+        <div class="cs-cover">
             <div class="cs-cover-inner">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 440" preserveAspectRatio="xMidYMid slice">
-                    <defs>
-                        <linearGradient id="cs-g-roadmap" x1="0" y1="0" x2="1" y2="1">
-                            <stop offset="0%" stop-color="#F5E6D3"/>
-                            <stop offset="60%" stop-color="#D9B38C"/>
-                            <stop offset="100%" stop-color="#C49060"/>
-                        </linearGradient>
-                    </defs>
-                    <rect width="1200" height="440" fill="url(#cs-g-roadmap)"/>
-                    <!-- Converging rays from left edge -->
-                    <line x1="0"    y1="0"   x2="860" y2="220" stroke="#96633E" stroke-width="3"   opacity="0.22"/>
-                    <line x1="0"    y1="55"  x2="860" y2="220" stroke="#96633E" stroke-width="2"   opacity="0.18"/>
-                    <line x1="0"    y1="110" x2="860" y2="220" stroke="#96633E" stroke-width="1.5" opacity="0.16"/>
-                    <line x1="0"    y1="165" x2="860" y2="220" stroke="#96633E" stroke-width="1.5" opacity="0.14"/>
-                    <line x1="0"    y1="220" x2="860" y2="220" stroke="#96633E" stroke-width="2"   opacity="0.18"/>
-                    <line x1="0"    y1="275" x2="860" y2="220" stroke="#96633E" stroke-width="1.5" opacity="0.14"/>
-                    <line x1="0"    y1="330" x2="860" y2="220" stroke="#96633E" stroke-width="1.5" opacity="0.16"/>
-                    <line x1="0"    y1="385" x2="860" y2="220" stroke="#96633E" stroke-width="2"   opacity="0.18"/>
-                    <line x1="0"    y1="440" x2="860" y2="220" stroke="#96633E" stroke-width="3"   opacity="0.22"/>
-                    <!-- Secondary faint rays -->
-                    <line x1="0"    y1="28"  x2="860" y2="220" stroke="#96633E" stroke-width="0.75" opacity="0.10"/>
-                    <line x1="0"    y1="83"  x2="860" y2="220" stroke="#96633E" stroke-width="0.75" opacity="0.10"/>
-                    <line x1="0"    y1="137" x2="860" y2="220" stroke="#96633E" stroke-width="0.75" opacity="0.10"/>
-                    <line x1="0"    y1="193" x2="860" y2="220" stroke="#96633E" stroke-width="0.75" opacity="0.10"/>
-                    <line x1="0"    y1="248" x2="860" y2="220" stroke="#96633E" stroke-width="0.75" opacity="0.10"/>
-                    <line x1="0"    y1="303" x2="860" y2="220" stroke="#96633E" stroke-width="0.75" opacity="0.10"/>
-                    <line x1="0"    y1="358" x2="860" y2="220" stroke="#96633E" stroke-width="0.75" opacity="0.10"/>
-                    <line x1="0"    y1="413" x2="860" y2="220" stroke="#96633E" stroke-width="0.75" opacity="0.10"/>
-                    <!-- Focal point: concentric rings -->
-                    <circle cx="860" cy="220" r="8"   fill="#7A4D2E" opacity="0.60"/>
-                    <circle cx="860" cy="220" r="28"  fill="none" stroke="#7A4D2E" stroke-width="1.5" opacity="0.28"/>
-                    <circle cx="860" cy="220" r="55"  fill="none" stroke="#7A4D2E" stroke-width="1"   opacity="0.16"/>
-                    <circle cx="860" cy="220" r="90"  fill="none" stroke="#7A4D2E" stroke-width="0.75" opacity="0.10"/>
-                    <circle cx="860" cy="220" r="135" fill="none" stroke="#7A4D2E" stroke-width="0.5" opacity="0.06"/>
-                </svg>
+                <img src="images/cs-roadmap-cover-2.jpeg" alt="Visual representation of trying to stuff too many features into the product." loading="lazy"/>
             </div>
         </div>
     </header>
@@ -179,7 +145,7 @@
             </div>
             <div class="cs-snapshot-item">
                 <dt class="cs-snapshot-label">Timeline</dt>
-                <dd class="cs-snapshot-value">~10 weeks</dd>
+                <dd class="cs-snapshot-value"> 18+ months</dd>
             </div>
             <div class="cs-snapshot-item">
                 <dt class="cs-snapshot-label">Methods</dt>
@@ -187,7 +153,7 @@
             </div>
             <div class="cs-snapshot-item">
                 <dt class="cs-snapshot-label">Stakeholders</dt>
-                <dd class="cs-snapshot-value">Product, Design, Sales, Executive Leadership</dd>
+                <dd class="cs-snapshot-value">Product, Design, Sales, Executive Leadership, Clinical, Engineering</dd>
             </div>
             <div class="cs-snapshot-item">
                 <dt class="cs-snapshot-label">Primary Outcome</dt>
@@ -204,21 +170,22 @@
     <main>
         <article class="cs-body">
 
-            <!-- The situation -->
+            <!-- Context -->
             <section class="cs-section" aria-labelledby="cs-situation">
                 <span class="cs-section-label">Context</span>
-                <h2 id="cs-situation">The situation</h2>
-                <p>The organisation was investing heavily in a new wellness platform, driven by large client demands and a need to stay competitive in a saturated market.</p>
+                <h2 id="cs-situation">Conflicting Demands and Competition From All Sides</h2>
+                <p>The client company was investing heavily in a new wellness platform, driven by large client demands and a need to stay competitive in a saturated market.</p>
                 <p>Feature requests were constant and often conflicting. Product decisions were being made reactively, with no clear prioritisation framework. As a result, the roadmap was expanding in multiple directions at once, with increasing delivery risk and little alignment across teams.</p>
+                <p>Our team was tasked with providing strategic direction for the overall user experience, and delivering a redesigned platform with significant improvements.</p>
             </section>
 
-            <!-- The challenge -->
+            <!-- Challenge -->
             <section class="cs-section" aria-labelledby="cs-challenge">
-                <span class="cs-section-label">The problem</span>
-                <h2 id="cs-challenge">The challenge</h2>
+                <span class="cs-section-label">Challenge</span>
+                <h2 id="cs-challenge">Balancing Customer Demands with User Needs</h2>
 
                 <p>Direct access to end users was limited, and internal perspectives were heavily influenced by sales pressure and competitor activity.</p>
-                <p>The team needed clear direction—but lacked the evidence and shared understanding required to make confident, strategic decisions.</p>
+                <p>The team needed clear direction, but lacked the evidence and shared understanding required to make confident, strategic decisions for user experience improvements.</p>
 
                 <!-- REPLACE: swap the placeholder div for a real <img> when ready.
                     Best size: 1200 × 675 px (16:9 ratio).
@@ -227,10 +194,10 @@
                         alt="Descriptive alt text explaining what the image shows"
                         width="1200" height="675" /> -->
                 <figure class="cs-inline-figure">
-                    <div class="cs-img-placeholder" aria-hidden="true">
-                        <span>Image placeholder — 1200 × 675 px (16:9)</span>
+                    <div class="cs-img-wrap">
+                        <img src="images/cs-roadmap-challenge.jpeg" alt="Example of a workshop where team members aligned on user needs." loading="lazy" />
                     </div>
-                    <figcaption class="cs-figure-caption">Caption — describe what this image shows and why it is relevant to the challenge.</figcaption>
+                    <figcaption class="cs-figure-caption">Snapshot of a workshop where stakeholders aligned on UX improvements based on insights from user research.</figcaption>
                 </figure>
 
             </section>
@@ -238,31 +205,19 @@
 
             <!-- Approach -->
             <section class="cs-section" aria-labelledby="cs-approach">
-                <span class="cs-section-label">Method</span>
-                <h2 id="cs-approach">Approach</h2>
-                <p>I focused on building a defensible foundation for decision-making by triangulating multiple sources of evidence and connecting user needs to business priorities.</p>
+                <span class="cs-section-label">Approach</span>
+                <h2 id="cs-approach">Triangulating Insights with Mixed Methods</h2>
+                <p>I focused on building a defensible foundation for decision-making by pulling together multiple sources of data and connecting user needs to business priorities.</p>
                 <ul class="cs-list">
-                    <li>Synthesised existing behavioural data to identify usage patterns and drop-off points</li>
-                    <li>Designed and deployed targeted surveys to capture user motivations and unmet needs</li>
-                    <li>Ran unmoderated usability studies to evaluate key workflows at scale</li>
-                    <li>Conducted structured competitor analysis to separate parity needs from true differentiation</li>
-                    <li>Incorporated academic and industry research to validate patterns where direct access was limited</li>
-                    <li>Facilitated working sessions to translate insights into roadmap decisions</li>
-                </ul>
-            </section>
-
-            <!-- What we learned -->
-            <section class="cs-section" aria-labelledby="cs-learned">
-                <span class="cs-section-label">Findings</span>
-                <h2 id="cs-learned">What we learned</h2>
-                <ul class="cs-list">
-                    <li>Many requested features addressed edge cases rather than core user needs</li>
-                    <li>Critical usability gaps were undermining adoption of existing functionality</li>
-                    <li>Competitor parity was driving reactive decisions without improving user value</li>
-                    <li>Users prioritised simplicity, clarity, and outcomes over feature breadth</li>
+                    <li>Synthesised existing behavioural data to identify usage patterns and drop-off points.</li>
+                    <li>Designed and deployed targeted surveys to capture user motivations and unmet needs.</li>
+                    <li>Ran unmoderated usability studies to evaluate key workflows at scale.</li>
+                    <li>Conducted structured competitor analysis to separate parity needs from true product differentiation in the market.</li>
+                    <li>Incorporated academic and industry research to validate patterns where direct access was limited.</li>
+                    <li>Facilitated working sessions to translate insights into roadmap decisions.</li>
                 </ul>
 
-                <!-- Three supporting images below the list.
+                 <!-- Three supporting images below the list.
                      Remove this entire block if no images are available for this section.
                      Best size: 4:3 ratio (e.g. 800 × 600 px) for first two, 16:9 ratio (e.g. 1200 × 675 px) for the third.
                      REPLACE each placeholder div with a real <img>, e.g.:
@@ -272,48 +227,61 @@
                 <div class="cs-trio-images" role="group" aria-label="Supporting methodology images">
  
                     <figure class="cs-trio-figure">
-                        <div class="cs-img-placeholder cs-img-placeholder--sm" aria-hidden="true">
-                            <span>Image 1<br/>4:3 ratio</span>
+                        <div class="cs-img-wrap">
+                            <img src="images/cs-roadmap-trio-2.jpeg" alt="Example of findings from user research." loading="lazy" />
                         </div>
-                        <figcaption class="cs-figure-caption">Caption — describe the method or artefact shown here.</figcaption>
+                        <figcaption class="cs-figure-caption">Data collected during unmoderated usability studies.</figcaption>
                     </figure>
  
                     <figure class="cs-trio-figure">
-                        <div class="cs-img-placeholder cs-img-placeholder--sm" aria-hidden="true">
-                            <span>Image 2<br/>4:3 ratio</span>
+                        <div class="cs-img-wrap">
+                            <img src="images/cs-roadmap-trio-1.jpeg" alt="Overview of key outcomes from our company's work." loading="lazy" />
                         </div>
-                        <figcaption class="cs-figure-caption">Caption — describe the method or artefact shown here.</figcaption>
+                        <figcaption class="cs-figure-caption">Outcomes from our company's redesign and implementation.</figcaption>
                     </figure>
  
                     <figure class="cs-trio-figure">
-                        <div class="cs-img-placeholder cs-img-placeholder--sm" aria-hidden="true">
-                            <span>Image 3<br/>4:3 ratio</span>
+                        <div class="cs-img-wrap">
+                            <img src="images/cs-roadmap-trio-3.jpeg" alt="Screens showing product iterations as a result of usability testing." loading="lazy" />
                         </div>
-                        <figcaption class="cs-figure-caption">Caption — describe the method or artefact shown here.</figcaption>
+                        <figcaption class="cs-figure-caption">Countless product iterations based on user feedback and observed behaviours in testing and analytics.</figcaption>
                     </figure>
  
                 </div><!-- /.cs-trio-images -->
             </section>
 
+            <!-- What we learned -->
+            <section class="cs-section" aria-labelledby="cs-learned">
+                <span class="cs-section-label">Findings</span>
+                <h2 id="cs-learned">Providing for Core User Needs > Feature Bloat</h2>
+                <ul class="cs-list">
+                    <li>Many customer-requested features addressed edge cases rather than core user needs.</li>
+                    <li>Critical usability gaps were undermining adoption of existing functionality.</li>
+                    <li>Competitor parity was driving reactive decisions without improving user value.</li>
+                    <li>Users prioritised simplicity, clarity, and outcomes over feature breadth.</li>
+                </ul>
+
+            </section>
+
             <!-- Impact — highlighted section -->
             <section class="cs-section cs-section--impact" aria-labelledby="cs-impact">
-                <span class="cs-section-label">Outcomes</span>
-                <h2 id="cs-impact">Impact</h2>
+                <span class="cs-section-label">Impact</span>
+                <h2 id="cs-impact">Clear Focus Areas for Product Roadmap</h2>
                 <ul class="cs-list">
-                    <li>Reframed the product roadmap around highest-value user needs</li>
-                    <li>Reduced internal conflict by grounding decisions in shared evidence</li>
-                    <li>Deprioritised low-impact features, narrowing scope and improving focus</li>
-                    <li>Increased leadership confidence in product direction</li>
-                    <li>Established a repeatable, evidence-based approach to prioritisation</li>
+                    <li>Reframed the product roadmap around highest-value user needs.</li>
+                    <li>Reduced internal conflict by grounding decisions in shared evidence.</li>
+                    <li>Deprioritised low-impact features, narrowing scope and improving focus.</li>
+                    <li>Increased leadership confidence in product direction.</li>
+                    <li>Established a repeatable, evidence-based approach to prioritisation.</li>
                 </ul>
             </section>
 
             <!-- My contribution -->
             <section class="cs-section" aria-labelledby="cs-contribution">
-                <span class="cs-section-label">Leadership</span>
-                <h2 id="cs-contribution">My contribution</h2>
-                <p>As the sole researcher, I guided the team from fragmented, assumption-driven decision-making to a clear, evidence-based direction.</p>
-                <p>I introduced structure where there was none—connecting disparate data into a coherent narrative and ensuring that research directly informed product strategy. My role extended beyond insight generation to actively shaping what the organisation chose to build.</p>
+                <span class="cs-section-label">My Contribution</span>
+                <h2 id="cs-contribution">The Team's Top Fact-Finder</h2>
+                <p>As the sole researcher, I guided the product team from fragmented, assumption-driven debates to a clear, evidence-based direction.</p>
+                <p>I introduced structure where there was none, connecting disparate data into a coherent narrative and ensuring that research directly informed product strategy. My role extended beyond insight generation to actively shaping what the organisation chose to build.</p>
             </section>
 
         </article>

@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Get in touch with Julia Milner — UX Researcher and Service Designer available for project collaboration, speaking, and consulting." />
+    <title>Contact | Julia Milner — UX Researcher & Service Designer</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+
+    <!-- Stylesheets: base first, then contact-page extensions -->
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="contact-styles.css" />
+</head>
+
+<body>
+
+    <!-- =====================
+         NAVIGATION
+    ========================== -->
+    <nav id="main-nav" aria-label="Main navigation">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">
+                <span class="nav-logo-full">JULIA MILNER</span>
+                <span class="nav-logo-initials">JM</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="about.html">About</a></li>
+                <li><a href="work.html">Work</a></li>
+                <!-- aria-current="page" marks active link for screen readers -->
+                <li><a href="contact.html" class="btn-secondary" aria-current="page">Contact</a></li>
+            </ul>
+            <button class="nav-hamburger" aria-label="Open navigation menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        <!-- Mobile menu overlay -->
+        <div class="nav-mobile-menu" aria-hidden="true">
+            <ul class="nav-mobile-links">
+                <li><a href="index.html">Julia Milner</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="work.html">Work</a></li>
+                <li><a href="contact.html" aria-current="page" class="btn-secondary">Contact</a></li>
+            </ul>
+            <div class="nav-mobile-social">
+                <a href="https://www.linkedin.com/in/juliamilner/" target="_blank" rel="noopener noreferrer" aria-label="Visit Julia's LinkedIn profile">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                </a>
+                <a href="https://medium.com/@JuliaMilner" target="_blank" rel="noopener noreferrer" aria-label="Visit Julia's Medium profile">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M4.21 0A4.201 4.201 0 0 0 0 4.21v15.58A4.201 4.201 0 0 0 4.21 24h15.58A4.201 4.201 0 0 0 24 19.79v-1.093c-.137.013-.278.02-.422.02-2.577 0-4.027-2.146-4.09-4.832a7.592 7.592 0 0 1 .022-.708c.093-1.186.475-2.241 1.105-3.022a3.885 3.885 0 0 1 1.395-1.1c.468-.237 1.127-.367 1.664-.367h.023c.101 0 .202.004.303.01V4.211A4.201 4.201 0 0 0 19.79 0Zm.198 5.583h4.165l3.588 8.435 3.59-8.435h3.864v.146l-.019.004c-.705.16-1.063.397-1.063 1.254h-.003l.003 10.274c.06.676.424.885 1.063 1.03l.02.004v.145h-4.923v-.145l.019-.005c.639-.144.994-.353 1.054-1.03V7.267l-4.745 11.15h-.261L6.15 7.569v9.445c0 .857.358 1.094 1.063 1.253l.02.004v.147H4.405v-.147l.019-.004c.705-.16 1.065-.397 1.065-1.253V6.987c0-.857-.358-1.094-1.064-1.254l-.018-.004zm19.25 3.668c-1.086.023-1.733 1.323-1.813 3.124H24V9.298a1.378 1.378 0 0 0-.342-.047Zm-1.862 3.632c-.1 1.756.86 3.239 2.204 3.634v-3.634z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- =====================
+         CONTACT SPLIT LAYOUT
+         Full-height two-panel design:
+         dark left panel (context) + light right panel (form).
+         The <main> wraps both for landmark/accessibility.
+    ========================== -->
+    <main class="contact-layout" id="main-content">
+
+        <!-- ── LEFT PANEL: context & alternative contacts ── -->
+        <aside class="contact-panel contact-panel--dark" aria-label="Contact information">
+
+            <div class="contact-panel-inner">
+
+                <!-- Eyebrow + headline -->
+                <div class="contact-intro">
+                    <span class="label-eyebrow contact-eyebrow">Get in touch</span>
+                    <h1 class="contact-headline">
+                        Let's find clarity <em>together.</em>
+                    </h1>
+                    <p class="contact-lead">
+                        Whether you have a project in mind, a tricky research question, or just want to explore what working together might look like — I'd love to hear from you.
+                    </p>
+                </div>
+
+                <!-- What to expect copy -->
+                <div class="contact-availability">
+                    <p class="contact-availability-text">
+                        I typically respond within two business days. For urgent enquiries, LinkedIn is faster.
+                    </p>
+                </div>
+
+                <!-- Alternative contact methods -->
+                <nav class="contact-alt-links" aria-label="Alternative contact methods">
+
+                    <!-- Email -->
+                    <a href="mailto:jhjmilner@gmail.com" class="contact-alt-link">
+                        <span class="contact-alt-icon" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+                            </svg>
+                        </span>
+                        <span class="contact-alt-label">jhjmilner@gmail.com</span>
+                        <span class="contact-alt-arrow" aria-hidden="true">↗</span>
+                    </a>
+
+                    <!-- LinkedIn -->
+                    <a href="https://www.linkedin.com/in/juliamilner/" target="_blank" rel="noopener noreferrer" class="contact-alt-link">
+                        <span class="contact-alt-icon" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                        </span>
+                        <span class="contact-alt-label">LinkedIn</span>
+                        <span class="contact-alt-arrow" aria-hidden="true">↗</span>
+                    </a>
+
+                </nav>
+
+            </div><!-- /.contact-panel-inner -->
+
+        </aside>
+
+
+        <!-- ── RIGHT PANEL: the contact form ── -->
+        <section class="contact-panel contact-panel--light" aria-labelledby="form-heading">
+
+            <div class="contact-panel-inner">
+
+                <h2 id="form-heading" class="contact-form-heading">Send a message</h2>
+
+                <!-- ── NETLIFY FORM ──────────────────────────────────
+                     Key Netlify attributes:
+                     - name="contact"           → names the form in the Netlify dashboard
+                     - data-netlify="true"       → tells Netlify's build bot to process this form
+                     - netlify-honeypot="bot-field" → invisible spam trap field
+                     - The hidden input[name="form-name"] is required for AJAX submissions
+                     so Netlify knows which form the data belongs to.
+                ─────────────────────────────────────────────────── -->
+                <form
+                    id="contact-form"
+                    name="contact"
+                    method="POST"
+                    data-netlify="true"
+                    netlify-honeypot="bot-field"
+                    novalidate
+                    aria-label="Contact form"
+                >
+                    <!-- Required hidden input for AJAX submission -->
+                    <input type="hidden" name="form-name" value="contact" />
+
+                    <!-- Honeypot: hidden from real users, visible to bots.
+                         aria-hidden and tabindex="-1" ensure it doesn't affect
+                         keyboard navigation or screen readers. -->
+                    <div class="contact-honeypot" aria-hidden="true">
+                        <label for="bot-field">Don't fill this in if you're human</label>
+                        <input type="text" id="bot-field" name="bot-field" tabindex="-1" autocomplete="off" />
+                    </div>
+
+                    <!-- ── Field group: Name ── -->
+                    <div class="form-field" data-field="name">
+                        <input
+                            type="text"
+                            id="field-name"
+                            name="name"
+                            class="form-input"
+                            autocomplete="name"
+                            required
+                            aria-required="true"
+                            aria-describedby="name-error"
+                        />
+                        <!-- Floating label — CSS transitions it upward on focus/fill -->
+                        <label for="field-name" class="form-label">Your name</label>
+                        <!-- Underline track: default grey, accent on focus -->
+                        <span class="form-underline" aria-hidden="true"></span>
+                        <!-- Inline error message, populated by JS -->
+                        <span id="name-error" class="form-error" role="alert" aria-live="polite"></span>
+                    </div>
+
+                    <!-- ── Field group: Email ── -->
+                    <div class="form-field" data-field="email">
+                        <input
+                            type="email"
+                            id="field-email"
+                            name="email"
+                            class="form-input"
+                            autocomplete="email"
+                            required
+                            aria-required="true"
+                            aria-describedby="email-error"
+                        />
+                        <label for="field-email" class="form-label">Email address</label>
+                        <span class="form-underline" aria-hidden="true"></span>
+                        <span id="email-error" class="form-error" role="alert" aria-live="polite"></span>
+                    </div>
+
+                    <!-- ── Field group: Enquiry type (select) ── -->
+                    <div class="form-field form-field--select" data-field="enquiry">
+                        <select
+                            id="field-enquiry"
+                            name="enquiry"
+                            class="form-input form-select"
+                            required
+                            aria-required="true"
+                            aria-describedby="enquiry-error"
+                        >
+                            <!-- Empty first option triggers the floating label -->
+                            <option value="" disabled selected></option>
+                            <option value="project-collaboration">Project collaboration</option>
+                            <option value="speaking-teaching">Speaking or teaching</option>
+                            <option value="general-enquiry">General enquiry</option>
+                            <option value="something-else">Something else</option>
+                        </select>
+                        <label for="field-enquiry" class="form-label">What are you working on?</label>
+                        <!-- Custom chevron icon — replaces browser default arrow -->
+                        <span class="form-select-arrow" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </span>
+                        <span class="form-underline" aria-hidden="true"></span>
+                        <span id="enquiry-error" class="form-error" role="alert" aria-live="polite"></span>
+                    </div>
+
+                    <!-- ── Field group: Message ── -->
+                    <div class="form-field form-field--textarea" data-field="message">
+                        <textarea
+                            id="field-message"
+                            name="message"
+                            class="form-input form-textarea"
+                            rows="5"
+                            required
+                            aria-required="true"
+                            aria-describedby="message-error"
+                        ></textarea>
+                        <label for="field-message" class="form-label">Your message</label>
+                        <span class="form-underline" aria-hidden="true"></span>
+                        <span id="message-error" class="form-error" role="alert" aria-live="polite"></span>
+                    </div>
+
+                    <!-- ── Submit button ── -->
+                    <!-- data-state drives CSS for idle / submitting / success / error -->
+                    <div class="form-submit-row">
+                        <button type="submit" class="form-submit-btn" id="submit-btn" data-state="idle">
+                            <!-- Idle label -->
+                            <span class="submit-label" aria-hidden="false">Send message</span>
+                            <!-- Submitting: animated spinner -->
+                            <span class="submit-spinner" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                                    <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+                                </svg>
+                            </span>
+                            <!-- Accessible live region announces state to screen readers -->
+                            <span class="sr-only" id="submit-status" aria-live="polite" aria-atomic="true"></span>
+                        </button>
+                    </div>
+
+                </form><!-- /#contact-form -->
+
+
+                <!-- ── SUCCESS STATE ──────────────────────────────
+                     Hidden by default; JS swaps this in and hides
+                     the form after a successful Netlify submission.
+                ─────────────────────────────────────────────────── -->
+                <div id="form-success" class="form-success" role="status" aria-live="polite" hidden>
+                    <div class="form-success-icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                            <polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                    </div>
+                    <h3 class="form-success-heading">Message sent.</h3>
+                    <p class="form-success-body">
+                        Thank you for reaching out. I'll be in touch within two business days.
+                    </p>
+                </div>
+
+
+                <!-- ── ERROR STATE ────────────────────────────────
+                     Shown if the Netlify submission fails outright
+                     (network error, server error, etc.).
+                ─────────────────────────────────────────────────── -->
+                <div id="form-error-banner" class="form-error-banner" role="alert" aria-live="assertive" hidden>
+                    <p>
+                        Something went wrong — your message wasn't sent. Please try again, or email me directly at
+                        <a href="mailto:jhjmilner@gmail.com">jhjmilner@gmail.com</a>.
+                    </p>
+                </div>
+
+            </div><!-- /.contact-panel-inner -->
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================
+         FOOTER
+    ========================== -->
+    <footer id="footer" aria-label="Site footer">
+        <div class="container footer-inner">
+            <nav class="footer-nav" aria-label="Footer navigation">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="work.html">Work</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+            <div class="footer-social">
+                <a href="mailto:jhjmilner@gmail.com" aria-label="Send Julia an email">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+                    </svg>
+                </a>
+                <a href="https://www.linkedin.com/in/juliamilner/" target="_blank" rel="noopener noreferrer" aria-label="Visit Julia's LinkedIn profile">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                </a>
+                <a href="https://medium.com/@JuliaMilner" target="_blank" rel="noopener noreferrer" aria-label="Visit Julia's Medium profile">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M4.21 0A4.201 4.201 0 0 0 0 4.21v15.58A4.201 4.201 0 0 0 4.21 24h15.58A4.201 4.201 0 0 0 24 19.79v-1.093c-.137.013-.278.02-.422.02-2.577 0-4.027-2.146-4.09-4.832a7.592 7.592 0 0 1 .022-.708c.093-1.186.475-2.241 1.105-3.022a3.885 3.885 0 0 1 1.395-1.1c.468-.237 1.127-.367 1.664-.367h.023c.101 0 .202.004.303.01V4.211A4.201 4.201 0 0 0 19.79 0Zm.198 5.583h4.165l3.588 8.435 3.59-8.435h3.864v.146l-.019.004c-.705.16-1.063.397-1.063 1.254h-.003l.003 10.274c.06.676.424.885 1.063 1.03l.02.004v.145h-4.923v145h-4.923v-.145l.019-.005c.639-.144.994-.353 1.054-1.03V7.267l-4.745 11.15h-.261L6.15 7.569v9.445c0 .857.358 1.094 1.063 1.253l.02.004v.147H4.405v-.147l.019-.004c.705-.16 1.065-.397 1.065-1.253V6.987c0-.857-.358-1.094-1.064-1.254l-.018-.004zm19.25 3.668c-1.086.023-1.733 1.323-1.813 3.124H24V9.298a1.378 1.378 0 0 0-.342-.047Zm-1.862 3.632c-.1 1.756.86 3.239 2.204 3.634v-3.634z"/>
+                    </svg>
+                </a>
+            </div>
+            <p class="footer-copy">&copy; 2026 Julia Milner — Find clarity.</p>
+        </div>
+    </footer>
+
+
+    <!-- =====================
+         SCRIPTS
+         script.js handles: nav scroll, smooth scroll,
+         hamburger menu toggle.
+    ========================== -->
+    <script src="script.js"></script>
+
+    <!-- Contact-page-specific JS:
+         - Floating label "has-value" state detection
+         - Client-side validation
+         - AJAX submission to Netlify
+         - Submit button state machine (idle / submitting / done)
+         - Success / error state rendering
+    -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        /* ── GSAP entrance animations ──────────────────────── */
+        if (typeof gsap !== 'undefined') {
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+
+                // Left panel: stagger headline, lead, availability, alt links
+                const leftEls = [
+                    document.querySelector('.contact-eyebrow'),
+                    document.querySelector('.contact-headline'),
+                    document.querySelector('.contact-lead'),
+                    document.querySelector('.contact-availability'),
+                    document.querySelector('.contact-alt-links'),
+                ].filter(Boolean);
+
+                gsap.from(leftEls, {
+                    opacity: 0,
+                    y: 22,
+                    duration: 0.8,
+                    ease: 'power2.out',
+                    stagger: 0.12,
+                    delay: 0.15
+                });
+
+                // Right panel: heading then form fields
+                const rightEls = [
+                    document.querySelector('.contact-form-heading'),
+                    ...document.querySelectorAll('.form-field'),
+                    document.querySelector('.form-submit-row'),
+                ].filter(Boolean);
+
+                gsap.from(rightEls, {
+                    opacity: 0,
+                    y: 18,
+                    duration: 0.7,
+                    ease: 'power2.out',
+                    stagger: 0.07,
+                    delay: 0.3
+                });
+            }
+        }
+
+
+        /* ── FLOATING LABEL: "has-value" state ─────────────────
+           The CSS floating label relies on:
+             :focus              → label floats up while typing
+             .has-value          → label stays up when field is filled
+           We add/remove .has-value on input, change, and blur events.
+           This also handles the select element correctly.
+        ──────────────────────────────────────────────────────── */
+        const formFields = document.querySelectorAll('.form-field');
+
+        formFields.forEach(fieldWrapper => {
+            const input = fieldWrapper.querySelector('.form-input');
+            if (!input) return;
+
+            // Set initial state (e.g. browser autofill)
+            function updateHasValue() {
+                const filled = input.value.trim() !== '';
+                fieldWrapper.classList.toggle('has-value', filled);
+            }
+
+            input.addEventListener('input',  updateHasValue);
+            input.addEventListener('change', updateHasValue); // catches select
+            input.addEventListener('blur',   updateHasValue);
+
+            // Run once on load for autofilled fields
+            updateHasValue();
+        });
+
+
+        /* ── CLIENT-SIDE VALIDATION ─────────────────────────────
+           Validates each required field on submit.
+           Shows inline error messages without a page reload.
+           Returns true only when all fields pass.
+        ──────────────────────────────────────────────────────── */
+
+        /**
+         * Marks a field as invalid and shows an error message.
+         * @param {HTMLElement} wrapper - The .form-field wrapper
+         * @param {string}      message - Human-readable error text
+         */
+        function setFieldError(wrapper, message) {
+            wrapper.classList.add('is-invalid');
+            wrapper.classList.remove('is-valid');
+            const errorEl = wrapper.querySelector('.form-error');
+            if (errorEl) errorEl.textContent = message;
+        }
+
+        /**
+         * Marks a field as valid and clears any error message.
+         * @param {HTMLElement} wrapper
+         */
+        function setFieldValid(wrapper) {
+            wrapper.classList.remove('is-invalid');
+            wrapper.classList.add('is-valid');
+            const errorEl = wrapper.querySelector('.form-error');
+            if (errorEl) errorEl.textContent = '';
+        }
+
+        /**
+         * Validates the entire form.
+         * @param  {HTMLFormElement} form
+         * @returns {boolean} true if all fields are valid
+         */
+        function validateForm(form) {
+            let valid = true;
+
+            // Name: required, at least 2 chars
+            const nameWrapper = form.querySelector('[data-field="name"]');
+            const nameInput   = nameWrapper.querySelector('input');
+            if (nameInput.value.trim().length < 2) {
+                setFieldError(nameWrapper, 'Please enter your name.');
+                valid = false;
+            } else {
+                setFieldValid(nameWrapper);
+            }
+
+            // Email: required, basic RFC-ish pattern
+            const emailWrapper = form.querySelector('[data-field="email"]');
+            const emailInput   = emailWrapper.querySelector('input');
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(emailInput.value.trim())) {
+                setFieldError(emailWrapper, 'Please enter a valid email address.');
+                valid = false;
+            } else {
+                setFieldValid(emailWrapper);
+            }
+
+            // Enquiry type: must select something
+            const enquiryWrapper = form.querySelector('[data-field="enquiry"]');
+            const enquirySelect  = enquiryWrapper.querySelector('select');
+            if (!enquirySelect.value) {
+                setFieldError(enquiryWrapper, 'Please select an enquiry type.');
+                valid = false;
+            } else {
+                setFieldValid(enquiryWrapper);
+            }
+
+            // Message: required, at least 10 chars
+            const msgWrapper = form.querySelector('[data-field="message"]');
+            const msgInput   = msgWrapper.querySelector('textarea');
+            if (msgInput.value.trim().length < 10) {
+                setFieldError(msgWrapper, 'Please include a message (at least 10 characters).');
+                valid = false;
+            } else {
+                setFieldValid(msgWrapper);
+            }
+
+            return valid;
+        }
+
+        // Live validation: re-validate a single field as the user corrects it
+        formFields.forEach(wrapper => {
+            const input = wrapper.querySelector('.form-input');
+            if (!input) return;
+            input.addEventListener('blur', () => {
+                // Only re-validate if it was previously marked invalid
+                if (wrapper.classList.contains('is-invalid')) {
+                    // Trigger a mini-validation just for this field
+                    const tempForm = input.closest('form');
+                    if (tempForm) validateForm(tempForm); // re-runs all; cheap enough
+                }
+            });
+        });
+
+
+        /* ── SUBMIT BUTTON STATE MACHINE ────────────────────────
+           States: 'idle' | 'submitting' | 'done'
+           The data-state attribute drives CSS visibility of
+           the label vs. spinner.
+        ──────────────────────────────────────────────────────── */
+        const submitBtn    = document.getElementById('submit-btn');
+        const submitStatus = document.getElementById('submit-status');
+
+        function setSubmitState(state) {
+            if (!submitBtn) return;
+            submitBtn.dataset.state = state;
+
+            if (state === 'submitting') {
+                submitBtn.disabled = true;
+                submitStatus.textContent = 'Sending your message…';
+            } else {
+                submitBtn.disabled = false;
+                submitStatus.textContent = '';
+            }
+        }
+
+
+        /* ── FORM SUBMISSION (AJAX → NETLIFY) ───────────────────
+           Netlify Forms accepts a standard URL-encoded POST to
+           the page's own URL ("/"). The hidden form-name input
+           tells Netlify which form the submission belongs to.
+
+           On success: hide form, reveal success message.
+           On failure: reveal error banner, reset button state.
+        ──────────────────────────────────────────────────────── */
+        const form          = document.getElementById('contact-form');
+        const successPanel  = document.getElementById('form-success');
+        const errorBanner   = document.getElementById('form-error-banner');
+
+        if (form) {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                // 1. Validate — abort if any field fails
+                if (!validateForm(form)) {
+                    // Move focus to first invalid field for accessibility
+                    const firstInvalid = form.querySelector('.is-invalid .form-input');
+                    if (firstInvalid) firstInvalid.focus();
+                    return;
+                }
+
+                // 2. Update button to 'submitting' state
+                setSubmitState('submitting');
+
+                // 3. Build URL-encoded body for Netlify
+                //    URLSearchParams(FormData) converts the form to key=value pairs
+                const body = new URLSearchParams(new FormData(form)).toString();
+
+                try {
+                    const response = await fetch('/', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body
+                    });
+
+                    if (response.ok) {
+                        // ── Success ──
+                        setSubmitState('done');
+
+                        // Animate form out, success panel in
+                        form.style.transition       = 'opacity 0.4s ease';
+                        form.style.opacity          = '0';
+                        successPanel.hidden         = false;
+                        successPanel.style.opacity  = '0';
+                        successPanel.style.transition = 'opacity 0.4s ease 0.3s';
+
+                        setTimeout(() => {
+                            form.hidden = true;
+                            successPanel.style.opacity = '1';
+                        }, 400);
+
+                        // Announce to screen reader
+                        submitStatus.textContent = 'Message sent successfully.';
+
+                    } else {
+                        throw new Error(`Server responded with status ${response.status}`);
+                    }
+
+                } catch (err) {
+                    // ── Error ──
+                    console.error('Form submission error:', err);
+                    setSubmitState('idle');
+                    errorBanner.hidden = false;
+                    errorBanner.focus(); // moves focus to error message for screen readers
+                }
+            });
+        }
+
+    }); // end DOMContentLoaded
+    </script>
+
+</body>
+</html>

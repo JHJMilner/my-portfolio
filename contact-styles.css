@@ -1,0 +1,636 @@
+/* =============================================
+   JULIA MILNER — CONTACT PAGE STYLES
+   Extension of style.css — link both stylesheets.
+   Covers: split layout, floating labels, form states,
+   submit button states, success/error panels.
+   ============================================= */
+
+
+/* ─── SPLIT LAYOUT ────────────────────────────── */
+/* Full-viewport two-panel grid. The dark left panel
+   holds context copy; the light right panel holds the form.
+   min-height: 100vh ensures both panels fill the screen
+   even on short content. */
+
+.contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
+}
+
+/* Shared panel base */
+.contact-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: calc(var(--nav-height) + var(--space-xl)) var(--space-lg) var(--space-xl);
+}
+
+/* Dark left panel */
+.contact-panel--dark {
+    background-color: var(--color-text);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle radial glow behind the dark panel content */
+.contact-panel--dark::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        ellipse at 30% 60%,
+        rgba(var(--color-accent-rgb), 0.12) 0%,
+        transparent 65%
+    );
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Light right panel */
+.contact-panel--light {
+    background-color: var(--color-bg);
+}
+
+/* Panel inner constrains content width */
+.contact-panel-inner {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 480px;
+}
+
+
+/* ─── DARK PANEL CONTENT ──────────────────────── */
+
+/* Eyebrow — overrides default accent colour for dark bg */
+.contact-eyebrow {
+    color: var(--color-accent) !important;
+    margin-bottom: var(--space-sm);
+}
+
+.contact-headline {
+    font-family: var(--font-serif);
+    font-size: clamp(2.25rem, 4vw, 3.5rem);
+    font-weight: var(--weight-display);
+    line-height: 1.1;
+    letter-spacing: var(--tracking-display);
+    color: var(--color-bg);
+    margin: var(--space-sm) 0 var(--space-md);
+}
+
+/* Italic brand accent in headline */
+.contact-headline em {
+    font-style: italic;
+    color: var(--color-accent);
+}
+
+.contact-lead {
+    font-family: var(--font-sans);
+    font-size: var(--typescale-body-large);
+    line-height: 1.7;
+    color: var(--color-bg-alt);
+    opacity: 0.85;
+    max-width: 42ch;
+    margin-bottom: var(--space-lg);
+    padding: 0;
+}
+
+/* Availability note */
+.contact-availability {
+    margin-bottom: var(--space-md);
+    padding-top: var(--space-md);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.contact-availability-text {
+    font-family: var(--font-sans);
+    font-size: var(--typescale-label-large);
+    line-height: 1.6;
+    color: var(--color-bg-alt);
+    opacity: 0.55;
+    margin: 0;
+    padding: 0;
+    max-width: none;
+}
+
+/* Alternative contact links */
+.contact-alt-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.contact-alt-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--color-bg-alt);
+    text-decoration: none;
+    transition: color var(--transition-base), border-color var(--transition-base);
+    position: relative;
+}
+
+.contact-alt-link:hover {
+    color: var(--color-accent);
+    border-color: rgba(150, 99, 62, 0.3);
+}
+
+.contact-alt-link:last-child {
+    border-bottom: none;
+}
+
+.contact-alt-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    opacity: 0.7;
+    transition: opacity var(--transition-base);
+}
+
+.contact-alt-link:hover .contact-alt-icon {
+    opacity: 1;
+}
+
+.contact-alt-label {
+    font-family: var(--font-sans);
+    font-size: var(--typescale-label-large);
+    font-weight: 600;
+    flex: 1;
+    /* Prevent email address from wrapping awkwardly */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* The ↗ arrow nudges right on hover */
+.contact-alt-arrow {
+    font-size: 1rem;
+    opacity: 0.4;
+    transition: transform var(--transition-base), opacity var(--transition-base);
+    flex-shrink: 0;
+}
+
+.contact-alt-link:hover .contact-alt-arrow {
+    transform: translate(3px, -3px);
+    opacity: 0.8;
+}
+
+
+/* ─── FORM HEADING ────────────────────────────── */
+
+.contact-form-heading {
+    font-family: var(--font-serif);
+    font-size: var(--typescale-headline-large);
+    font-weight: var(--weight-headline);
+    color: var(--color-text);
+    margin-bottom: var(--space-lg);
+    /* Override global h2 scale */
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+}
+
+
+/* ─── HONEYPOT (hidden from humans) ──────────── */
+
+.contact-honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+
+
+/* ─── FORM FIELDS: BASE ───────────────────────── */
+/* Floating label pattern:
+   - Label sits inside the input in the resting state
+   - On :focus OR .has-value (class added by JS), it floats
+     above the input using CSS transform + font-size change
+   - The animated underline replaces a traditional border
+     for a cleaner, editorial feel
+*/
+
+.form-field {
+    position: relative;
+    margin-bottom: var(--space-md);
+}
+
+/* The input/select/textarea itself */
+.form-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--color-border);
+    border-radius: 0;
+    padding: 1.4rem 0 0.5rem;   /* top padding makes room for the floated label */
+    font-family: var(--font-sans);
+    font-size: var(--typescale-body-large);
+    font-weight: var(--weight-body);
+    color: var(--color-text);
+    outline: none;
+    transition: border-color var(--transition-base);
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+/* Placeholder hidden — we use floating labels instead */
+.form-input::placeholder {
+    color: transparent;
+}
+
+/* Floating label */
+.form-label {
+    position: absolute;
+    left: 0;
+    top: 1.4rem;                 /* matches input padding-top */
+    font-family: var(--font-sans);
+    font-size: var(--typescale-body-large);
+    font-weight: var(--weight-body);
+    color: var(--color-text-muted);
+    pointer-events: none;        /* click passes through to input */
+    transform-origin: left top;
+    transition: transform 0.22s ease,
+                font-size 0.22s ease,
+                color 0.22s ease;
+    line-height: 1;
+}
+
+/* Float the label up when input is focused OR has a value */
+.form-field:focus-within .form-label,
+.form-field.has-value .form-label {
+    transform: translateY(-1.15rem);
+    font-size: var(--typescale-label-medium);
+    color: var(--color-accent);
+    font-weight: var(--weight-label);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+}
+
+/* Underline track */
+.form-underline {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;                    /* expands on focus via transition */
+    height: 1.5px;
+    background-color: var(--color-accent);
+    transition: width 0.3s ease;
+}
+
+/* Expand underline on focus */
+.form-field:focus-within .form-underline {
+    width: 100%;
+}
+
+
+/* ─── SELECT FIELD ────────────────────────────── */
+
+.form-select {
+    cursor: pointer;
+    /* Hide native arrow — we use a custom SVG instead */
+    -webkit-appearance: none;
+    appearance: none;
+    padding-right: 2rem;         /* make room for the custom chevron */
+    background-color: transparent;
+}
+
+/* The custom chevron icon */
+.form-select-arrow {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-30%);  /* visually centred in the input zone */
+    pointer-events: none;
+    color: var(--color-text-muted);
+    transition: color var(--transition-base), transform var(--transition-base);
+}
+
+.form-field--select:focus-within .form-select-arrow {
+    color: var(--color-accent);
+    transform: translateY(-30%) rotate(180deg); /* flip on open */
+}
+
+/* Select option text (in the native dropdown) */
+.form-select option {
+    font-family: var(--font-sans);
+    color: var(--color-text);
+    background-color: var(--color-bg);
+}
+
+
+/* ─── TEXTAREA FIELD ──────────────────────────── */
+
+.form-textarea {
+    resize: vertical;
+    min-height: 130px;
+    /* Allow the textarea to grow downward; label floats up */
+    line-height: var(--lineheight-body);
+    padding-top: 1.6rem;
+}
+
+/* The textarea label needs slightly more top offset */
+.form-field--textarea .form-label {
+    top: 1.6rem;
+}
+
+
+/* ─── VALIDATION STATES ───────────────────────── */
+
+/* Error state */
+.form-field.is-invalid .form-input {
+    border-bottom-color: var(--color-red);
+}
+
+.form-field.is-invalid .form-underline {
+    background-color: var(--color-red);
+}
+
+.form-field.is-invalid:focus-within .form-label,
+.form-field.is-invalid.has-value   .form-label {
+    color: var(--color-red);
+}
+
+/* Inline error message */
+.form-error {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: var(--typescale-label-medium);
+    color: var(--color-red);
+    margin-top: 0.35rem;
+    min-height: 1em;          /* prevents layout shift when message appears */
+    line-height: 1.4;
+}
+
+/* Valid state — subtle green confirmation */
+.form-field.is-valid .form-input {
+    border-bottom-color: var(--color-green-text);
+}
+
+.form-field.is-valid .form-underline {
+    background-color: var(--color-green-text);
+    width: 100%;
+}
+
+.form-field.is-valid:focus-within .form-label,
+.form-field.is-valid.has-value   .form-label {
+    color: var(--color-green-text);
+}
+
+
+/* ─── SUBMIT BUTTON ───────────────────────────── */
+
+.form-submit-row {
+    margin-top: var(--space-lg);
+}
+
+.form-submit-btn {
+    /* Extends .btn-primary pattern from style.css */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    font-family: var(--font-sans);
+    font-size: var(--typescale-label-large);
+    font-weight: var(--weight-label);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-bg);
+    background-color: var(--color-text);
+    border: 2px solid var(--color-text);
+    border-radius: 100px;
+    padding: 0.75rem 2rem;
+    cursor: pointer;
+    width: 100%;
+    max-width: 260px;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.25s ease,
+                color 0.25s ease,
+                border-color 0.25s ease,
+                transform 0.15s ease,
+                box-shadow 0.25s ease;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.form-submit-btn:hover:not(:disabled) {
+    background-color: var(--color-accent-dk);
+    border-color: var(--color-accent-dk);
+    box-shadow: 0 6px 20px rgba(var(--color-accent-dk-rgb), 0.25);
+}
+
+.form-submit-btn:active:not(:disabled) {
+    transform: scale(0.97);
+    box-shadow: none;
+}
+
+.form-submit-btn:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+}
+
+.form-submit-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+/* ── Button state: idle ── */
+/* Label visible, spinner hidden */
+.form-submit-btn[data-state="idle"] .submit-label  { display: inline; }
+.form-submit-btn[data-state="idle"] .submit-spinner { display: none; }
+
+/* ── Button state: submitting ── */
+/* Spinner visible, label hidden */
+.form-submit-btn[data-state="submitting"] .submit-label  { display: none; }
+.form-submit-btn[data-state="submitting"] .submit-spinner {
+    display: inline-flex;
+    animation: spin 0.9s linear infinite;
+}
+
+/* ── Button state: done ── */
+/* Keep spinner until success panel appears */
+.form-submit-btn[data-state="done"] .submit-label  { display: none; }
+.form-submit-btn[data-state="done"] .submit-spinner {
+    display: inline-flex;
+    animation: spin 0.9s linear infinite;
+    opacity: 0.5;
+}
+
+/* Spinner keyframe */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+
+/* ─── SUCCESS STATE ───────────────────────────── */
+
+.form-success {
+    text-align: center;
+    padding: var(--space-lg) 0;
+    animation: fade-in-up 0.5s ease forwards;
+}
+
+@keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.form-success-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: var(--color-bg-alt);
+    color: var(--color-green-text);
+    margin: 0 auto var(--space-md);
+}
+
+.form-success-heading {
+    font-family: var(--font-serif);
+    font-size: var(--typescale-headline-large);
+    font-weight: var(--weight-headline);
+    color: var(--color-text);
+    margin-bottom: var(--space-sm);
+}
+
+.form-success-body {
+    font-family: var(--font-sans);
+    font-size: var(--typescale-body-large);
+    color: var(--color-text-muted);
+    line-height: var(--lineheight-body);
+    max-width: 38ch;
+    margin: 0 auto;
+    padding: 0;
+}
+
+
+/* ─── ERROR BANNER ────────────────────────────── */
+
+.form-error-banner {
+    margin-top: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    background-color: rgba(145, 70, 61, 0.07);
+    border-left: 3px solid var(--color-red);
+    border-radius: 0 8px 8px 0;
+}
+
+.form-error-banner p {
+    font-family: var(--font-sans);
+    font-size: var(--typescale-label-large);
+    color: var(--color-red);
+    margin: 0;
+    padding: 0;
+    max-width: none;
+    line-height: 1.6;
+}
+
+.form-error-banner a {
+    color: var(--color-red);
+    text-decoration: underline;
+    text-decoration-color: rgba(145, 70, 61, 0.4);
+    text-underline-offset: 3px;
+}
+
+.form-error-banner a:hover {
+    text-decoration-color: var(--color-red);
+}
+
+
+/* ─── RESPONSIVE: TABLET ──────────────────────── */
+
+@media (max-width: 900px) {
+    /* Stack panels vertically */
+    .contact-layout {
+        grid-template-columns: 1fr;
+        min-height: auto;
+    }
+
+    .contact-panel {
+        padding: calc(var(--nav-height) + var(--space-lg)) var(--space-md) var(--space-lg);
+        justify-content: flex-start;
+    }
+
+    /* Dark panel doesn't need to fill half the screen when stacked */
+    .contact-panel--dark {
+        padding-bottom: var(--space-lg);
+    }
+
+    .contact-headline {
+        font-size: clamp(2rem, 6vw, 2.8rem);
+    }
+
+    .contact-lead {
+        max-width: none;
+    }
+
+    .contact-panel-inner {
+        max-width: 100%;
+    }
+
+    .form-submit-btn {
+        max-width: none;    /* full-width button on tablet */
+    }
+}
+
+
+/* ─── RESPONSIVE: MOBILE ──────────────────────── */
+
+@media (max-width: 640px) {
+    .contact-panel {
+        padding-left: var(--space-sm);
+        padding-right: var(--space-sm);
+    }
+
+    .contact-headline {
+        font-size: var(--typescale-display-small);
+    }
+
+    .contact-form-heading {
+        font-size: var(--typescale-headline-small);
+    }
+
+    /* Slightly smaller top padding on fields — tighter mobile layout */
+    .form-input {
+        padding-top: 1.25rem;
+        font-size: var(--typescale-body-large);
+    }
+
+    .form-label {
+        top: 1.25rem;
+    }
+
+    .form-field--textarea .form-label {
+        top: 1.4rem;
+    }
+}
+
+
+/* ─── REDUCED MOTION ──────────────────────────── */
+/* Floating labels still move, but without the transition.
+   Spinner becomes a static icon. */
+
+@media (prefers-reduced-motion: reduce) {
+    .form-label {
+        transition: none;
+    }
+
+    .form-underline {
+        transition: none;
+    }
+
+    .submit-spinner svg {
+        animation: none;
+    }
+
+    .form-success {
+        animation: none;
+    }
+}

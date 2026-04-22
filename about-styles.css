@@ -1,0 +1,485 @@
+/* =============================================
+   JULIA MILNER — ABOUT PAGE STYLES
+   Extension of style.css — link both stylesheets.
+   This file only contains about-page-specific rules;
+   shared layout utilities live in style.css.
+   ============================================= */
+
+
+/* ─── ABOUT HERO ──────────────────────────────── */
+
+.about-hero {
+    padding-top: calc(var(--nav-height) + var(--space-xl));
+    padding-bottom: var(--space-xl);
+    background-color: var(--color-bg-alt);
+    overflow: hidden;
+    /* Subtle radial glow matching work-hero */
+    background-image: radial-gradient(
+        circle at 60% 40%,
+        rgba(var(--color-bg-tan-rgb), 0.25) 0%,
+        rgba(var(--color-accent-rgb), 0.04) 55%,
+        transparent 100%
+    );
+}
+
+.about-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+    align-items: center;
+}
+
+/* Left: text */
+.about-hero-content {
+    max-width: 560px;
+}
+
+.about-hero-headline {
+    font-family: var(--font-serif);
+    font-size: var(--typescale-display-large);
+    font-weight: var(--weight-display);
+    line-height: 1.1;
+    letter-spacing: var(--tracking-display);
+    color: var(--color-text);
+    margin: var(--space-sm) 0 var(--space-sm);
+}
+
+/* The <em> in the headline gets the brand italic treatment */
+.about-hero-headline em {
+    font-style: italic;
+    color: var(--color-accent);
+}
+
+.about-hero-lead {
+    font-family: var(--font-sans);
+    font-size: var(--typescale-title-large);
+    font-weight: var(--weight-body);
+    line-height: 1.6;
+    color: var(--color-text-muted);
+    max-width: 50ch;
+    margin-bottom: 0;
+}
+
+/* Right: portrait */
+.about-hero-portrait {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.about-portrait-frame {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 32px;
+    overflow: hidden;
+    /* Decorative offset border, matches intro-image pattern */
+    box-shadow: 0 20px 40px rgba(42, 43, 47, 0.10);
+}
+
+/* The portrait image itself */
+.about-portrait-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: top center;
+    /* Greyscale + brand tint overlay applied via pseudo-element below */
+    filter: grayscale(15%);
+}
+
+/* Brand colour overlay — matches work-hero-image pattern */
+.about-portrait-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-accent);
+    mix-blend-mode: soft-light;
+    border-radius: 32px;
+    pointer-events: none;
+}
+
+/* Decorative offset frame behind the portrait */
+.about-portrait-frame::before {
+    content: '';
+    position: absolute;
+    top: -14px;
+    right: -14px;
+    width: 100%;
+    height: 100%;
+    border: 1px solid var(--color-border);
+    border-radius: 32px;
+    z-index: -1;
+    pointer-events: none;
+}
+
+
+/* ─── SHARED SECTION LAYOUT ───────────────────── */
+/* Bio and timeline sections share a two-column layout:
+   a narrow sticky label on the left, main content on the right. */
+
+.about-section {
+    padding: var(--space-xl) 0;
+}
+
+.about-bio-inner {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: var(--space-lg);
+    align-items: start;
+}
+
+/* Sticky section label (desktop only) */
+.about-section-aside {
+    padding-top: 0.3rem; /* visually aligns with body text cap height */
+}
+
+.about-section-label {
+    font-family: var(--font-sans);
+    font-size: var(--typescale-label-medium);
+    font-weight: var(--weight-label);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    color: var(--color-accent);
+    display: block;
+    position: sticky;
+    top: calc(var(--nav-height) + var(--space-sm));
+}
+
+/* Main content column */
+.about-section-content {
+    max-width: 680px;
+}
+
+.about-section-heading {
+    font-family: var(--font-serif);
+    font-size: var(--typescale-headline-large);
+    font-weight: var(--weight-headline);
+    color: var(--color-text);
+    margin-bottom: var(--space-md);
+    /* Override global h2 scale which is too large for article body */
+    font-size: clamp(1.75rem, 3vw, 2rem);
+}
+
+.about-section-content p {
+    font-size: var(--typescale-body-large);
+    line-height: var(--lineheight-body);
+    color: var(--color-text-muted);
+    max-width: 65ch;
+    margin-bottom: var(--space-sm);
+}
+
+.about-section-content p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* ─── BIO SECTION ─────────────────────────────── */
+
+.about-bio {
+    background-color: var(--color-bg);
+    border-top: 1px solid var(--color-border);
+}
+
+
+/* ─── APPROACH / VALUES SECTION ───────────────── */
+
+.about-approach {
+    background-color: var(--color-bg-alt);
+}
+
+.about-approach-header {
+    margin-bottom: var(--space-lg);
+}
+
+.about-approach-header h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.75rem, 3vw, 2.8125rem);
+    font-weight: var(--weight-headline);
+    color: var(--color-text);
+    margin-bottom: 0;
+}
+
+/* Three-column principles grid */
+.about-principles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+}
+
+.about-principle-card {
+    background-color: var(--color-bg);
+    border-radius: 20px;
+    padding: var(--space-md);
+    border-top: 2px solid var(--color-accent);
+    /* Restrained hover — content first */
+    transition: transform var(--transition-base),
+                box-shadow var(--transition-base);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .about-principle-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 16px 40px rgba(42, 43, 47, 0.09);
+    }
+}
+
+/* Large decorative number */
+.about-principle-number {
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--color-accent);
+    opacity: 0.25;
+    margin-bottom: var(--space-sm);
+    letter-spacing: -0.02em;
+    /* Prevents number from interfering with heading baseline */
+    display: block;
+}
+
+.about-principle-card h3 {
+    font-family: var(--font-serif);
+    font-size: var(--typescale-headline-small);
+    font-weight: var(--weight-headline);
+    color: var(--color-text);
+    margin-bottom: 0.75rem;
+}
+
+.about-principle-card p {
+    font-family: var(--font-sans);
+    font-size: var(--typescale-label-large);
+    font-weight: var(--weight-body);
+    line-height: var(--lineheight-body);
+    color: var(--color-text-muted);
+    max-width: none;
+    margin-bottom: 0;
+    padding: 0;
+}
+
+
+/* ─── CAREER TIMELINE SECTION ──────────────────── */
+
+.about-timeline-section {
+    background-color: var(--color-bg);
+    border-top: 1px solid var(--color-border);
+}
+
+/* Timeline ordered list */
+.about-timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    /* The vertical track is a left border on each item */
+}
+
+/* Individual timeline entry */
+.about-timeline-item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: var(--space-md);
+    padding-bottom: var(--space-md);
+    margin-bottom: var(--space-md);
+    border-bottom: 1px solid var(--color-border);
+    position: relative;
+}
+
+/* Remove bottom border from last item */
+.about-timeline-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+/* Accent dot on the left track */
+.about-timeline-item::before {
+    content: '';
+    position: absolute;
+    left: calc(120px + var(--space-md) - 5px); /* aligns with left edge of body column */
+    top: 0.55em; /* visually centres with role heading cap height */
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    flex-shrink: 0;
+}
+
+/* Education-variant: muted dot, no description */
+.about-timeline-item--edu::before {
+    background-color: var(--color-bg-tan);
+    width: 6px;
+    height: 6px;
+    top: 0.6em;
+}
+
+/* Date column */
+.about-timeline-meta {
+    padding-top: 0.15rem; /* aligns with role heading cap height */
+}
+
+.about-timeline-date {
+    font-family: var(--font-sans);
+    font-size: var(--typescale-label-medium);
+    font-weight: var(--weight-label);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    color: var(--color-accent);
+    white-space: nowrap;
+    display: block;
+}
+
+/* Body column */
+.about-timeline-body {
+    padding-left: var(--space-md); /* indents past the dot */
+}
+
+.about-timeline-role {
+    font-family: var(--font-serif);
+    font-size: var(--typescale-headline-small);
+    font-weight: var(--weight-headline);
+    color: var(--color-text);
+    margin-bottom: 0.2rem;
+}
+
+.about-timeline-org {
+    font-family: var(--font-sans);
+    font-size: var(--typescale-label-large);
+    font-weight: 600;
+    color: var(--color-accent-dk);
+    display: block;
+    margin-bottom: 0.6rem;
+}
+
+/* Small clarifying note within org name (e.g. "formerly Macadamian") */
+.about-timeline-note {
+    font-weight: 400;
+    color: var(--color-text-muted);
+    font-size: var(--typescale-label-medium);
+}
+
+.about-timeline-body p {
+    font-family: var(--font-sans);
+    font-size: var(--typescale-label-large);
+    line-height: 1.65;
+    color: var(--color-text-muted);
+    max-width: 60ch;
+    margin: 0;
+    padding: 0;
+}
+
+/* Education variant: no body paragraph, reduced weight */
+.about-timeline-item--edu .about-timeline-role {
+    font-size: var(--typescale-title-large);
+    color: var(--color-text-muted);
+}
+
+.about-timeline-item--edu .about-timeline-org {
+    color: var(--color-text-muted);
+    font-weight: 400;
+}
+
+
+/* ─── RESPONSIVE: TABLET ──────────────────────── */
+
+@media (max-width: 900px) {
+
+    .about-hero-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+    }
+
+    .about-hero-content {
+        max-width: 100%;
+    }
+
+    .about-hero-lead {
+        max-width: none;
+    }
+
+    .about-hero-portrait {
+        order: -1; /* portrait above text on tablet/mobile */
+        justify-content: flex-start;
+    }
+
+    .about-portrait-frame {
+        max-width: 300px;
+    }
+
+    /* Collapse aside label into inline flow */
+    .about-bio-inner {
+        grid-template-columns: 1fr;
+        gap: var(--space-sm);
+    }
+
+    .about-section-aside {
+        padding-top: 0;
+    }
+
+    .about-section-label {
+        position: static; /* un-sticky on small screens */
+        margin-bottom: 0.25rem;
+    }
+
+    /* Principle cards: single column */
+    .about-principles-grid {
+        grid-template-columns: 1fr;
+        max-width: 560px;
+    }
+
+    /* Timeline: compress date column */
+    .about-timeline-item {
+        grid-template-columns: 90px 1fr;
+        gap: var(--space-sm);
+    }
+
+    .about-timeline-item::before {
+        left: calc(90px + var(--space-sm) - 5px);
+    }
+}
+
+
+/* ─── RESPONSIVE: MOBILE ──────────────────────── */
+
+@media (max-width: 640px) {
+
+    .about-hero {
+        padding-top: calc(var(--nav-height) + var(--space-lg));
+        padding-bottom: var(--space-lg);
+    }
+
+    .about-hero-headline {
+        font-size: var(--typescale-display-medium);
+    }
+
+    .about-hero-lead {
+        font-size: var(--typescale-body-large);
+    }
+
+    /* Full-width portrait on mobile */
+    .about-portrait-frame {
+        max-width: 100%;
+    }
+
+    /* Timeline: stack date above body */
+    .about-timeline-item {
+        grid-template-columns: 1fr;
+        gap: 0.3rem;
+    }
+
+    .about-timeline-item::before {
+        display: none; /* hide dot on single-column layout */
+    }
+
+    .about-timeline-meta {
+        padding-top: 0;
+    }
+
+    .about-timeline-body {
+        padding-left: 0;
+    }
+
+    /* Tighten section spacing on mobile */
+    .about-section {
+        padding: var(--space-lg) 0;
+    }
+}
