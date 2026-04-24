@@ -791,6 +791,18 @@
     padding: var(--space-xl) var(--space-md);
 }
 
+/* ─ MOBILE SCROLL PERFORMANCE ─ */
+/* Pre-promotes animated elements to compositor layers.
+   Remove will-change once animation completes (handled in JS). */
+.cs-section,
+.cs-snapshot-item,
+.cs-breadcrumb,
+.cs-title,
+.cs-subtitle,
+.cs-cover {
+    will-change: transform, opacity;
+}
+
 .cs-section {
     margin-bottom: calc(var(--space-xl) * 0.8);
 }

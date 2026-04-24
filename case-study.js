@@ -1,106 +1,113 @@
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
 
-    document.addEventListener('DOMContentLoaded', () => {
-        if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-        gsap.registerPlugin(ScrollTrigger);
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
- 
-        // Hero text elements — staggered fade up on load
-        const heroElements = [
-            document.querySelector('.cs-breadcrumb'),
-            document.querySelector('.cs-hero .label-eyebrow'),
-            document.querySelector('.cs-title'),
-            document.querySelector('.cs-subtitle'),
-        ].filter(Boolean);
- 
-        if (heroElements.length) {
-            gsap.from(heroElements, {
-                opacity: 0,
-                y: 24,
-                duration: 0.8,
-                ease: 'power2.out',
-                stagger: 0.12,
-                delay: 0.2
-            });
-        }
- 
-        // Hero thumbnail — fades in alongside the cover image
-        const heroThumb = document.querySelector('.cs-hero-thumb');
-        const cover     = document.querySelector('.cs-cover');
-        const fadeTargets = [heroThumb, cover].filter(Boolean);
- 
-        if (fadeTargets.length) {
-            gsap.from(fadeTargets, {
-                opacity: 0,
-                y: 24,
-                duration: 1,
-                ease: 'power2.out',
-                stagger: 0.1,
-                delay: 0.5
-            });
-        }
- 
-        // Snapshot items — stagger in on scroll
-        const snapshotItems = gsap.utils.toArray('.cs-snapshot-item');
-        if (snapshotItems.length) {
-            gsap.from(snapshotItems, {
-                opacity: 0,
-                y: 16,
-                duration: 0.55,
-                ease: 'power2.out',
-                stagger: 0.07,
-                scrollTrigger: {
-                    trigger: '.cs-snapshot',
-                    start: 'top 88%',
-                    toggleActions: 'play none none none'
-                }
-            });
-        }
- 
-        // Body sections — fade up on scroll
-        gsap.utils.toArray('.cs-section').forEach(section => {
-            gsap.from(section, {
-                opacity: 0,
-                y: 28,
-                duration: 0.75,
-                ease: 'power2.out',
-                scrollTrigger: {
-                    trigger: section,
-                    start: 'top 88%',
-                    toggleActions: 'play none none none'
-                }
-            });
+    gsap.registerPlugin(ScrollTrigger);
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    // Detect mobile once — used to simplify animations on small screens
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+    // ── Hero: breadcrumb, eyebrow, title, subtitle ──────────────
+    // On mobile: opacity only, no y movement (avoids layout recalc)
+    const heroElements = [
+        document.querySelector('.cs-breadcrumb'),
+        document.querySelector('.cs-hero .label-eyebrow'),
+        document.querySelector('.cs-title'),
+        document.querySelector('.cs-subtitle'),
+    ].filter(Boolean);
+
+    if (heroElements.length) {
+        gsap.from(heroElements, {
+            opacity: 0,
+            y: isMobile ? 0 : 20,
+            duration: 0.7,
+            ease: 'power2.out',
+            stagger: 0.1,
+            delay: 0.15,
+            // Clean up will-change after animation — reduces GPU memory use
+            onComplete: () => {
+                heroElements.forEach(el => el.style.willChange = 'auto');
+            }
         });
- 
-        // Approach trio images — staggered in on scroll
-        const trioFigures = gsap.utils.toArray('.cs-trio-figure');
-        if (trioFigures.length) {
-            gsap.from(trioFigures, {
-                opacity: 0,
-                y: 20,
-                duration: 0.65,
-                ease: 'power2.out',
-                stagger: 0.1,
-                scrollTrigger: {
-                    trigger: '.cs-trio-images',
-                    start: 'top 88%',
-                    toggleActions: 'play none none none'
-                }
-            });
-        }
- 
-        // Closing statement
-        const closing = document.querySelector('.cs-closing-text');
-        if (closing) {
-            gsap.from(closing, {
-                opacity: 0,
-                y: 20,
-                duration: 0.8,
-                ease: 'power2.out',
-                scrollTrigger: {
-                    trigger: '.cs-closing',
-                    start: 'top 85%',
-                    toggleActions: 'play none none none'
-                }
-            });
-        }
+    }
+
+    // ── Cover image: opacity fade only, no y ───────────────────
+    // Removed y movement — animating a large image element on load
+    // causes layout thrash. Pure opacity is GPU-composited cleanly.
+    const cover = document.querySelector('.cs-cover');
+    if (cover) {
+        gsap.from(cover, {
+            opacity: 0,
+            duration: 0.8,
+            ease: 'power1.out',
+            delay: 0.3,
+            onComplete: () => { cover.style.willChange = 'auto'; }
+        });
+    }
+
+    // ── Snapshot items ─────────────────────────────────────────
+    // Batched into one ScrollTrigger instead of six individual ones.
+    // On mobile: fade only.
+    const snapshotItems = gsap.utils.toArray('.cs-snapshot-item');
+    if (snapshotItems.length) {
+        gsap.from(snapshotItems, {
+            opacity: 0,
+            y: isMobile ? 0 : 14,
+            duration: 0.5,
+            ease: 'power2.out',
+            stagger: 0.06,
+            onComplete: () => {
+                snapshotItems.forEach(el => el.style.willChange = 'auto');
+            },
+            scrollTrigger: {
+                trigger: '.cs-snapshot',
+                start: 'top 90%',
+                once: true   // destroys listener after firing — fewer active watchers
+            }
+        });
+    }
+
+    // ── Body sections ──────────────────────────────────────────
+    // On desktop: gentle y fade-up per section.
+    // On mobile: opacity only — no y at all. Content blocks are
+    // layout-heavy; moving them on mobile causes the most lag.
+    const sections = gsap.utils.toArray('.cs-section');
+    sections.forEach(section => {
+        gsap.from(section, {
+            opacity: 0,
+            y: isMobile ? 0 : 20,
+            duration: 0.65,
+            ease: 'power1.out',
+            onComplete: () => { section.style.willChange = 'auto'; },
+            scrollTrigger: {
+                trigger: section,
+                start: 'top 92%',  // fires earlier so animation is done by the time
+                once: true          // user reaches the content — no mid-read flash
+            }
+        });
     });
+
+    // ── Closing statement ──────────────────────────────────────
+    const closing = document.querySelector('.cs-closing-text');
+    if (closing) {
+        gsap.from(closing, {
+            opacity: 0,
+            y: isMobile ? 0 : 16,
+            duration: 0.7,
+            ease: 'power2.out',
+            onComplete: () => { closing.style.willChange = 'auto'; },
+            scrollTrigger: {
+                trigger: '.cs-closing',
+                start: 'top 88%',
+                once: true
+            }
+        });
+    }
+
+    // ── Refresh after all images load ─────────────────────────
+    // Images change layout height after load. Without this,
+    // ScrollTrigger start positions are calculated against the
+    // pre-image layout — causing animations to fire at wrong points.
+    window.addEventListener('load', () => ScrollTrigger.refresh());
+});
