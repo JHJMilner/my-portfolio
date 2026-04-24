@@ -742,6 +742,7 @@
     letter-spacing: var(--tracking-label);
     color: var(--color-accent);
     display: block;
+    margin-bottom: 0.4rem;
 }
 
 .cs-snapshot-value {
@@ -805,6 +806,7 @@
 
 .cs-section {
     margin-bottom: calc(var(--space-xl) * 0.8);
+    content-visibility: auto;  /* allows the browser to skip rendering off-screen content until it's needed, improving performance */
 }
 
 /* Last section before closing needs no extra margin */
@@ -821,7 +823,7 @@
     letter-spacing: var(--tracking-label);
     color: var(--color-accent);
     display: block;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.35rem;
 }
 
 /* Section heading — overrides the global h2 scale to
@@ -831,16 +833,16 @@
     font-size: var(--typescale-headline-large);
     font-weight: var(--weight-headline);
     color: var(--color-text);
-    margin-bottom: var(--space-sm);
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
     /* Reset from global h2 which is much larger */
-    font-size: var(--typescale-headline-large);
 }
 
 .cs-section p {
     font-size: var(--typescale-body-large);
     line-height: var(--lineheight-body);
     color: var(--color-text-muted);
-    max-width: none;
+    max-width: 72ch;
     margin-bottom: var(--space-sm);
 }
 
@@ -865,6 +867,7 @@
     font-size: var(--typescale-body-large);
     line-height: var(--lineheight-body);
     color: var(--color-text-muted);
+    max-width: 70ch;
 }
 
 /* Accent dot bullet */
@@ -886,6 +889,7 @@
     border-left: 3px solid var(--color-accent);
     border-radius: 0 20px 20px 0;
     padding: var(--space-md);
+    margin-top: calc(var(--space-xl) * 0.6); 
 }
 
 .cs-section--impact h2 {
@@ -1022,7 +1026,7 @@
 
 .cs-closing {
     background-color: var(--color-text);
-    padding: var(--space-lg) 0;
+    padding: var(--space-xl) 0;
     text-align: center;
 }
 
@@ -1179,7 +1183,8 @@
     }
 
     .cs-cover-inner {
-        height: 260px;
+        height: auto;
+        aspect-ratio: 21 / 8;
         border-radius: 16px;
     }
 

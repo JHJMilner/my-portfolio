@@ -33,8 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ── Cover image: opacity fade only, no y ───────────────────
-    // Removed y movement — animating a large image element on load
-    // causes layout thrash. Pure opacity is GPU-composited cleanly.
     const cover = document.querySelector('.cs-cover');
     if (cover) {
         gsap.from(cover, {
@@ -47,7 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ── Snapshot items ─────────────────────────────────────────
-    // Batched into one ScrollTrigger instead of six individual ones.
     // On mobile: fade only.
     const snapshotItems = gsap.utils.toArray('.cs-snapshot-item');
     if (snapshotItems.length) {
@@ -70,8 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ── Body sections ──────────────────────────────────────────
     // On desktop: gentle y fade-up per section.
-    // On mobile: opacity only — no y at all. Content blocks are
-    // layout-heavy; moving them on mobile causes the most lag.
+    // On mobile: opacity only — no y at all. 
     const sections = gsap.utils.toArray('.cs-section');
     sections.forEach(section => {
         gsap.from(section, {
@@ -82,8 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
             onComplete: () => { section.style.willChange = 'auto'; },
             scrollTrigger: {
                 trigger: section,
-                start: 'top 92%',  // fires earlier so animation is done by the time
-                once: true          // user reaches the content — no mid-read flash
+                start: 'top 92%',  
+                once: true          
             }
         });
     });
@@ -106,8 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ── Refresh after all images load ─────────────────────────
-    // Images change layout height after load. Without this,
-    // ScrollTrigger start positions are calculated against the
-    // pre-image layout — causing animations to fire at wrong points.
+    // Images change layout height after load. 
     window.addEventListener('load', () => ScrollTrigger.refresh());
 });
