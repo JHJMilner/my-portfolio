@@ -668,13 +668,18 @@
     padding: 0 var(--space-md);
 }
 
+    
 .cs-cover-inner {
     width: 100%;
-    height: 440px;
+    height: auto;
+    aspect-ratio: 21 / 8;
     overflow: hidden;
-    border-radius: 24px;
+    border-radius: 16px;
     display: block;
     position: relative;                        /* add this for overlay effects — needed to anchor the pseudo-element */
+    box-shadow: 0 8px 32px rgba(55, 27, 6, 0.10),
+                0 1px 4px  rgba(55, 27, 6, 0.06);
+    
 }
 
 .cs-cover-inner svg {
@@ -1180,12 +1185,6 @@
 
     .cs-title {
         font-size: var(--typescale-display-medium);
-    }
-
-    .cs-cover-inner {
-        height: auto;
-        aspect-ratio: 21 / 8;
-        border-radius: 16px;
     }
 
     .cs-pagination-inner {
