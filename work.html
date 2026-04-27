@@ -3,10 +3,6 @@
 
 <head>
     <meta charset="UTF-8" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Julia Milner — UX research case studies spanning product strategy, clinical research, service design, and AI evaluation." />
@@ -24,6 +20,20 @@
     <!-- Stylesheets: base first, then page extensions -->
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="work-styles.css" />
+
+    <!-- Basic favicon for most modern browsers -->
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">
+
+    <!-- Apple touch icon (iOS, iPadOS) -->
+    <link rel="apple-touch-icon" href="images/favicon/apple-touch-icon.png">
+
+     <!-- Android Chrome icon -->
+    <link rel="android-chrome" sizes="192x192" href="images/favicon/android-chrome-192x192.png">
+    <link rel="android-chrome" sizes="512x512" href="images/favicon/android-chrome-512x512.png">
+
+    <!-- Web app manifest (Chrome, Edge, Samsung Internet) -->
+    <link rel="manifest" href="images/favicon/site.webmanifest">
 </head>
 
 <body>
@@ -250,6 +260,7 @@
          PLACEHOLDER: Replace copy and avatar initials
          once real testimonials are confirmed.
     ========================== -->
+    <section class="hidden"> <!-- /.hidden DELETE when ready to display content-->
     <section id="testimonials" class="section-testimonials" aria-labelledby="testimonials-heading">
         <div class="container">
             <span class="label-eyebrow">Testimonials</span>
@@ -302,7 +313,7 @@
             </div><!-- /.testimonials-grid -->
         </div><!-- /.container -->
     </section>
-
+    </section> <!-- /.hidden DELETE when ready to display content-->
 
     <!-- =====================
          EXPANDED SERVICES SECTION

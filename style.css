@@ -147,6 +147,11 @@ a:hover {
     border: 0;
 }
 
+/* SECTION HIDDEN UNTIL I COMPLETE IT */
+.hidden {
+    display: none;
+}
+
 /* ─── TYPOGRAPHY ─────────────────────────────── */
 h1 {
     font-family: var(--font-serif);
