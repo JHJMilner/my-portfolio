@@ -1231,3 +1231,67 @@
     aspect-ratio: 4 / 3;
     border-radius: 12px;
 }
+
+/* ─── EASTER EGG — WORK HERO IMAGE LINK ─────── */
+/*
+   Wraps the decorative work hero image in a clickable link.
+   The ::after pseudo-element reveals a subtle hint icon on hover
+   so curious visitors are rewarded for noticing the hover state.
+   The existing .work-hero-image hover transform/shadow still fires
+   automatically because the <a> carries both classes.
+*/
+
+.work-hero-image--easter-egg {
+    /* <a> tags aren't block by default — match the original div layout */
+    display: block;
+    text-decoration: none;
+    cursor: pointer;
+    /* Establish a stacking context so the hint badge sits inside the border-radius */
+    position: relative;
+}
+
+/* Subtle hint badge — only visible on hover on pointer devices */
+.work-hero-image--easter-egg::before {
+    content: '⁖✶';
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    z-index: 3;
+    font-size: 18px;
+    line-height: 1;
+    color: var(--color-bg);
+    background-color: rgba(var(--color-accent-rgb), 0.75);
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Hidden by default */
+    opacity: 0;
+    transform: scale(0.6) translateY(6px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    /* Don't interfere with image clicks */
+    pointer-events: none;
+    backdrop-filter: blur(4px);
+}
+
+/* Reveal the badge when the parent is hovered on a real pointer device */
+@media (hover: hover) and (pointer: fine) {
+    .work-hero-image--easter-egg:hover::before {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Focus state for keyboard navigation — show the badge persistently */
+.work-hero-image--easter-egg:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+    border-radius: 32px; /* match the image border-radius */
+}
+
+.work-hero-image--easter-egg:focus-visible::before {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}

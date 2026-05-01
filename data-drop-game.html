@@ -262,11 +262,72 @@
     }
     #hint-btn:active { transform: scale(0.95); }
 
+    /* ─── BACK-TO-PORTFOLIO LINKS ───────────────── */
+
+/* HUD variant — sits left of the level display.
+   Matches the existing HUD label typographic style but is clearly interactive. */
+.hud-back-link {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: rgba(245, 230, 211, 0.4);
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+    white-space: nowrap;
+    /* Minimum tap target — WCAG 2.5.5 recommends 44×44px */
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+}
+
+.hud-back-link:hover {
+    color: rgba(245, 230, 211, 0.9);
+    background-color: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.14);
+}
+
+.hud-back-link:focus-visible {
+    outline: 2px solid #96633E;
+    outline-offset: 2px;
+}
+
+/* Start screen variant — quiet, below the CTA */
+.start-back-link {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(245, 230, 211, 0.25);
+    text-decoration: none;
+    margin-top: 18px;
+    letter-spacing: 0.04em;
+    transition: color 0.2s ease;
+}
+
+.start-back-link:hover {
+    color: rgba(245, 230, 211, 0.65);
+}
+
+.start-back-link:focus-visible {
+    outline: 2px solid #96633E;
+    outline-offset: 3px;
+    border-radius: 2px;
+}
   </style>
 </head>
 <body>
   <div id="game-container">
     <div id="hud">
+      <a href="work.html"
+       class="hud-back-link"
+       aria-label="Back to Julia Milner's portfolio">
+        ← Portfolio
+      </a>
       <div class="hud-box" id="level-display">
         <span class="hud-label">Level</span>
         <span class="hud-value" id="hud-level">1</span>
@@ -300,6 +361,7 @@
     </div>
     <div class="subtitle"><b>Match 3 or more to find "insights"!</b></div>
     <button class="btn btn-primary" id="start-btn">Play</button>
+    <a href="work.html" class="start-back-link">← Back to Julia's portfolio</a>
   </div>
 
 <!-- Tutorial Screen -->
