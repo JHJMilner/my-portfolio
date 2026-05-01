@@ -10,7 +10,7 @@
     --color-bg-alt:       #F5E6D3; /* Brown - Soft section transitions */
     --color-bg-tan:       #D9B38C; /* Brown - Card backgrounds or emphasized blocks */
     --color-text:         #371B06; /* High-contrast body text */
-    --color-text-muted:   #5C402A; /* Secondary info and meta-text */
+    --color-text-muted:   #5c402a; /* Secondary info and meta-text */
     --color-accent:       #96633E; /* Brown - Primary brand color/Buttons */
     --color-accent-dk:    #7A4D2E; /* Brown - Accessible icons, links, and bold UI */
     --color-green-lt:     #A4AD6C; /* Green - soft backgrounds */
@@ -21,7 +21,7 @@
     --color-blue-lt:      #8EABB8; /* Blue - large UI elements, borders, decorations */
     --color-blue:         #4B6573; /* Blue - accessible text/icons */
     --color-blue-dk:      #32424A; /* Blue - high-contrast editorial moments */
-    --color-grey:         #706E6C;
+    --color-grey:         #706e6c; /* Grey - outlines and subtle border ele*/
     --color-red:          #91463D; /* Red - error states and critical accents */
     --color-border:       rgba(59, 44, 27, 0.122);
 
@@ -34,6 +34,8 @@
     --color-bg-blue-rgb:    235, 242, 245;
     --color-blue-lt-rgb:    142, 171, 184;
     --color-blue-rgb:       75, 101, 115;
+    --color-grey-rgb:       112, 110, 108;
+    --color-blue-dk-rgb:    50, 66, 74;
 
 
     /* Typography */

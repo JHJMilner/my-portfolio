@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="description" content="Just a silly little game to add a sprinkle of fun to your day - Enjoy my website! Julia Milner" />
+    <title>Data Drop Game | Julia Milner — UX Researcher & Service Designer</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+     <!-- Basic favicon for most modern browsers -->
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">
+
+    <!-- Apple touch icon (iOS, iPadOS) -->
+    <link rel="apple-touch-icon" href="images/favicon/apple-touch-icon.png">
+
+     <!-- Android Chrome icon -->
+    <link rel="android-chrome" sizes="192x192" href="images/favicon/android-chrome-192x192.png">
+    <link rel="android-chrome" sizes="512x512" href="images/favicon/android-chrome-512x512.png">
+
+    <!-- Web app manifest (Chrome, Edge, Samsung Internet) -->
+    <link rel="manifest" href="images/favicon/site.webmanifest">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Inter', sans-serif; }
+    body { background: linear-gradient(135deg, #251203, #5C402A, #371B06); }
+    
+    #game-container {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+
+    /* Top HUD */
+    #hud {
+      position: fixed; top: 0; left: 0; right: 0;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px 16px; z-index: 10;
+      background: rgba(37, 18, 3, 0.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .hud-box {
+      display: flex; flex-direction: column; align-items: center;
+      min-width: 70px;
+    }
+    .hud-label {
+      font-size: 10px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 1.5px; color: rgba(245,230,211,0.45);
+    }
+    .hud-value {
+      font-size: 22px; font-weight: 800; color: #fff;
+      line-height: 1.2;
+    }
+    #level-display .hud-value { color: #D9B38C; }
+    #score-display .hud-value { color: #A4AD6C; }
+    #moves-display .hud-value { color: #8EABB8; }
+    #target-display .hud-value { color: #96633E; font-size: 16px; }
+
+    /* Progress bar */
+    #progress-bar-container {
+      position: fixed; top: 62px; left: 16px; right: 16px;
+      height: 4px; background: rgba(255,255,255,0.08);
+      border-radius: 2px; z-index: 10;
+    }
+    #progress-bar {
+      height: 100%; width: 0%; border-radius: 2px;
+      background: linear-gradient(90deg, #D9B38C, #96633E);
+      transition: width 0.4s ease;
+    }
+
+    /* Canvas */
+    #game-canvas {
+      display: block; touch-action: none;
+      margin-top: 30px;
+    }
+
+    /* Combo popup */
+    .combo-popup {
+      position: fixed; left: 50%; transform: translateX(-50%);
+      font-size: 28px; font-weight: 900; color: #D9B38C;
+      text-shadow: 0 0 20px rgba(251,191,36,0.5);
+      pointer-events: none; z-index: 20;
+      animation: comboAnim 1s ease-out forwards;
+    }
+    @keyframes comboAnim {
+      0% { opacity: 1; top: 45%; transform: translateX(-50%) scale(0.5); }
+      50% { opacity: 1; transform: translateX(-50%) scale(1.2); }
+      100% { opacity: 0; top: 30%; transform: translateX(-50%) scale(1); }
+    }
+
+    /* Overlay screens */
+    .overlay {
+      position: fixed; inset: 0; z-index: 100;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      background: rgba(37, 18, 3, 0.92);
+      backdrop-filter: blur(15px);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .overlay.active { opacity: 1; pointer-events: auto; }
+    .overlay h1 {
+      font-size: 36px; font-weight: 900; color: #fff;
+      margin-bottom: 8px;
+    }
+    .overlay h2 {
+      font-size: 18px; font-weight: 600; color: rgba(255,255,255,0.5);
+      margin-bottom: 30px;
+    }
+    .overlay .stat-row {
+      display: flex; gap: 30px; margin-bottom: 30px;
+    }
+    .overlay .stat {
+      text-align: center;
+    }
+    .overlay .stat-val {
+      font-size: 28px; font-weight: 800; color: #D9B38C;
+    }
+    .overlay .stat-lbl {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 1px; color: rgba(255,255,255,0.4);
+    }
+    .btn {
+      padding: 14px 40px; border: none; border-radius: 12px;
+      font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 700;
+      cursor: pointer; transition: transform 0.15s ease, opacity 0.15s ease;
+      margin: 6px;
+    }
+    .btn:active { transform: scale(0.95); }
+    .btn-primary {
+      background: #7A4D2E; color: #FDF9F4;
+    }
+    .btn-secondary {
+      background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* Start screen */
+    #start-screen .game-title {
+      font-size: 42px; font-weight: 900;
+      background: linear-gradient(135deg, #8EABB8, #EBF2F5, #A4AD6C, #D9B38C);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 6px;
+    }
+    #start-screen .subtitle {
+      font-size: 14px; color: rgba(255,255,255,0.4); font-weight: 600;
+      margin-bottom: 40px;
+    }
+
+    /* Particles canvas */
+    #particles-canvas {
+      position: fixed; inset: 0; pointer-events: none; z-index: 5;
+    }
+
+   /* Data icon animation on start screen */
+    .data-icon-row {
+      display: flex; gap: 14px; margin-bottom: 30px;
+    }
+    .data-icon-row span {
+      font-size: 28px;
+      animation: iconFloat 3s ease-in-out infinite;
+    }
+    .data-icon-row span:nth-child(2) { animation-delay: 0.3s; }
+    .data-icon-row span:nth-child(3) { animation-delay: 0.6s; }
+    .data-icon-row span:nth-child(4) { animation-delay: 0.9s; }
+    .data-icon-row span:nth-child(5) { animation-delay: 1.2s; }
+    .data-icon-row span:nth-child(6) { animation-delay: 1.5s; }
+    @keyframes iconFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* Tutorial overlay */
+    #tutorial-screen {
+      position: fixed; inset: 0; z-index: 200;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      background: rgba(21, 10, 2, 0.96);
+      backdrop-filter: blur(25px);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.4s ease;
+      padding: 20px;
+    }
+    #tutorial-screen.active { opacity: 1; pointer-events: auto; }
+
+    .tutorial-card {
+      max-width: 360px; width: 100%;
+      background: rgba(92, 64, 42, 0.1);
+      border: 1px solid rgba(150, 99, 62, 0.15);
+      border-radius: 16px;
+      padding: 30px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .tutorial-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, #D9B38C, transparent);
+    }
+    .tutorial-header {
+      font-size: 11px; font-weight: 700;
+      color: #FDF9F4; letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .tutorial-title {
+      font-size: 22px; font-weight: 800; color: #fff;
+      margin-bottom: 20px;
+    }
+    .tutorial-steps {
+      list-style: none; margin-bottom: 24px;
+    }
+    .tutorial-steps li {
+      display: flex; align-items: flex-start; gap: 12px;
+      margin-bottom: 16px;
+      font-size: 13px; color: rgba(164, 161, 157, 0.7);
+      line-height: 1.5;
+    }
+    .step-icon {
+      flex-shrink: 0;
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 8px;
+      background: rgba(122,77,46,0.1);
+      border: 1px solid rgba(150,99,62,0.2);
+      font-size: 15px;
+    }
+    .tutorial-step-num {
+      font-size: 11px; font-weight: 700; color: #FDF9F4;
+      display: block; margin-bottom: 2px;
+    }
+    .tutorial-footer {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .tutorial-dismiss {
+      font-size: 10px; color: rgba(164, 161, 157,0.3);
+      letter-spacing: 1px;
+    }
+
+    /* Hint button in HUD */
+    #hint-btn {
+      position: fixed; bottom: 16px; right: 16px;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: rgba(122,77,46,0.1);
+      border: 1px solid rgba(150,99,62,0.2);
+      color: #FDF9F4;
+      font-size: 20px; font-weight: 700;
+      cursor: pointer; z-index: 15;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    #hint-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(150, 99, 62, 0.3);
+    }
+    #hint-btn:active { transform: scale(0.95); }
+
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <div id="hud">
+      <div class="hud-box" id="level-display">
+        <span class="hud-label">Level</span>
+        <span class="hud-value" id="hud-level">1</span>
+      </div>
+      <div class="hud-box" id="score-display">
+        <span class="hud-label">Insight Score</span>
+        <span class="hud-value" id="hud-score">0</span>
+      </div>
+      <div class="hud-box" id="moves-display">
+        <span class="hud-label">Moves</span>
+        <span class="hud-value" id="hud-moves">25</span>
+      </div>
+      <div class="hud-box" id="target-display">
+        <span class="hud-label">Target</span>
+        <span class="hud-value" id="hud-target">1000</span>
+      </div>
+    </div>
+    <div id="progress-bar-container"><div id="progress-bar"></div></div>
+    <canvas id="game-canvas" aria-hidden="true"></canvas>
+    <canvas id="particles-canvas" aria-hidden="true"></canvas>
+  </div>
+
+  <button id="hint-btn" title="How to play" aria-label="How to play">?</button>
+
+  <!-- Start Screen -->
+  <div class="overlay active" id="start-screen" role="dialog" aria-modal="true" aria-labelledby="game-title" aria-describedby="game-subtitle">
+    <div class="game-title">Data Drop</div>
+  <div class="subtitle">ANALYZE · MATCH · SYNTHESIZE</div>
+    <div class="data-icon-row">
+      <span>✨</span><span>💡</span><span>📊</span><span>💠</span><span>💬</span><span>📖</span>
+    </div>
+    <div class="subtitle"><b>Match 3 or more to find "insights"!</b></div>
+    <button class="btn btn-primary" id="start-btn">Play</button>
+  </div>
+
+<!-- Tutorial Screen -->
+  <div id="tutorial-screen">
+    <div class="tutorial-card">
+      <div class="tutorial-header">Research Plan</div>
+      <div class="tutorial-title">How to Play</div>
+      <ul class="tutorial-steps">
+        <li>
+          <div class="step-icon">👆</div>
+          <div>
+            <span class="tutorial-step-num">Step 01</span>
+            Tap a piece of data to select it, then tap an adjacent one to swap — or simply swipe in any direction.
+          </div>
+        </li>
+        <li>
+          <div class="step-icon">🔗</div>
+          <div>
+            <span class="tutorial-step-num">Step 02</span>
+            Line up 3 or more matching pieces in a row or column to extract insights. Bigger chains mean bigger scores.
+          </div>
+        </li>
+        <li>
+          <div class="step-icon">🎯</div>
+          <div>
+            <span class="tutorial-step-num">Step 03</span>
+            Hit the insight quota before your cycles run out to advance to the next phase of analysis. Combos multiply your points!
+          </div>
+        </li>
+        <li>
+          <div class="step-icon">⚡</div>
+          <div>
+            <span class="tutorial-step-num">Step 04</span>
+            Watch for chain reactions — when falling pieces form new matches, you earn combo multipliers automatically.
+          </div>
+        </li>
+      </ul>
+      <div class="tutorial-footer">
+        <button class="btn btn-primary" id="tutorial-close-btn">Got It</button>
+        <span class="tutorial-dismiss">tap the ? button anytime for help</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Level Complete -->
+  <div class="overlay" id="win-screen" role="dialog" aria-modal="true" aria-labelledby="win-title" aria-describedby="win-subtitle">
+    <h1>🎉 Level Complete! 🤓</h1>
+    <h2 id="win-subtitle">Amazing!</h2>
+    <div class="stat-row">
+      <div class="stat"><div class="stat-val" id="win-score">0</div><div class="stat-lbl">Score</div></div>
+      <div class="stat"><div class="stat-val" id="win-moves">0</div><div class="stat-lbl">Moves Left</div></div>
+    </div>
+    <button class="btn btn-primary" id="next-btn">Next Level</button>
+  </div>
+
+  <!-- Game Over -->
+  <div class="overlay" id="lose-screen" role="dialog" aria-modal="true" aria-labelledby="lose-title" aria-describedby="lose-subtitle">
+    <h1>Out of Moves</h1>
+    <h2>So close! Try again?</h2>
+    <div class="stat-row">
+      <div class="stat"><div class="stat-val" id="lose-score">0</div><div class="stat-lbl">Score</div></div>
+      <div class="stat"><div class="stat-val" id="lose-target">0</div><div class="stat-lbl">Needed</div></div>
+    </div>
+    <button class="btn btn-primary" id="retry-btn">Retry</button>
+    <button class="btn btn-secondary" id="menu-btn">Menu</button>
+  </div>
+
+  <script>
+  (() => {
+    // ─── CONFIG ───
+    const COLS = 7, ROWS = 8;
+    const GEM_TYPES = [
+      { color: '#5B6043', glow: '#A4AD6C', icon: '💬' },   // green
+      { color: '#c69f77', glow: '#FDF9F4', icon: '📊' },   // beige
+      { color: '#4B6573', glow: '#EBF2F5', icon: '💡' },   // lt-blue
+      { color: '#32424A', glow: '#8EABB8', icon: '✨' },   // blue
+      { color: '#96633E', glow: '#ddaa86', icon: '📖' },   // accent
+    ];
+    const ANIM_SWAP = 180, ANIM_POP = 200, ANIM_FALL = 250;
+    const TUTORIAL_KEY = 'datadownload_tutorial_seen';
+
+    // ─── STATE ───
+    let grid = [], cellSize, padX, padY;
+    let selected = null, animating = false;
+    let score = 0, moves = 0, targetScore = 0, level = 1;
+    let comboCount = 0;
+    let particles = [];
+    let swipeStart = null;
+
+    // ─── DOM ───
+    const canvas = document.getElementById('game-canvas');
+    const ctx = canvas.getContext('2d');
+    const pCanvas = document.getElementById('particles-canvas');
+    const pCtx = pCanvas.getContext('2d');
+
+    // ─── LEVELS ───
+    function getLevelConfig(lvl) {
+      return {
+        moves: Math.max(15, 30 - lvl),
+        target: 800 + lvl * 400,
+        types: Math.min(GEM_TYPES.length, 4 + Math.floor(lvl / 3)),
+      };
+    }
+
+    // ─── SIZING ───
+    function resize() {
+      const dpr = window.devicePixelRatio || 1;
+      const maxW = Math.min(window.innerWidth, 420);
+      const maxH = window.innerHeight - 90;
+      cellSize = Math.floor(Math.min(maxW / COLS, maxH / ROWS) * 0.88);
+      const gw = cellSize * COLS, gh = cellSize * ROWS;
+      canvas.style.width = gw + 'px';
+      canvas.style.height = gh + 'px';
+      canvas.width = gw * dpr;
+      canvas.height = gh * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      pCanvas.width = window.innerWidth * dpr;
+      pCanvas.height = window.innerHeight * dpr;
+      pCanvas.style.width = window.innerWidth + 'px';
+      pCanvas.style.height = window.innerHeight + 'px';
+      pCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      padX = (window.innerWidth - gw) / 2;
+      padY = canvas.getBoundingClientRect().top;
+    }
+
+    // ─── GRID ───
+    function createGem(col, row, typeCount) {
+      return {
+        type: Math.floor(Math.random() * typeCount),
+        col, row,
+        x: col * cellSize, y: row * cellSize,
+        scale: 1, alpha: 1,
+        targetX: col * cellSize, targetY: row * cellSize,
+      };
+    }
+
+    function initGrid() {
+      const tc = getLevelConfig(level).types;
+      grid = [];
+      for (let c = 0; c < COLS; c++) {
+        grid[c] = [];
+        for (let r = 0; r < ROWS; r++) {
+          let gem;
+          do {
+            gem = createGem(c, r, tc);
+          } while (hasMatchAt(c, r, gem.type));
+          grid[c][r] = gem;
+        }
+      }
+    }
+
+    function hasMatchAt(col, row, type) {
+      // horizontal
+      if (col >= 2 && grid[col-1][row] && grid[col-2][row] &&
+          grid[col-1][row].type === type && grid[col-2][row].type === type) return true;
+      // vertical
+      if (row >= 2 && grid[col][row-1] && grid[col][row-2] &&
+          grid[col][row-1].type === type && grid[col][row-2].type === type) return true;
+      return false;
+    }
+
+    // ─── MATCH FINDING ───
+    function findMatches() {
+      const matched = new Set();
+      // horizontal
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS - 2; c++) {
+          if (!grid[c][r] || !grid[c+1][r] || !grid[c+2][r]) continue;
+          const t = grid[c][r].type;
+          if (grid[c+1][r].type === t && grid[c+2][r].type === t) {
+            let end = c + 2;
+            while (end + 1 < COLS && grid[end+1][r] && grid[end+1][r].type === t) end++;
+            for (let i = c; i <= end; i++) matched.add(`${i},${r}`);
+          }
+        }
+      }
+      // vertical
+      for (let c = 0; c < COLS; c++) {
+        for (let r = 0; r < ROWS - 2; r++) {
+          if (!grid[c][r] || !grid[c][r+1] || !grid[c][r+2]) continue;
+          const t = grid[c][r].type;
+          if (grid[c][r+1].type === t && grid[c][r+2].type === t) {
+            let end = r + 2;
+            while (end + 1 < ROWS && grid[c][end+1] && grid[c][end+1].type === t) end++;
+            for (let i = r; i <= end; i++) matched.add(`${c},${i}`);
+          }
+        }
+      }
+      return matched;
+    }
+
+    // ─── ANIMATIONS ───
+    function animateSwap(g1, g2, duration) {
+      return new Promise(resolve => {
+        const sx1 = g1.x, sy1 = g1.y, sx2 = g2.x, sy2 = g2.y;
+        const tx1 = g2.col * cellSize, ty1 = g2.row * cellSize;
+        const tx2 = g1.col * cellSize, ty2 = g1.row * cellSize;
+        const start = performance.now();
+        function step(now) {
+          let t = Math.min(1, (now - start) / duration);
+          t = t < 0.5 ? 2*t*t : -1+(4-2*t)*t; // ease
+          g1.x = sx1 + (tx1 - sx1) * t;
+          g1.y = sy1 + (ty1 - sy1) * t;
+          g2.x = sx2 + (tx2 - sx2) * t;
+          g2.y = sy2 + (ty2 - sy2) * t;
+          if (t < 1) requestAnimationFrame(step);
+          else resolve();
+        }
+        requestAnimationFrame(step);
+      });
+    }
+
+    function animatePop(gems) {
+      return new Promise(resolve => {
+        const start = performance.now();
+        function step(now) {
+          let t = Math.min(1, (now - start) / ANIM_POP);
+          gems.forEach(({ col, row }) => {
+            if (grid[col][row]) {
+              grid[col][row].scale = 1 - t;
+              grid[col][row].alpha = 1 - t;
+            }
+          });
+          if (t < 1) requestAnimationFrame(step);
+          else resolve();
+        }
+        requestAnimationFrame(step);
+      });
+    }
+
+    function animateFall() {
+      return new Promise(resolve => {
+        const start = performance.now();
+        let needsAnim = false;
+        for (let c = 0; c < COLS; c++) {
+          for (let r = 0; r < ROWS; r++) {
+            if (grid[c][r]) {
+              grid[c][r].targetX = c * cellSize;
+              grid[c][r].targetY = r * cellSize;
+              if (Math.abs(grid[c][r].y - grid[c][r].targetY) > 1) needsAnim = true;
+            }
+          }
+        }
+        if (!needsAnim) { resolve(); return; }
+        function step(now) {
+          let t = Math.min(1, (now - start) / ANIM_FALL);
+          let bounceT = t < 1 ? 1 - Math.pow(1 - t, 3) : 1;
+          let done = true;
+          for (let c = 0; c < COLS; c++) {
+            for (let r = 0; r < ROWS; r++) {
+              const g = grid[c][r];
+              if (!g) continue;
+              if (Math.abs(g.y - g.targetY) > 0.5) {
+                g.x += (g.targetX - g.x) * bounceT;
+                g.y += (g.targetY - g.y) * bounceT;
+                if (Math.abs(g.y - g.targetY) > 0.5) done = false;
+              } else {
+                g.x = g.targetX; g.y = g.targetY;
+              }
+            }
+          }
+          if (!done && t < 1) requestAnimationFrame(step);
+          else {
+            for (let c = 0; c < COLS; c++)
+              for (let r = 0; r < ROWS; r++)
+                if (grid[c][r]) { grid[c][r].x = grid[c][r].targetX; grid[c][r].y = grid[c][r].targetY; }
+            resolve();
+          }
+        }
+        requestAnimationFrame(step);
+      });
+    }
+
+    // ─── PARTICLES ───
+    function spawnParticles(cx, cy, color, count = 8) {
+      for (let i = 0; i < count; i++) {
+        const angle = (Math.PI * 2 * i) / count + Math.random() * 0.5;
+        const speed = 1.5 + Math.random() * 3;
+        particles.push({
+          x: cx, y: cy,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          life: 1,
+          decay: 0.015 + Math.random() * 0.02,
+          size: 2 + Math.random() * 4,
+          color,
+        });
+      }
+    }
+
+    function updateParticles() {
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.vx; p.y += p.vy;
+        p.vy += 0.08;
+        p.life -= p.decay;
+        if (p.life <= 0) particles.splice(i, 1);
+      }
+    }
+
+    function drawParticles() {
+      pCtx.clearRect(0, 0, pCanvas.width / (window.devicePixelRatio||1), pCanvas.height / (window.devicePixelRatio||1));
+      particles.forEach(p => {
+        pCtx.globalAlpha = p.life;
+        pCtx.fillStyle = p.color;
+        pCtx.beginPath();
+        pCtx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+        pCtx.fill();
+      });
+      pCtx.globalAlpha = 1;
+    }
+
+    // ─── GAME LOGIC ───
+    async function processMatches() {
+      comboCount = 0;
+      let matched = findMatches();
+      while (matched.size > 0) {
+        comboCount++;
+        const gems = [...matched].map(s => {
+          const [c, r] = s.split(',').map(Number);
+          return { col: c, row: r };
+        });
+
+        // Particles
+        gems.forEach(({ col, row }) => {
+          const g = grid[col][row];
+          if (g) {
+            const rect = canvas.getBoundingClientRect();
+            const cx = rect.left + g.x + cellSize / 2;
+            const cy = rect.top + g.y + cellSize / 2;
+            spawnParticles(cx, cy, GEM_TYPES[g.type].glow, 6);
+          }
+        });
+
+        // Score
+        const points = gems.length * 10 * comboCount;
+        score += points;
+
+        if (comboCount > 1) showCombo(comboCount);
+
+        await animatePop(gems);
+
+        // Remove
+        gems.forEach(({ col, row }) => { grid[col][row] = null; });
+
+        // Collapse
+        const tc = getLevelConfig(level).types;
+        for (let c = 0; c < COLS; c++) {
+          let write = ROWS - 1;
+          for (let r = ROWS - 1; r >= 0; r--) {
+            if (grid[c][r]) {
+              if (r !== write) {
+                grid[c][write] = grid[c][r];
+                grid[c][write].row = write;
+                grid[c][r] = null;
+              }
+              write--;
+            }
+          }
+          for (let r = write; r >= 0; r--) {
+            grid[c][r] = createGem(c, r, tc);
+            grid[c][r].y = -(write - r + 1) * cellSize;
+            grid[c][r].alpha = 1;
+            grid[c][r].scale = 1;
+          }
+        }
+
+        await animateFall();
+        updateHUD();
+        matched = findMatches();
+      }
+    }
+
+    function showCombo(n) {
+      const labels = ['', '', 'Double!', 'Triple!', 'Mega!', 'Ultra!', 'INSANE!'];
+      const text = labels[Math.min(n, 6)] || `${n}x Combo!`;
+      const el = document.createElement('div');
+      el.className = 'combo-popup';
+      el.textContent = text;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 1100);
+    }
+
+    async function trySwap(c1, r1, c2, r2) {
+      if (animating) return;
+      if (c2 < 0 || c2 >= COLS || r2 < 0 || r2 >= ROWS) return;
+      animating = true;
+      const g1 = grid[c1][r1], g2 = grid[c2][r2];
+
+      // Swap in grid
+      grid[c1][r1] = g2; grid[c2][r2] = g1;
+      const tc = g1.col; g1.col = g2.col; g2.col = tc;
+      const tr = g1.row; g1.row = g2.row; g2.row = tr;
+
+      await animateSwap(g1, g2, ANIM_SWAP);
+
+      const matched = findMatches();
+      if (matched.size > 0) {
+        moves--;
+        updateHUD();
+        await processMatches();
+        checkWinLose();
+      } else {
+        // Swap back
+        grid[c2][r2] = g1; grid[c1][r1] = g2;
+        const bc = g1.col; g1.col = g2.col; g2.col = bc;
+        const br = g1.row; g1.row = g2.row; g2.row = br;
+        await animateSwap(g1, g2, ANIM_SWAP);
+      }
+      selected = null;
+      animating = false;
+    }
+
+    function checkWinLose() {
+      if (score >= targetScore) {
+        setTimeout(() => showScreen('win'), 400);
+      } else if (moves <= 0) {
+        setTimeout(() => showScreen('lose'), 400);
+      }
+    }
+
+    // ─── HUD ───
+    function updateHUD() {
+      document.getElementById('hud-level').textContent = level;
+      document.getElementById('hud-score').textContent = score.toLocaleString();
+      document.getElementById('hud-moves').textContent = moves;
+      document.getElementById('hud-target').textContent = targetScore.toLocaleString();
+      const pct = Math.min(100, (score / targetScore) * 100);
+      document.getElementById('progress-bar').style.width = pct + '%';
+    }
+
+    // ─── SCREENS ───
+    function showScreen(type) {
+      if (type === 'win') {
+        document.getElementById('win-score').textContent = score.toLocaleString();
+        document.getElementById('win-moves').textContent = moves;
+        const msgs = ['Nice!', 'Amazing!', 'Brilliant!', 'Superb!'];
+        document.getElementById('win-subtitle').textContent = msgs[Math.floor(Math.random()*msgs.length)];
+        document.getElementById('win-screen').classList.add('active');
+      } else if (type === 'lose') {
+        document.getElementById('lose-score').textContent = score.toLocaleString();
+        document.getElementById('lose-target').textContent = targetScore.toLocaleString();
+        document.getElementById('lose-screen').classList.add('active');
+      }
+    }
+
+    function hideScreens() {
+      document.querySelectorAll('.overlay').forEach(o => o.classList.remove('active'));
+      document.getElementById('tutorial-screen').classList.remove('active');
+    }
+
+    function startLevel(lvl) {
+      level = lvl;
+      const config = getLevelConfig(lvl);
+      moves = config.moves;
+      targetScore = config.target;
+      score = 0;
+      selected = null;
+      animating = false;
+      comboCount = 0;
+      initGrid();
+      updateHUD();
+      hideScreens();
+    }
+
+    // ─── TUTORIAL ───
+    function showTutorial() {
+      document.getElementById('tutorial-screen').classList.add('active');
+    }
+    function hideTutorial() {
+      document.getElementById('tutorial-screen').classList.remove('active');
+      try { localStorage.setItem(TUTORIAL_KEY, '1'); } catch(e) {}
+    }
+    function shouldShowTutorial() {
+      try { return !localStorage.getItem(TUTORIAL_KEY); } catch(e) { return true; }
+    }
+
+    document.getElementById('tutorial-close-btn').addEventListener('click', hideTutorial);
+    document.getElementById('hint-btn').addEventListener('click', showTutorial);
+
+    // ─── INPUT ───
+    function getCellFromEvent(e) {
+      const rect = canvas.getBoundingClientRect();
+      const touch = e.touches ? e.touches[0] : e;
+      const x = touch.clientX - rect.left;
+      const y = touch.clientY - rect.top;
+      const col = Math.floor(x / cellSize);
+      const row = Math.floor(y / cellSize);
+      if (col < 0 || col >= COLS || row < 0 || row >= ROWS) return null;
+      return { col, row };
+    }
+
+    canvas.addEventListener('pointerdown', (e) => {
+      if (animating) return;
+      e.preventDefault();
+      const cell = getCellFromEvent(e);
+      if (!cell) return;
+      swipeStart = cell;
+
+      if (selected) {
+        const dc = Math.abs(cell.col - selected.col);
+        const dr = Math.abs(cell.row - selected.row);
+        if ((dc === 1 && dr === 0) || (dc === 0 && dr === 1)) {
+          trySwap(selected.col, selected.row, cell.col, cell.row);
+          return;
+        }
+      }
+      selected = cell;
+    });
+
+    canvas.addEventListener('pointermove', (e) => {
+      if (!swipeStart || animating) return;
+      const cell = getCellFromEvent(e);
+      if (!cell) return;
+      const dc = cell.col - swipeStart.col;
+      const dr = cell.row - swipeStart.row;
+      if (Math.abs(dc) + Math.abs(dr) >= 1) {
+        let tc, tr;
+        if (Math.abs(dc) > Math.abs(dr)) {
+          tc = swipeStart.col + Math.sign(dc);
+          tr = swipeStart.row;
+        } else {
+          tc = swipeStart.col;
+          tr = swipeStart.row + Math.sign(dr);
+        }
+        trySwap(swipeStart.col, swipeStart.row, tc, tr);
+        swipeStart = null;
+      }
+    });
+
+    canvas.addEventListener('pointerup', () => { swipeStart = null; });
+    canvas.addEventListener('pointerleave', () => { swipeStart = null; });
+
+    // ─── DRAWING ───
+    function drawGem(g) {
+      if (!g || g.alpha <= 0) return;
+      const cx = g.x + cellSize / 2;
+      const cy = g.y + cellSize / 2;
+      const r = (cellSize * 0.38) * g.scale;
+      const gemType = GEM_TYPES[g.type];
+
+      ctx.save();
+      ctx.globalAlpha = g.alpha;
+
+      // Glow
+      if (g.scale > 0.5) {
+        ctx.shadowColor = gemType.glow;
+        ctx.shadowBlur = 12 * g.scale;
+      }
+
+      // Gem body
+      ctx.fillStyle = gemType.color;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      // Highlight
+      const grad = ctx.createRadialGradient(cx - r*0.3, cy - r*0.3, 0, cx, cy, r);
+      grad.addColorStop(0, 'rgba(255,255,255,0.35)');
+      grad.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Icon
+      ctx.fillStyle = 'rgba(255,255,255,0.9)';
+      ctx.font = `${Math.round(r * 0.9)}px Inter, sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(gemType.icon, cx, cy + 1);
+
+      ctx.restore();
+    }
+
+    function drawSelection() {
+      if (!selected || animating) return;
+      const x = selected.col * cellSize;
+      const y = selected.row * cellSize;
+      ctx.strokeStyle = 'rgba(255,255,255,0.7)';
+      ctx.lineWidth = 2.5;
+      ctx.strokeRect(x + 3, y + 3, cellSize - 6, cellSize - 6);
+    }
+
+    function drawGrid() {
+      // BG cells
+      for (let c = 0; c < COLS; c++) {
+        for (let r = 0; r < ROWS; r++) {
+          ctx.fillStyle = (c + r) % 2 === 0 ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.06)';
+          ctx.fillRect(c * cellSize, r * cellSize, cellSize, cellSize);
+        }
+      }
+    }
+
+    function render() {
+      ctx.clearRect(0, 0, cellSize * COLS, cellSize * ROWS);
+      drawGrid();
+      for (let c = 0; c < COLS; c++)
+        for (let r = 0; r < ROWS; r++)
+          drawGem(grid[c][r]);
+      drawSelection();
+      updateParticles();
+      drawParticles();
+      requestAnimationFrame(render);
+    }
+
+    // ─── BUTTONS ───
+    document.getElementById('start-btn').addEventListener('click', () => {
+      startLevel(1);
+      if (shouldShowTutorial()) {
+        setTimeout(showTutorial, 500);
+      }
+    });
+    document.getElementById('next-btn').addEventListener('click', () => {
+      startLevel(level + 1);
+    });
+    document.getElementById('retry-btn').addEventListener('click', () => {
+      startLevel(level);
+    });
+    document.getElementById('menu-btn').addEventListener('click', () => {
+      hideScreens();
+      document.getElementById('start-screen').classList.add('active');
+    });
+
+    // ─── INIT ───
+    resize();
+    window.addEventListener('resize', resize);
+    initGrid();
+    updateHUD();
+    render();
+  })();
+  </script>
+</body>
+</html>
