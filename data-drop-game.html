@@ -435,10 +435,11 @@
     const COLS = 7, ROWS = 8;
     const GEM_TYPES = [
       { color: '#5B6043', glow: '#A4AD6C', icon: '💬' },   // green
-      { color: '#c69f77', glow: '#FDF9F4', icon: '📊' },   // beige
-      { color: '#4B6573', glow: '#EBF2F5', icon: '💡' },   // lt-blue
       { color: '#32424A', glow: '#8EABB8', icon: '✨' },   // blue
       { color: '#96633E', glow: '#ddaa86', icon: '📖' },   // accent
+      { color: '#91463D', glow: '#E1BBB7', icon: '📊' },   // red
+      { color: '#c69f77', glow: '#FDF9F4', icon: '💠' },   // beige
+      { color: '#4B6573', glow: '#EBF2F5', icon: '💡' },   // lt-blue
     ];
     const ANIM_SWAP = 180, ANIM_POP = 200, ANIM_FALL = 250;
     const TUTORIAL_KEY = 'datadownload_tutorial_seen';
@@ -553,25 +554,305 @@
       return matched;
     }
 
+    // ─── MATCH GROUPS (for power gem logic) ──────
+    // Returns an array of group objects instead of a flat Set.
+    // Each group: { cells, direction ('h'|'v'), length, pivotCol, pivotRow }
+    // The pivot is the centre cell — where a power gem will be placed for 4/5-matches.
+    function findMatchGroups() {
+        const groups = [];
+        // Track cells already assigned to a horizontal run to avoid double-counting
+        const countedH = new Set();
+        const countedV = new Set();
+
+        // ── Horizontal ──
+        for (let r = 0; r < ROWS; r++) {
+            for (let c = 0; c < COLS - 2; c++) {
+                if (countedH.has(`${c},${r}`)) continue;
+                if (!grid[c][r] || !grid[c+1][r] || !grid[c+2][r]) continue;
+                const t = grid[c][r].type;
+                if (grid[c+1][r].type !== t || grid[c+2][r].type !== t) continue;
+
+                // Extend run as far as it goes
+                let end = c + 2;
+                while (end + 1 < COLS && grid[end+1][r] && grid[end+1][r].type === t) end++;
+
+                const len = end - c + 1;
+                const cells = [];
+                for (let i = c; i <= end; i++) {
+                    cells.push({ col: i, row: r });
+                    countedH.add(`${i},${r}`);
+                }
+                groups.push({
+                    cells,
+                    direction: 'h',
+                    length: len,
+                    // Pivot = centre of the run; this is where the power gem appears
+                    pivotCol: Math.floor((c + end) / 2),
+                    pivotRow: r,
+                });
+            }
+        }
+
+        // ── Vertical ──
+        for (let c = 0; c < COLS; c++) {
+            for (let r = 0; r < ROWS - 2; r++) {
+                if (countedV.has(`${c},${r}`)) continue;
+                if (!grid[c][r] || !grid[c][r+1] || !grid[c][r+2]) continue;
+                const t = grid[c][r].type;
+                if (grid[c][r+1].type !== t || grid[c][r+2].type !== t) continue;
+
+                let end = r + 2;
+                while (end + 1 < ROWS && grid[c][end+1] && grid[c][end+1].type === t) end++;
+
+                const len = end - r + 1;
+                const cells = [];
+                for (let i = r; i <= end; i++) {
+                    cells.push({ col: c, row: i });
+                    countedV.add(`${c},${i}`);
+                }
+                groups.push({
+                    cells,
+                    direction: 'v',
+                    length: len,
+                    pivotCol: c,
+                    pivotRow: Math.floor((r + end) / 2),
+                });
+            }
+        }
+
+        return groups;
+    }
+
+    // ─── POWER GEM HELPERS ────────────────────────
+
+// Returns the list of {col, row} cells that a power gem clears when activated.
+//   areaMode = false → normal in-match blast (line or cross)
+//   areaMode = true  → double-tap blast (area explosion)
+//
+// Power types:
+//   'row'   — created by a 4-horizontal match; blasts the entire row
+//   'col'   — created by a 4-vertical match;   blasts the entire column
+//   'hyper' — created by a 5+ match;           blasts the full row + full column (cross)
+//
+// Double-tap area modes:
+//   'row'/'col' double-tap → 3×3 area  (the 8 surrounding cells + itself)
+//   'hyper'    double-tap → 5×5 area  (roughly 3× the 3×3 coverage)
+function getActivationCells(gem, col, row, areaMode) {
+    const cells = [];
+
+    if (areaMode) {
+        // Area explosion — radius depends on gem tier
+        const radius = gem.power === 'hyper' ? 2 : 1;  // hyper = 5×5, others = 3×3
+        for (let dc = -radius; dc <= radius; dc++) {
+            for (let dr = -radius; dr <= radius; dr++) {
+                const nc = col + dc, nr = row + dr;
+                if (nc >= 0 && nc < COLS && nr >= 0 && nr < ROWS) {
+                    cells.push({ col: nc, row: nr });
+                }
+            }
+        }
+    } else if (gem.power === 'row') {
+        // Clear the entire row the gem sits in
+        for (let c = 0; c < COLS; c++) cells.push({ col: c, row });
+    } else if (gem.power === 'col') {
+        // Clear the entire column the gem sits in
+        for (let r = 0; r < ROWS; r++) cells.push({ col, row: r });
+    } else if (gem.power === 'hyper') {
+        // Full cross: entire row + entire column (no duplicate at intersection)
+        for (let c = 0; c < COLS; c++) cells.push({ col: c, row });
+        for (let r = 0; r < ROWS; r++) {
+            if (r !== row) cells.push({ col, row: r });
+        }
+    }
+
+    return cells;
+}
+
+// Handles a double-tap on a selected power gem: costs 1 move, triggers area blast.
+// Called from the pointerdown handler when the player taps a gem that is already selected
+// AND that gem has a .power property.
+async function activatePowerGemManually(col, row) {
+    if (animating) return;
+    animating = true;
+    const g = grid[col][row];
+    if (!g || !g.power) { animating = false; return; }
+
+    moves--;
+    updateHUD();
+    selected = null;
+
+    // Collect the blast cells and spawn extra particles for drama
+    const blastCells = getActivationCells(g, col, row, true /* area mode */);
+    blastCells.forEach(({ col: c, row: r }) => {
+        const gem = grid[c][r];
+        if (!gem) return;
+        const rect = canvas.getBoundingClientRect();
+        spawnParticles(
+            rect.left + gem.x + cellSize / 2,
+            rect.top  + gem.y + cellSize / 2,
+            GEM_TYPES[gem.type % GEM_TYPES.length].glow,
+            gem.power ? 16 : 10  // extra burst if this also pops a power gem
+        );
+    });
+
+    // Bonus points — manual activation rewards skill
+    score += blastCells.length * 15;
+    showCombo(2); // reuse the combo popup for a satisfying "boom" feeling
+
+    await animatePop(blastCells);
+    blastCells.forEach(({ col: c, row: r }) => { grid[c][r] = null; });
+
+    // Collapse and refill
+    const tc = getLevelConfig(level).types;
+    for (let c = 0; c < COLS; c++) {
+        let write = ROWS - 1;
+        for (let r = ROWS - 1; r >= 0; r--) {
+            if (grid[c][r]) {
+                if (r !== write) {
+                    grid[c][write] = grid[c][r];
+                    grid[c][write].row = write;
+                    grid[c][r] = null;
+                }
+                write--;
+            }
+        }
+        for (let r = write; r >= 0; r--) {
+            grid[c][r] = createGem(c, r, tc);
+            grid[c][r].y = -(write - r + 1) * cellSize;
+            grid[c][r].alpha = 1;
+            grid[c][r].scale = 1;
+        }
+    }
+
+    await animateFall();
+    // Process any cascade matches that result from the explosion
+    await processMatches();
+    updateHUD();
+    checkWinLose();
+    animating = false;
+}
+
     // ─── ANIMATIONS ───
     function animateSwap(g1, g2, duration) {
-      return new Promise(resolve => {
-        const sx1 = g1.x, sy1 = g1.y, sx2 = g2.x, sy2 = g2.y;
-        const tx1 = g2.col * cellSize, ty1 = g2.row * cellSize;
-        const tx2 = g1.col * cellSize, ty2 = g1.row * cellSize;
+        return new Promise(resolve => {
+            const sx1 = g1.x, sy1 = g1.y;
+            const sx2 = g2.x, sy2 = g2.y;
+            const tx1 = g1.col * cellSize, ty1 = g1.row * cellSize;
+            const tx2 = g2.col * cellSize, ty2 = g2.row * cellSize;
+
+            const start = performance.now();
+            function step(now) {
+                let t = Math.min(1, (now - start) / duration);
+                t = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; // ease-in-out
+                g1.x = sx1 + (tx1 - sx1) * t;
+                g1.y = sy1 + (ty1 - sy1) * t;
+                g2.x = sx2 + (tx2 - sx2) * t;
+                g2.y = sy2 + (ty2 - sy2) * t;
+                if (t < 1) requestAnimationFrame(step);
+                else resolve();
+            }
+            requestAnimationFrame(step);
+        });
+    }
+
+    function squishGems(gems, duration = 140) {
+    return new Promise(resolve => {
         const start = performance.now();
         function step(now) {
-          let t = Math.min(1, (now - start) / duration);
-          t = t < 0.5 ? 2*t*t : -1+(4-2*t)*t; // ease
-          g1.x = sx1 + (tx1 - sx1) * t;
-          g1.y = sy1 + (ty1 - sy1) * t;
-          g2.x = sx2 + (tx2 - sx2) * t;
-          g2.y = sy2 + (ty2 - sy2) * t;
-          if (t < 1) requestAnimationFrame(step);
-          else resolve();
-        }
-        requestAnimationFrame(step);
+            const t = Math.min(1, (now - start) / duration);
+            // Sine curve: starts at 1, dips to 0.78 at midpoint, returns to 1
+            const s = 1 - 0.22 * Math.sin(t * Math.PI);
+            gems.forEach(g => { g.scale = s; });
+            if (t < 1) requestAnimationFrame(step);
+            else { gems.forEach(g => { g.scale = 1; }); resolve(); }
+              }
+              requestAnimationFrame(step);
       });
+    }   
+
+    // ─── DEADLOCK DETECTION & SHUFFLE ────────────
+    // Returns true if at least one valid swap exists anywhere on the board.
+    // Checks every possible adjacent swap by temporarily swapping just the
+    // gem TYPE values (not the full gem objects).
+    function hasMoves() {
+        for (let c = 0; c < COLS; c++) {
+            for (let r = 0; r < ROWS; r++) {
+                if (!grid[c][r]) continue;
+
+                // Try swap right
+                if (c + 1 < COLS && grid[c+1][r]) {
+                    const t1 = grid[c][r].type, t2 = grid[c+1][r].type;
+                    grid[c][r].type = t2; grid[c+1][r].type = t1;
+                    const valid = findMatches().size > 0;
+                    grid[c][r].type = t1; grid[c+1][r].type = t2;
+                    if (valid) return true;
+                }
+
+                // Try swap down
+                if (r + 1 < ROWS && grid[c][r+1]) {
+                    const t1 = grid[c][r].type, t2 = grid[c][r+1].type;
+                    grid[c][r].type = t2; grid[c][r+1].type = t1;
+                    const valid = findMatches().size > 0;
+                    grid[c][r].type = t1; grid[c][r+1].type = t2;
+                    if (valid) return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // Shuffles the board when no valid moves remain.
+    // Shows a "Reshuffling…" notification, fades out, redistributes types
+    // using Fisher-Yates, guarantees no starting matches, then fades back in.
+    // Power gems are cleared on shuffle — carrying them over leads to confusing state.
+    async function shuffleBoard() {
+        // ── Collect all occupied cells ──
+        const allCells = [];
+        for (let c = 0; c < COLS; c++)
+            for (let r = 0; r < ROWS; r++)
+                if (grid[c][r]) allCells.push({ col: c, row: r });
+
+        // ── Fade out ──
+        await animatePop(allCells);  // reuses the pop animation to fade everything
+
+        // ── Collect and shuffle types ──
+        let types = allCells.map(({ col, row }) => grid[col][row].type);
+
+        function fisherYates(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+        }
+
+        // Attempt up to 30 shuffles to find a layout with no starting matches
+        // AND at least one valid move. In practice this resolves in 1–3 tries.
+        let attempts = 0;
+        do {
+            fisherYates(types);
+            allCells.forEach(({ col, row }, i) => {
+                grid[col][row].type  = types[i];
+                grid[col][row].power = null;   // clear any power gems from the old board
+                grid[col][row].alpha = 1;
+                grid[col][row].scale = 1;
+            });
+            attempts++;
+        } while ((findMatches().size > 0 || !hasMoves()) && attempts < 30);
+
+        // Fallback: if 30 shuffles couldn't produce a valid board (extremely unlikely),
+        // just re-initialise the grid from scratch so the player isn't stuck.
+        if (attempts >= 30) {
+            initGrid();
+            return;
+        }
+
+        // ── Show notification ──
+        // Reuses the combo popup element and style — no extra HTML needed.
+        const el = document.createElement('div');
+        el.className = 'combo-popup';
+        el.textContent = 'Reshuffling…';
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 1100);
     }
 
     function animatePop(gems) {
@@ -674,65 +955,143 @@
       pCtx.globalAlpha = 1;
     }
 
-    // ─── GAME LOGIC ───
+    // ─── GAME LOGIC ───────────────────────────────
+    // Processes all matches on the board, including chain reactions, and handles:
+    //   - 4-match → schedules a power gem ('row' or 'col') at the centre of the run
+    //   - 5+-match → schedules a 'hyper' gem at the centre
+    //   - If a power gem is caught IN a match, it chain-activates before removal
+    //   - Power gems are re-inserted BEFORE the collapse so they fall naturally
     async function processMatches() {
-      comboCount = 0;
-      let matched = findMatches();
-      while (matched.size > 0) {
-        comboCount++;
-        const gems = [...matched].map(s => {
-          const [c, r] = s.split(',').map(Number);
-          return { col: c, row: r };
-        });
+        comboCount = 0;
+        let groups = findMatchGroups();
 
-        // Particles
-        gems.forEach(({ col, row }) => {
-          const g = grid[col][row];
-          if (g) {
-            const rect = canvas.getBoundingClientRect();
-            const cx = rect.left + g.x + cellSize / 2;
-            const cy = rect.top + g.y + cellSize / 2;
-            spawnParticles(cx, cy, GEM_TYPES[g.type].glow, 6);
-          }
-        });
+        while (groups.length > 0) {
+            comboCount++;
 
-        // Score
-        const points = gems.length * 10 * comboCount;
-        score += points;
+            // ── Step 1: collect cells to remove and pending power gem placements ──
+            const toRemove = new Set();          // "col,row" strings
+            const powerCreations = [];           // { col, row, power, type }
 
-        if (comboCount > 1) showCombo(comboCount);
+            groups.forEach(({ cells, direction, length, pivotCol, pivotRow }) => {
+                cells.forEach(c => toRemove.add(`${c.col},${c.row}`));
 
-        await animatePop(gems);
+                if (length >= 5) {
+                    // 5-in-a-row → hyper gem (cross blast)
+                    powerCreations.push({
+                        col: pivotCol, row: pivotRow, power: 'hyper',
+                        type: grid[pivotCol]?.[pivotRow]?.type ?? 0,
+                    });
+                } else if (length === 4) {
+                    // 4-in-a-row → line blast gem; direction is set at creation time
+                    powerCreations.push({
+                        col: pivotCol, row: pivotRow,
+                        power: direction === 'h' ? 'row' : 'col',
+                        type: grid[pivotCol]?.[pivotRow]?.type ?? 0,
+                    });
+                }
+            });
 
-        // Remove
-        gems.forEach(({ col, row }) => { grid[col][row] = null; });
+            // ── Chain-activate any power gems caught in the current removal set ──
+            // Snapshot the set first so we don't iterate while growing it
+            [...toRemove].forEach(key => {
+                const [c, r] = key.split(',').map(Number);
+                const g = grid[c]?.[r];
+                if (g?.power) {
+                    // This power gem was matched — blast it
+                    getActivationCells(g, c, r, false).forEach(cell => {
+                        toRemove.add(`${cell.col},${cell.row}`);
+                    });
+                }
+            });
 
-        // Collapse
-        const tc = getLevelConfig(level).types;
-        for (let c = 0; c < COLS; c++) {
-          let write = ROWS - 1;
-          for (let r = ROWS - 1; r >= 0; r--) {
-            if (grid[c][r]) {
-              if (r !== write) {
-                grid[c][write] = grid[c][r];
-                grid[c][write].row = write;
-                grid[c][r] = null;
-              }
-              write--;
+            // ── Build array, spawn particles, score ──
+            const gemsToRemove = [...toRemove].map(s => {
+                const [col, row] = s.split(',').map(Number);
+                return { col, row };
+            });
+
+            gemsToRemove.forEach(({ col, row }) => {
+                const g = grid[col]?.[row];
+                if (!g) return;
+                const rect = canvas.getBoundingClientRect();
+                spawnParticles(
+                    rect.left + g.x + cellSize / 2,
+                    rect.top  + g.y + cellSize / 2,
+                    GEM_TYPES[g.type % GEM_TYPES.length].glow,
+                    g.power ? 14 : 6  // power gem removal is more explosive
+                );
+            });
+
+            score += gemsToRemove.length * 10 * comboCount;
+            if (comboCount > 1) showCombo(comboCount);
+
+            // ── Step 4: pop animation, then remove ──
+            await animatePop(gemsToRemove);
+            gemsToRemove.forEach(({ col, row }) => { grid[col][row] = null; });
+
+            // ── Place power gems at pivot cells before collapsing ──
+            const claimedPivots = new Set();
+            powerCreations.forEach(({ col, row, power, type }) => {
+                const key = `${col},${row}`;
+                // Only place if the cell is empty and no other power gem has already claimed this pivot
+                if (grid[col][row] === null && !claimedPivots.has(key)) {
+                    claimedPivots.add(key);
+                    const newGem = createGem(col, row, getLevelConfig(level).types);
+                    newGem.type  = type;
+                    newGem.power = power;
+                    newGem.x     = col * cellSize;
+                    newGem.y     = row * cellSize;
+                    newGem.scale = 0;   // starts collapsed, pops in
+                    newGem.alpha = 1;
+                    grid[col][row] = newGem;
+
+                    // Animate the power gem popping into existence
+                    const g = newGem;
+                    const t0 = performance.now();
+                    const popIn = (now) => {
+                        const t    = Math.min(1, (now - t0) / 260);
+                        const ease = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+                        // Slight overshoot (scale beyond 1) before settling — feels satisfying
+                        g.scale = ease < 0.85 ? ease * 1.25 : 1 + (1 - ease) * 0.5;
+                        if (t < 1) requestAnimationFrame(popIn);
+                        else g.scale = 1;
+                    };
+                    requestAnimationFrame(popIn);
+                }
+            });
+
+            // ── Collapse columns and fill from top ──
+            const tc = getLevelConfig(level).types;
+            for (let c = 0; c < COLS; c++) {
+                let write = ROWS - 1;
+                for (let r = ROWS - 1; r >= 0; r--) {
+                    if (grid[c][r]) {
+                        if (r !== write) {
+                            grid[c][write]     = grid[c][r];
+                            grid[c][write].row = write;
+                            grid[c][r]         = null;
+                        }
+                        write--;
+                    }
+                }
+                for (let r = write; r >= 0; r--) {
+                    grid[c][r]       = createGem(c, r, tc);
+                    grid[c][r].y     = -(write - r + 1) * cellSize;
+                    grid[c][r].alpha = 1;
+                    grid[c][r].scale = 1;
+                }
             }
-          }
-          for (let r = write; r >= 0; r--) {
-            grid[c][r] = createGem(c, r, tc);
-            grid[c][r].y = -(write - r + 1) * cellSize;
-            grid[c][r].alpha = 1;
-            grid[c][r].scale = 1;
-          }
+
+            await animateFall();
+            updateHUD();
+            groups = findMatchGroups();  // cascade: keep looping if new matches formed
         }
 
-        await animateFall();
-        updateHUD();
-        matched = findMatches();
-      }
+        // ── After all cascades settle: check for deadlock ──
+        // If no valid swap exists, shuffleBoard() (added in Item 6) handles the recovery.
+        if (!hasMoves()) {
+            await shuffleBoard();
+        }
     }
 
     function showCombo(n) {
@@ -765,11 +1124,12 @@
         await processMatches();
         checkWinLose();
       } else {
-        // Swap back
-        grid[c2][r2] = g1; grid[c1][r1] = g2;
-        const bc = g1.col; g1.col = g2.col; g2.col = bc;
-        const br = g1.row; g1.row = g2.row; g2.row = br;
-        await animateSwap(g1, g2, ANIM_SWAP);
+      // No match — snap back.
+          grid[c2][r2] = g1; grid[c1][r1] = g2;
+          const bc = g1.col; g1.col = g2.col; g2.col = bc;
+          const br = g1.row; g1.row = g2.row; g2.row = br;
+          await squishGems([g1, g2]);
+          await animateSwap(g1, g2, ANIM_SWAP);
       }
       selected = null;
       animating = false;
@@ -855,21 +1215,30 @@
     }
 
     canvas.addEventListener('pointerdown', (e) => {
-      if (animating) return;
-      e.preventDefault();
-      const cell = getCellFromEvent(e);
-      if (!cell) return;
-      swipeStart = cell;
+        if (animating) return;
+        e.preventDefault();
+        const cell = getCellFromEvent(e);
+        if (!cell) return;
+        swipeStart = cell;
 
-      if (selected) {
-        const dc = Math.abs(cell.col - selected.col);
-        const dr = Math.abs(cell.row - selected.row);
-        if ((dc === 1 && dr === 0) || (dc === 0 && dr === 1)) {
-          trySwap(selected.col, selected.row, cell.col, cell.row);
-          return;
+        if (selected) {
+            const dc = Math.abs(cell.col - selected.col);
+            const dr = Math.abs(cell.row - selected.row);
+
+            if (dc === 0 && dr === 0) {
+                const g = grid[cell.col][cell.row];
+                if (g?.power) {
+                    activatePowerGemManually(cell.col, cell.row);
+                    return;
+                }
+            }
+
+            if ((dc === 1 && dr === 0) || (dc === 0 && dr === 1)) {
+                trySwap(selected.col, selected.row, cell.col, cell.row);
+                return;
+            }
         }
-      }
-      selected = cell;
+        selected = cell;
     });
 
     canvas.addEventListener('pointermove', (e) => {
@@ -895,47 +1264,82 @@
     canvas.addEventListener('pointerup', () => { swipeStart = null; });
     canvas.addEventListener('pointerleave', () => { swipeStart = null; });
 
-    // ─── DRAWING ───
+    // ─── DRAWING ──────────────────────────────────
+    // Changes from original:
+    //   - Uses g.type % GEM_TYPES.length as a safety guard (defensive against future type count changes)
+    //   - Adds an outer glow ring for power gems
+    //   - Swaps the emoji icon for a directional symbol on power gems so the blast type is legible
+    //   - Hyper gems get extra shadow intensity and a cross indicator
     function drawGem(g) {
-      if (!g || g.alpha <= 0) return;
-      const cx = g.x + cellSize / 2;
-      const cy = g.y + cellSize / 2;
-      const r = (cellSize * 0.38) * g.scale;
-      const gemType = GEM_TYPES[g.type];
+        if (!g || g.alpha <= 0) return;
+        const cx = g.x + cellSize / 2;
+        const cy = g.y + cellSize / 2;
+        const r  = (cellSize * 0.38) * g.scale;
+        // Safety mod: prevents a crash if g.type ever exceeds the array length
+        const gemType = GEM_TYPES[g.type % GEM_TYPES.length];
 
-      ctx.save();
-      ctx.globalAlpha = g.alpha;
+        ctx.save();
+        ctx.globalAlpha = g.alpha;
 
-      // Glow
-      if (g.scale > 0.5) {
-        ctx.shadowColor = gemType.glow;
-        ctx.shadowBlur = 12 * g.scale;
-      }
+        // ── Glow (power gems glow brighter) ──
+        if (g.scale > 0.5) {
+            ctx.shadowColor = gemType.glow;
+            ctx.shadowBlur  = g.power ? (g.power === 'hyper' ? 22 : 16) * g.scale
+                                      : 12 * g.scale;
+        }
 
-      // Gem body
-      ctx.fillStyle = gemType.color;
-      ctx.beginPath();
-      ctx.arc(cx, cy, r, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.shadowBlur = 0;
+        // ── Gem body ──
+        ctx.fillStyle = gemType.color;
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
 
-      // Highlight
-      const grad = ctx.createRadialGradient(cx - r*0.3, cy - r*0.3, 0, cx, cy, r);
-      grad.addColorStop(0, 'rgba(255,255,255,0.35)');
-      grad.addColorStop(1, 'rgba(255,255,255,0)');
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.arc(cx, cy, r, 0, Math.PI * 2);
-      ctx.fill();
+        // ── Specular highlight ──
+        const grad = ctx.createRadialGradient(cx - r * 0.3, cy - r * 0.3, 0, cx, cy, r);
+        grad.addColorStop(0, 'rgba(255,255,255,0.35)');
+        grad.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.fill();
 
-      // Icon
-      ctx.fillStyle = 'rgba(255,255,255,0.9)';
-      ctx.font = `${Math.round(r * 0.9)}px Inter, sans-serif`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(gemType.icon, cx, cy + 1);
+        // ── Icon ──
+        // Power gems show a directional symbol instead of the type's emoji,
+        // making their special ability immediately legible.
+        // ↔ = row blast  ↕ = column blast  ✦ = cross/hyper blast
+        const icon = g.power === 'row'   ? '↔'
+                  : g.power === 'col'   ? '↕'
+                  : g.power === 'hyper' ? '✦'
+                  : gemType.icon;
 
-      ctx.restore();
+        ctx.fillStyle = 'rgba(255,255,255,0.9)';
+        ctx.font = `${Math.round(r * 0.9)}px Inter, sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(icon, cx, cy + 1);
+
+        // ── Power gem outer ring ──
+        // A bright ring makes power gems stand out in a busy board.
+        // Hyper gems get a double ring to signal they are a tier above.
+        if (g.power) {
+            ctx.strokeStyle = 'rgba(255,255,255,0.55)';
+            ctx.lineWidth   = 1.5 * g.scale;
+            ctx.beginPath();
+            ctx.arc(cx, cy, r * 1.22, 0, Math.PI * 2);
+            ctx.stroke();
+
+            if (g.power === 'hyper') {
+                // Second, outer ring for hyper tier
+                ctx.strokeStyle = 'rgba(255,255,255,0.25)';
+                ctx.lineWidth   = 1 * g.scale;
+                ctx.beginPath();
+                ctx.arc(cx, cy, r * 1.42, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+        }
+
+        ctx.restore();
     }
 
     function drawSelection() {
