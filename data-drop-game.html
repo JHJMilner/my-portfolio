@@ -152,6 +152,7 @@
     #start-screen .subtitle {
       font-size: 14px; color: rgba(255,255,255,0.4); font-weight: 600;
       margin-bottom: 40px;
+      max-width: 37ch; text-align: center;
     }
 
     /* Particles canvas */
@@ -164,7 +165,7 @@
       display: flex; gap: 14px; margin-bottom: 30px;
     }
     .data-icon-row span {
-      font-size: 28px;
+      font-size: 28px; color: rgba(235, 242, 245, 0.7); 
       animation: iconFloat 3s ease-in-out infinite;
     }
     .data-icon-row span:nth-child(2) { animation-delay: 0.3s; }
@@ -219,7 +220,7 @@
     .tutorial-steps li {
       display: flex; align-items: flex-start; gap: 12px;
       margin-bottom: 16px;
-      font-size: 13px; color: rgba(164, 161, 157, 0.7);
+      font-size: 13px; color: rgba(203, 195, 184, 0.7);
       line-height: 1.5;
     }
     .step-icon {
@@ -354,12 +355,13 @@
 
   <!-- Start Screen -->
   <div class="overlay active" id="start-screen" role="dialog" aria-modal="true" aria-labelledby="game-title" aria-describedby="game-subtitle">
-    <div class="game-title">Data Drop</div>
-  <div class="subtitle">ANALYZE · MATCH · SYNTHESIZE</div>
+    <div class="game-title">Data Drop!</div>
+    <div class="subtitle">ANALYZE· MATCH · SYNTHESIZE</div>
     <div class="data-icon-row">
-      <span>✨</span><span>💡</span><span>📊</span><span>💠</span><span>💬</span><span>📖</span>
+      <span>⋆.˚ ⌚︎</span><span>۫ ׅ⛁ ˚</span><span>｡˚○</span><span>“⟡”</span><span>☺︎</span><span>✎ᝰ۫</span>       
     </div>
-    <div class="subtitle"><b>Match 3 or more to find "insights"!</b></div>
+    <div class="subtitle">A client just sent you a mountain of new user data to analyze. How will you make sense of it all?</div>
+    <div class="subtitle"><b>Match 3 or more to find "insights"</b></div>
     <button class="btn btn-primary" id="start-btn">Play</button>
     <a href="work.html" class="start-back-link">← Back to Julia's portfolio</a>
   </div>
@@ -371,28 +373,28 @@
       <div class="tutorial-title">How to Play</div>
       <ul class="tutorial-steps">
         <li>
-          <div class="step-icon">👆</div>
+          <div class="step-icon">◉</div>
           <div>
             <span class="tutorial-step-num">Step 01</span>
             Tap a piece of data to select it, then tap an adjacent one to swap — or simply swipe in any direction.
           </div>
         </li>
         <li>
-          <div class="step-icon">🔗</div>
+          <div class="step-icon">⫘</div>
           <div>
             <span class="tutorial-step-num">Step 02</span>
             Line up 3 or more matching pieces in a row or column to extract insights. Bigger chains mean bigger scores.
           </div>
         </li>
         <li>
-          <div class="step-icon">🎯</div>
+          <div class="step-icon">𖦏</div>
           <div>
             <span class="tutorial-step-num">Step 03</span>
             Hit the insight quota before your cycles run out to advance to the next phase of analysis. Combos multiply your points!
           </div>
         </li>
         <li>
-          <div class="step-icon">⚡</div>
+          <div class="step-icon">ᝰ.ᐟ</div>
           <div>
             <span class="tutorial-step-num">Step 04</span>
             Watch for chain reactions — when falling pieces form new matches, you earn combo multipliers automatically.
@@ -408,7 +410,7 @@
 
   <!-- Level Complete -->
   <div class="overlay" id="win-screen" role="dialog" aria-modal="true" aria-labelledby="win-title" aria-describedby="win-subtitle">
-    <h1>🎉 Level Complete! 🤓</h1>
+    <h1>⋆.˚ Level Complete! ˚.⋆</h1>
     <h2 id="win-subtitle">Amazing!</h2>
     <div class="stat-row">
       <div class="stat"><div class="stat-val" id="win-score">0</div><div class="stat-lbl">Score</div></div>
@@ -434,12 +436,12 @@
     // ─── CONFIG ───
     const COLS = 7, ROWS = 8;
     const GEM_TYPES = [
-      { color: '#5B6043', glow: '#A4AD6C', icon: '💬' },   // green
-      { color: '#32424A', glow: '#8EABB8', icon: '✨' },   // blue
-      { color: '#96633E', glow: '#ddaa86', icon: '📖' },   // accent
-      { color: '#91463D', glow: '#E1BBB7', icon: '📊' },   // red
-      { color: '#c69f77', glow: '#FDF9F4', icon: '💠' },   // beige
-      { color: '#4B6573', glow: '#EBF2F5', icon: '💡' },   // lt-blue
+      { color: '#848034', glow: '#4D5640', icon: '❝ ❞' },  // Green
+      { color: '#2379A7', glow: '#32424A', icon: '⛁' },  // Blue 
+      { color: '#DD9B59', glow: '#7A4D2E', icon: '⌚︎' },  // Beige 
+      { color: '#64B8DE', glow: '#32424A', icon: '☻' },  // Lt-Blue     
+      { color: '#B53E30', glow: '#5c402a', icon: '｡˚○' },  // Red 
+      { color: '#A56639', glow: '#7A4D2E', icon: '✎ᝰ' },  // Accent       
     ];
     const ANIM_SWAP = 180, ANIM_POP = 200, ANIM_FALL = 250;
     const TUTORIAL_KEY = 'datadownload_tutorial_seen';
@@ -1265,17 +1267,11 @@ async function activatePowerGemManually(col, row) {
     canvas.addEventListener('pointerleave', () => { swipeStart = null; });
 
     // ─── DRAWING ──────────────────────────────────
-    // Changes from original:
-    //   - Uses g.type % GEM_TYPES.length as a safety guard (defensive against future type count changes)
-    //   - Adds an outer glow ring for power gems
-    //   - Swaps the emoji icon for a directional symbol on power gems so the blast type is legible
-    //   - Hyper gems get extra shadow intensity and a cross indicator
     function drawGem(g) {
         if (!g || g.alpha <= 0) return;
         const cx = g.x + cellSize / 2;
         const cy = g.y + cellSize / 2;
         const r  = (cellSize * 0.38) * g.scale;
-        // Safety mod: prevents a crash if g.type ever exceeds the array length
         const gemType = GEM_TYPES[g.type % GEM_TYPES.length];
 
         ctx.save();
@@ -1305,12 +1301,9 @@ async function activatePowerGemManually(col, row) {
         ctx.fill();
 
         // ── Icon ──
-        // Power gems show a directional symbol instead of the type's emoji,
-        // making their special ability immediately legible.
-        // ↔ = row blast  ↕ = column blast  ✦ = cross/hyper blast
-        const icon = g.power === 'row'   ? '↔'
-                  : g.power === 'col'   ? '↕'
-                  : g.power === 'hyper' ? '✦'
+        const icon = g.power === 'row'   ? '⭑'
+                  : g.power === 'col'   ? '⭑'
+                  : g.power === 'hyper' ? '⁖✶' 
                   : gemType.icon;
 
         ctx.fillStyle = 'rgba(255,255,255,0.9)';
