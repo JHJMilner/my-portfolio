@@ -48,8 +48,10 @@
 }
 
 .work-hero-image {
+    display:block;
     position: relative;
     width: 100%;
+    height: 100%;
     max-width: 420px;
     margin-left: auto;
     border-radius: 32px;
@@ -137,11 +139,15 @@
     }
 }
 
+/* ─── RESPONSIVE: TABLET (641px – 900px) ─────── */
+/* At this size the grid collapses to one column.
+   The image is hidden here — too large to fit cleanly
+   beside text, too small to warrant its own full row. */
+
 @media (max-width: 900px) {
-   
     .work-hero {
         min-height: auto;
-        align-items: flex-start;    /* content flows from top padding down */
+        align-items: flex-start;     /* prevents vertical centering from eating the nav-clearance padding */
         padding-top: calc(var(--nav-height) + var(--space-xl));
         padding-bottom: var(--space-xl);
     }
@@ -157,15 +163,35 @@
         margin: 0 auto;
     }
 
-    .work-hero-subhead {
+    .work-hero-image {
+        display: none;               /* hidden at tablet */
+    }
+
+    /* Work page supporting sections — kept here to avoid split-file confusion */
+    .featured-work-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .cs-snapshot-grid {
+        grid-template-columns: repeat(3, 1fr);
+        row-gap: var(--space-sm);
+    }
+
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+        max-width: 560px;
         margin-left: auto;
         margin-right: auto;
     }
 
-    .work-hero-image {
-        display:none;  /* hide decorative image on smaller screens for better performance and layout */
+    .services-expanded-grid {
+        grid-template-columns: 1fr;
     }
 }
+
+
+/* ─── RESPONSIVE: MOBILE (≤ 640px) ───────────── */
 
 @media (max-width: 640px) {
     .work-hero {
@@ -179,10 +205,82 @@
         font-size: var(--typescale-display-medium);
     }
 
-    .work-hero-image {
-        display:none;  /* hide decorative image on smaller screens for better performance and layout */
+    /* EASTER EGG IMAGE — mobile treatment
+       Reintroduce a two-column grid: text fills all available
+       space, image gets a fixed 72px column on the right.
+       align-items: start pins both columns to the top edge,
+       so the image sits level with the "My Work" eyebrow label. */
+    .work-hero-grid {
+        grid-template-columns: 1fr 72px;
+        gap: var(--space-sm);
+        align-items: start;
     }
 
+    .work-hero-image {
+        display: block;              /* overrides the display:none set at 900px */
+        width: 72px;
+        height: 72px;
+        max-width: 72px;
+        margin: 0;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(42, 43, 47, 0.08);
+        /* swap transform-based hover for opacity — translateY on a 72px
+           element shifts layout noticeably and feels wrong on touch */
+        transition: opacity 0.3s ease;
+    }
+
+    /* Constrain the image to match its parent's fixed dimensions */
+    .work-hero-image img {
+        aspect-ratio: 1 / 1;
+        height: 72px;
+    }
+
+    /* Disable the desktop lift-on-hover entirely on touch —
+       translateY from the base style will cause a layout jump */
+    .work-hero-image:hover {
+        transform: none;
+        box-shadow: 0 4px 12px rgba(42, 43, 47, 0.08);
+    }
+
+    /* Provide a clear tap confirmation without movement */
+    .work-hero-image:active {
+        opacity: 0.65;
+        transform: none;
+    }
+
+    /* Case study and grid overrides — mobile */
+    .card-grid-4 {
+        grid-template-columns: 1fr;
+    }
+
+    .cs-snapshot-grid {
+        grid-template-columns: repeat(2, 1fr);
+        row-gap: var(--space-sm);
+    }
+
+    .cs-title {
+        font-size: var(--typescale-display-medium);
+    }
+
+    .cs-cover-inner {
+        height: 260px;
+        border-radius: 16px;
+    }
+
+    .cs-pagination-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-md);
+    }
+
+    .cs-pagination-link--next {
+        text-align: left;
+        margin-left: 0;
+    }
+
+    .cs-closing-text {
+        font-size: var(--typescale-headline-small);
+    }
 }
 
 /* ─── WORK PAGE: FEATURED WORK ───────────────── */
@@ -1248,6 +1346,7 @@
     cursor: pointer;
     /* Establish a stacking context so the hint badge sits inside the border-radius */
     position: relative;
+    border: 1px solid var(--color-border);
 }
 
 /* Subtle hint badge — only visible on hover on pointer devices */
@@ -1285,13 +1384,19 @@
 }
 
 /* Focus state for keyboard navigation — show the badge persistently */
-.work-hero-image--easter-egg:focus-visible {
+.work-hero-image--easter-egg:focus-within {
     outline: 2px solid var(--color-accent);
     outline-offset: 4px;
-    border-radius: 32px; /* match the image border-radius */
+    border-radius: 32px;
 }
 
-.work-hero-image--easter-egg:focus-visible::before {
+.work-hero-image--easter-egg:focus-within::before {
     opacity: 1;
     transform: scale(1) translateY(0);
+}
+
+.work-hero-image--easter-egg a:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 16px;
 }
