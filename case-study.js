@@ -100,8 +100,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+   
+    // Prevent smooth-scroll CSS from interfering with ScrollTrigger's internal scroll probing on mobile.
+    ScrollTrigger.config({ ignoreMobileResize: true });
 
     // ── Refresh after all images load ─────────────────────────
     // Images change layout height after load. 
-    window.addEventListener('load', () => ScrollTrigger.refresh());
+   window.addEventListener('load', () => {
+    if (window.scrollY < 100) {
+        ScrollTrigger.refresh();
+    }
 });
