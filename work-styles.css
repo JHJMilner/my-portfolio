@@ -252,6 +252,14 @@
         margin-bottom: 0;
     }
 
+    .work-hero-image--easter-egg {
+        border: 1px solid var(--color-border);
+    }
+
+    .work-hero-image--easter-egg::after {
+        opacity: 0.3;
+    }
+
     /* Constrain the image to match its parent's fixed dimensions */
     .work-hero-image img {
         aspect-ratio: 1 / 1;
