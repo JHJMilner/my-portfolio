@@ -211,20 +211,20 @@
        align-items: start pins both columns to the top edge,
        so the image sits level with the "My Work" eyebrow label. */
     .work-hero-grid {
-        grid-template-columns: 1fr 72px;
+        grid-template-columns: 1fr 52px;
         gap: var(--space-sm);
         align-items: start;
     }
 
     .work-hero-image {
         display: block;              /* overrides the display:none set at 900px */
-        width: 72px;
-        height: 72px;
-        max-width: 72px;
+        width: 52px;
+        height: 52px;
+        max-width: 52px;
         margin: 0;
         border-radius: 16px;
         box-shadow: 0 4px 12px rgba(42, 43, 47, 0.08);
-        /* swap transform-based hover for opacity — translateY on a 72px
+        /* swap transform-based hover for opacity — translateY on a 36px
            element shifts layout noticeably and feels wrong on touch */
         transition: opacity 0.3s ease;
     }
@@ -232,7 +232,7 @@
     /* Constrain the image to match its parent's fixed dimensions */
     .work-hero-image img {
         aspect-ratio: 1 / 1;
-        height: 72px;
+        height: 52px;
     }
 
     /* Disable the desktop lift-on-hover entirely on touch —

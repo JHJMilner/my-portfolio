@@ -106,8 +106,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ── Refresh after all images load ─────────────────────────
     // Images change layout height after load. 
-   window.addEventListener('load', () => {
-    if (window.scrollY < 100) {
-        ScrollTrigger.refresh();
-    }
+    window.addEventListener('load', () => {
+        if (window.scrollY < 100) {
+            ScrollTrigger.refresh();
+        }
+    });
 });
