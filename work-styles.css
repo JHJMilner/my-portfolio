@@ -201,8 +201,8 @@
         align-items: flex-start;
     }
 
-    .work-hero-headline {
-        font-size: var(--typescale-display-medium);
+    .work-hero-content {
+        display: contents;
     }
 
     /* EASTER EGG IMAGE — mobile treatment
@@ -212,12 +212,23 @@
        so the image sits level with the "My Work" eyebrow label. */
     .work-hero-grid {
         grid-template-columns: 1fr 52px;
+        grid-template-rows: auto;
         gap: var(--space-sm);
         align-items: start;
     }
 
+    .work-hero-grid .label-eyebrow {
+        grid-column: 1;
+        grid-row: 1;
+        align-self: center;
+        margin-bottom: 0;   /* grid gap handles spacing — reset the default 0.5rem */
+    }
+
     .work-hero-image {
         display: block;              /* overrides the display:none set at 900px */
+        grid-column: 2;
+        grid-row: 1;
+        align-self: start;
         width: 52px;
         height: 52px;
         max-width: 52px;
@@ -227,6 +238,18 @@
         /* swap transform-based hover for opacity — translateY on a 36px
            element shifts layout noticeably and feels wrong on touch */
         transition: opacity 0.3s ease;
+    }
+
+    .work-hero-headline {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        font-size: var(--typescale-display-medium);
+        
+    }
+
+    .work-hero-subhead {
+        grid-column: 1 / -1;
+        margin-bottom: 0;
     }
 
     /* Constrain the image to match its parent's fixed dimensions */
