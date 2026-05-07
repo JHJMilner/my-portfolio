@@ -258,20 +258,47 @@
 
 
     <!-- =====================
-         TESTIMONIALS SECTION
-         PLACEHOLDER: Replace copy and avatar initials
-         once real testimonials are confirmed.
+         TESTIMONIALS CAROUSEL
+            7 cards, chevron nav, pill-dot indicators.
+            Carousel pattern follows WCAG 2.1 §3.2.2.
     ========================== -->
     <!-- Use <section class="hidden"> to toggle off this section-->
     <section id="testimonials" class="section-testimonials" aria-labelledby="testimonials-heading">
-        <div class="container">
+        <div class="container testimonials-intro">
             <span class="label-eyebrow">Testimonials</span>
-            <h2 id="testimonials-heading">Why work with me?</h2>
+            <h2 id="testimonials-heading">Client Kudos</h2>
+        </div>
+        
+        <div class="testimonials-carousel" role="region" aria-roledescription="carousel" aria-label="Client Testimonials">
+        
+            <!-- ── Stage: buttons + scroll viewport ── -->
+            <div class="carousel-stage">
 
-            <div class="testimonials-grid">
+                <button class="carousel-btn carousel-btn--prev"
+                        aria-label="Show previous testimonial"
+                        aria-controls="testimonials-track"
+                        type="button"
+                        disabled>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                        aria-hidden="true" focusable="false">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
 
-                <!-- PLACEHOLDER testimonial 1 -->
-                <article class="testimonial-card">
+            <!-- Viewport: the clipping window -->
+            <div class="carousel-viewport">
+                <ul class="carousel-track"
+                    id="testimonials-track"
+                    aria-live="polite"
+                    aria-atomic="false">
+
+                <!-- ── Card 1 ── -->
+                <li class="testimonial-card"
+                        role="group"
+                        aria-roledescription="slide"
+                        aria-label="Testimonial 1 of 7">
                     <p class="testimonial-quote">
                        Give Julia a hard problem and she'll come back with the answer you needed, a framework you didn't have, and a team that actually understands both.
                     </p>
@@ -282,12 +309,15 @@
                             <span class="testimonial-role">AVP User Experience</span>
                         </div>
                     </div>
-                </article>
+                </li>
 
-                <!-- PLACEHOLDER testimonial 2 -->
-                <article class="testimonial-card">
+                <!-- ── Card 2 ── -->
+                <li class="testimonial-card"
+                        role="group"
+                        aria-roledescription="slide"
+                        aria-label="Testimonial 2 of 7">
                     <p class="testimonial-quote">
-                        Her session on navigating complexity and systems thinking was pure gold.
+                        Julia's speaking style is grounded and approachable. Her session on navigating ambiguity and systems thinking was pure gold.
                     </p>
                     <div class="testimonial-attribution">
                         <div class="testimonial-avatar" aria-hidden="true">J.H.</div>
@@ -296,10 +326,30 @@
                             <span class="testimonial-role">Strategic Programs Manager</span>
                         </div>
                     </div>
-                </article>
+                </li>
 
-                <!-- PLACEHOLDER testimonial 3 -->
-                <article class="testimonial-card">
+                <!-- ── Card 3 ── -->
+                    <li class="testimonial-card"
+                        role="group"
+                        aria-roledescription="slide"
+                        aria-label="Testimonial 3 of 7">
+                        <p class="testimonial-quote">
+                            Working with Julia is a cheat code—she brings a level of clarity that makes complex problems feel obvious in hindsight.
+                        </p>
+                        <div class="testimonial-attribution">
+                            <div class="testimonial-avatar" aria-hidden="true">K.D.</div>
+                            <div class="testimonial-meta">
+                                <span class="testimonial-name">Kevin Deevey</span>
+                                <span class="testimonial-role">Fractional Design Leader</span>
+                            </div>
+                        </div>
+                    </li>
+
+                 <!-- ── Card 4 ── -->
+                <li class="testimonial-card"
+                        role="group"
+                        aria-roledescription="slide"
+                        aria-label="Testimonial 4 of 7">
                     <p class="testimonial-quote">
                         She has a special ability to understand people, sensing what they're really looking for even if they can't articulate it themselves.
                     </p>
@@ -310,9 +360,81 @@
                             <span class="testimonial-role">Chief Marketing Officer</span>
                         </div>
                     </div>
-                </article>
+                </li>
 
-            </div><!-- /.testimonials-grid -->
+                    <!-- ── Card 5 ── -->
+                    <li class="testimonial-card"
+                        role="group"
+                        aria-roledescription="slide"
+                        aria-label="Testimonial 5 of 7">
+                        <p class="testimonial-quote">
+                            The research Julia delivered didn't just answer our questions — it reframed them entirely, and that led to better decisions across the entire product team.
+                        </p>
+                        <div class="testimonial-attribution">
+                            <div class="testimonial-avatar" aria-hidden="true">S.F.</div>
+                            <div class="testimonial-meta">
+                                <span class="testimonial-name">Sasha Force</span>
+                                <span class="testimonial-role">Senior Advisor, Service Design & Operations</span>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- ── Card 6 ── -->
+                    <li class="testimonial-card"
+                        role="group"
+                        aria-roledescription="slide"
+                        aria-label="Testimonial 6 of 7">
+                        <p class="testimonial-quote">
+                            Julia's ability to synthesise qualitative and quantitative data into a single coherent story is something I haven't seen in many researchers. She made our team smarter.
+                        </p>
+                        <div class="testimonial-attribution">
+                            <div class="testimonial-avatar" aria-hidden="true">K.B.</div>
+                            <div class="testimonial-meta">
+                                <span class="testimonial-name">Kenneth Boddy</span>
+                                <span class="testimonial-role">Director of Product</span>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- ── Card 7 ── -->
+                    <li class="testimonial-card"
+                        role="group"
+                        aria-roledescription="slide"
+                        aria-label="Testimonial 7 of 7">
+                        <p class="testimonial-quote">
+                            I've worked with many researchers, but Julia stands out for her ability to move quickly without sacrificing depth, a mix of thoughtful and decisive.
+                        </p>
+                        <div class="testimonial-attribution">
+                            <div class="testimonial-avatar" aria-hidden="true">A.N.</div>
+                            <div class="testimonial-meta">
+                                <span class="testimonial-name">Amber Nevin</span>
+                                <span class="testimonial-role">Chief Product Officer</span>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul><!-- /.carousel-track -->
+            </div><!-- /.carousel-viewport -->
+
+            <button class="carousel-btn carousel-btn--next"
+                    aria-label="Show next testimonial"
+                    aria-controls="testimonials-track"
+                    type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                     aria-hidden="true" focusable="false">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+
+            </div><!-- /.carousel-stage -->
+
+            <!-- Dot indicators — populated by JS, degrades gracefully without it -->
+            <div class="carousel-dots"
+             role="tablist"
+             aria-label="Jump to testimonial"></div>
+        
         </div><!-- /.container -->
     </section>
 
@@ -535,17 +657,16 @@
             });
         }
 
-        // Testimonial cards — stagger in
-        const testimonialCards = gsap.utils.toArray('.testimonial-card');
-        if (testimonialCards.length) {
-            gsap.from(testimonialCards, {
+       // Testimonials carousel — wrapper animation.
+        const testimonialsCarousel = document.querySelector('.testimonials-carousel');
+        if (testimonialsCarousel) {
+            gsap.from(testimonialsCarousel, {
                 opacity: 0,
-                y: 30,
-                duration: 0.7,
+                y: 24,
+                duration: 0.8,
                 ease: 'power2.out',
-                stagger: 0.15,
                 scrollTrigger: {
-                    trigger: '.testimonials-grid',
+                    trigger: '.testimonials-carousel',
                     start: 'top 85%',
                     toggleActions: 'play none none none'
                 }
@@ -586,6 +707,161 @@
         }
     });
     </script>
+
+    <!-- ── Testimonials carousel ─────────────────────
+     Vanilla JS, no dependencies.
+     - Centres the active card via translateX
+     - Reads computed gap so CSS drives the value
+     - Handles keyboard (←→ Home End), touch, resize
+     - Injects accessible dot buttons dynamically
+──────────────────────────────────────────────── -->
+<script>
+(function initTestimonialsCarousel() {
+
+    const carousel  = document.querySelector('.testimonials-carousel');
+    if (!carousel) return;
+
+    const track     = carousel.querySelector('.carousel-track');
+    const viewport  = carousel.querySelector('.carousel-viewport');
+    const btnPrev   = carousel.querySelector('.carousel-btn--prev');
+    const btnNext   = carousel.querySelector('.carousel-btn--next');
+    const dotsWrap  = carousel.querySelector('.carousel-dots');
+    const cards     = Array.from(track.querySelectorAll('.testimonial-card'));
+    const total     = cards.length;
+
+    let current   = 0;
+    let cardWidth = 0; // set by calculateLayout()
+
+    /* ── Reads the rendered gap from CSS ──────── */
+    function getGap() {
+        return parseInt(getComputedStyle(track).gap) || 32;
+    }
+
+    /* ── Sets each card's width ──  */
+    function calculateLayout() {
+        var vw  = viewport.offsetWidth;
+        var gap = getGap();
+
+        // Cards visible at each breakpoint:
+        //   Desktop  (≥900px) → 2.5  visible  (2 full + a peek on each side)
+        //   Tablet   (≥560px) → 1.6  visible  (1 full + generous peeks)
+        //   Mobile   (<560px) → 1.15 visible  (fills the screen with a peek)
+        var visible = window.innerWidth >= 900 ? 2.5
+                    : window.innerWidth >= 560 ? 1.6
+                    : 1.15;
+
+        // Solve for cardWidth so that (visible) cards + their gaps fill the viewport.
+        // Formula: vw = visible * cardWidth + (visible - 1) * gap
+        cardWidth = Math.round((vw - gap * (visible - 1)) / visible);
+
+        cards.forEach(function (card) { card.style.width = cardWidth + 'px'; });
+    }
+
+    /* ── Moves to a given index ────────────────── 
+       animate=false snaps instantly (used on init  
+       and resize to avoid a visible "slide in").   */
+    function goTo(index, animate) {
+        if (animate === undefined) animate = true;
+
+        index = Math.max(0, Math.min(total - 1, index));
+        current = index;
+
+        const gap    = getGap();
+        const vw     = viewport.offsetWidth;
+        const offset = -(current * (cardWidth + gap));
+
+        /* Suppress transition for instant snap */
+        if (!animate) {
+            track.style.transition = 'none';
+            track.offsetHeight; // force reflow
+        }
+
+        track.style.transform = 'translateX(' + offset + 'px)';
+
+        if (!animate) {
+            requestAnimationFrame(function () {
+                track.style.transition = '';
+            });
+        }
+
+        /* Update card ARIA + visual states */
+        cards.forEach(function (card, i) {
+            var active = (i === current);
+            card.classList.toggle('is-active', active);
+            card.setAttribute('aria-hidden', !active);
+            card.setAttribute('tabindex',     active ? '0' : '-1');
+        });
+
+        /* Update dot states */
+        Array.from(dotsWrap.children).forEach(function (dot, i) {
+            var active = (i === current);
+            dot.classList.toggle('is-active', active);
+            dot.setAttribute('aria-selected', active);
+            dot.setAttribute('tabindex',       active ? '0' : '-1');
+        });
+
+        /* Update button disabled state */
+        btnPrev.disabled = (current === 0);
+        btnNext.disabled = (current === total - 1);
+    }
+
+    /* ── Build dot buttons ─────────────────────── */
+    cards.forEach(function (_, i) {
+        var dot = document.createElement('button');
+        dot.type      = 'button';
+        dot.className = 'carousel-dot';
+        dot.setAttribute('role',          'tab');
+        dot.setAttribute('aria-selected', 'false');
+        dot.setAttribute('aria-label',    'Go to testimonial ' + (i + 1));
+        dot.setAttribute('aria-controls', 'testimonials-track');
+        dot.addEventListener('click', function () { goTo(i); });
+        dotsWrap.appendChild(dot);
+    });
+
+    /* ── Button listeners ──────────────────────── */
+    btnPrev.addEventListener('click', function () { goTo(current - 1); });
+    btnNext.addEventListener('click', function () { goTo(current + 1); });
+
+    /* ── Keyboard navigation ───────────────────── 
+       Arrow keys: advance/retreat one slide.
+       Home/End: jump to first/last slide.          */
+    carousel.addEventListener('keydown', function (e) {
+        if      (e.key === 'ArrowLeft')  { e.preventDefault(); goTo(current - 1); btnPrev.focus(); }
+        else if (e.key === 'ArrowRight') { e.preventDefault(); goTo(current + 1); btnNext.focus(); }
+        else if (e.key === 'Home')       { e.preventDefault(); goTo(0); }
+        else if (e.key === 'End')        { e.preventDefault(); goTo(total - 1); }
+    });
+
+    /* ── Touch / swipe ─────────────────────────── */
+    var touchStartX = 0;
+
+    track.addEventListener('touchstart', function (e) {
+        touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+
+    track.addEventListener('touchend', function (e) {
+        var delta = touchStartX - e.changedTouches[0].clientX;
+        if (Math.abs(delta) > 48) {
+            goTo(delta > 0 ? current + 1 : current - 1);
+        }
+    }, { passive: true });
+
+    /* ── Resize: debounced recalculation ────────── */
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function () {
+            calculateLayout();
+            goTo(current, false); // snap to current card at new size
+        }, 100);
+    }, { passive: true });
+
+    /* ── Initialise ─────────────────────────────── */
+    calculateLayout();
+    goTo(0, false);
+
+})();
+</script>
 
 </body>
 </html>
