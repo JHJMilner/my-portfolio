@@ -44,6 +44,16 @@
 
     <!-- Web app manifest (Chrome, Edge, Samsung Internet) -->
     <link rel="manifest" href="images/favicon/site.webmanifest">
+
+    <!-- MailerLite Universal -->
+    <script>
+        (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+        .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+        n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+        (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+        ml('account', '2334765');
+    </script>
+    <!-- End MailerLite Universal -->
 </head>
 
 <body>
@@ -571,10 +581,21 @@
     ========================== -->
     <section id="contact" class="section-contact" aria-labelledby="contact-heading">
         <canvas id="contact-canvas" width="32" height="32" aria-hidden="true"></canvas>
+
         <div class="container contact-inner">
-            <h2 id="contact-heading">Let's work together</h2>
-            <p>If you are working through ambiguity, making a critical decision, or need a clearer understanding of your users, I can help.</p>
-            <a href="mailto:hello@juliamilner.ca" class="contact-email">hello@juliamilner.ca</a>
+
+            <!-- Left column: direct contact -->
+            <div class="contact-text">
+                <h2 id="contact-heading">Let's work together</h2>
+                <p>If you are working through ambiguity, making a critical decision, or need a clearer understanding of your users, I can help.</p>
+                <a href="mailto:hello@juliamilner.ca" class="contact-email">hello@juliamilner.ca</a>
+            </div>
+
+            <!-- Right column: newsletter sign-up (rendered by MailerLite Universal) -->
+            <div class="contact-newsletter" aria-label="Newsletter sign-up">
+                <div class="ml-embedded" data-form="InZCaY"></div>
+            </div>
+
         </div>
     </section>
 

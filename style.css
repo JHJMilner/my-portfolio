@@ -1076,10 +1076,36 @@ p {
     pointer-events: none;
 }
 
+/* ─── CONTACT SECTION: TWO-COLUMN LAYOUT ────── */
+
 .contact-inner {
     position: relative;
     z-index: 1;
-    max-width: 640px;
+    max-width: var(--max-width);          /* full container width, not 640px */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    align-items: center;
+    text-align: left;                      /* override the section-level text-align: center */
+}
+
+.contact-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+}
+
+.contact-text p {
+    margin-bottom: 0;
+}
+
+.contact-newsletter {
+    background-color: var(--color-bg);
+    border-radius: 20px;
+    padding: var(--space-md);
+    /* Subtle lift to distinguish the card from the section bg */
+    box-shadow: 0 8px 32px rgba(55, 27, 6, 0.08);
 }
 
 .contact-inner h2 {
@@ -1112,6 +1138,48 @@ p {
 .contact-email:hover {
     opacity: 0.7;
     color: var(--color-accent);
+}
+
+/* ─── MAILERLITE UNIVERSAL FORM OVERRIDES ────── */
+/* The Universal embed injects its own styles. These overrides
+   align the form's typography and colours with the site design.
+   Scoped to .contact-newsletter to avoid affecting other embeds. */
+
+.contact-newsletter .ml-embedded * {
+    font-family: var(--font-sans) !important;
+}
+
+/* Form title */
+.contact-newsletter .ml-embedded h4 {
+    font-family: var(--font-serif) !important;
+    font-size: var(--typescale-headline-small) !important;
+    font-weight: var(--weight-headline) !important;
+    color: var(--color-text) !important;
+    margin-bottom: var(--space-xs) !important;
+}
+
+/* Form description text */
+.contact-newsletter .ml-embedded p {
+    font-size: var(--typescale-body-medium) !important;
+    color: var(--color-text-muted) !important;
+    line-height: var(--lineheight-body) !important;
+    max-width: none !important;
+    padding: 0 !important;
+    margin-bottom: var(--space-sm) !important;
+}
+
+/* ─── RESPONSIVE: MOBILE ─────────────────────── */
+/* Stack to single column below 640px */
+@media (max-width: 640px) {
+    .contact-inner {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+        text-align: center;
+    }
+
+    .contact-text {
+        align-items: center;
+    }
 }
 
 /* ─── FOOTER ─────────────────────────────────── */
