@@ -1128,7 +1128,7 @@ p {
     font-family: var(--font-serif);
     font-size: var(--typescale-headline-medium);
     line-height: var(--lineheight-heading);
-    color: var(--color-green);
+    color: var(--color-green-dk);
     letter-spacing: 0.02em;
     border-bottom: 1px solid var(--color-accent);
     padding-bottom: 2px;
