@@ -102,7 +102,6 @@
 }
 
 html {
-    scroll-behavior: smooth;
     font-size: 16px;
 }
 
@@ -723,10 +722,6 @@ p {
     backface-visibility: hidden;
 }
 
-.cred-track:hover {
-    animation-play-state: paused;
-}
-
 .cred-logo {
     display: flex;
     align-items: center;
@@ -740,10 +735,6 @@ p {
     object-fit: contain;
     filter: grayscale(100%) opacity(65%);
     transition: filter var(--transition-base);
-}
-
-.cred-logo img:hover {
-    filter: grayscale(100%) opacity(70%);
 }
 
 @keyframes cred-scroll {
@@ -1411,7 +1402,6 @@ p {
         letter-spacing: 0.06em;
         text-transform: uppercase;
         color: var(--color-text);
-        transition: color var(--transition-base);
         opacity: 0;
         transform: translateY(12px);
         transition: color var(--transition-base),

@@ -177,14 +177,6 @@
         grid-template-columns: repeat(3, 1fr);
         row-gap: var(--space-sm);
     }
-/* DELETE? 
-    .testimonials-grid {
-        grid-template-columns: 1fr;
-        max-width: 560px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-        */
 
     .services-expanded-grid {
         grid-template-columns: 1fr;
@@ -245,7 +237,9 @@
         grid-column: 1 / -1;
         grid-row: 2;
         font-size: var(--typescale-display-medium);
-        
+        .work-hero-headline .italic-text-primary {
+            font-size: inherit;
+        }
     }
 
     .work-hero-subhead {
