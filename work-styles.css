@@ -237,9 +237,10 @@
         grid-column: 1 / -1;
         grid-row: 2;
         font-size: var(--typescale-display-medium);
-        .work-hero-headline .italic-text-primary {
-            font-size: inherit;
-        }
+    }
+
+    .work-hero-headline .italic-text-primary {
+        font-size: inherit; 
     }
 
     .work-hero-subhead {
