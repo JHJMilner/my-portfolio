@@ -1,0 +1,664 @@
+/* =============================================
+   JULIA MILNER — PLAY PAGE STYLES
+   Extension of style.css — link BOTH stylesheets.
+   "Same person, day off": shares the warm base, fonts, and
+   accessibility floor of the main brand, with the dial turned
+   up on colour, motion, and personality.
+   ============================================= */
+
+/* ─── PLAY TOKENS ─────────────────────────────
+   New variables live here (not in style.css) so they only apply
+   on pages that load this file. A few brights sit on top of the
+   existing warm palette — cohesive, not a different brand.
+   Text-safe variants are darkened for AA contrast on light backgrounds. */
+:root {
+    --play-coral:      #E8645A;  /* punchy warm coral (cousin of --color-red) */
+    --play-coral-dk:   #B8473E;  /* AA-safe coral for text on light */
+    --play-marigold:   #F2B33C;  /* sunny marigold (relative of --color-bg-tan) */
+    --play-teal:       #2FA39B;  /* fresh teal (a brighter --color-blue) */
+    --play-teal-dk:    #287F79;  /* AA-safe teal for text on light */
+
+    /* Page-level surfaces */
+    --play-gallery-bg: #FFFDFA;  /* a hair brighter than parchment for the gallery */
+
+    /* Play display face — Fraunces; falls back to the brand serif if the
+       font fails to load or you remove the <link> in the HTML head. */
+    --font-display:    'Fraunces', 'Crimson Pro', Georgia, serif;
+
+    /* Playful shadow — warmer and bouncier than Work's restrained one */
+    --play-shadow:     0 18px 40px rgba(184, 71, 62, 0.16);
+}
+
+/* The page gets a faintly warmer canvas overall */
+body.play-page {
+    background-color: var(--play-gallery-bg);
+}
+
+
+/* ─── HERO ────────────────────────────────────
+   Mirrors .work-hero bones (grid, nav clearance, scroll cue)
+   with a brighter wash and room for floating doodles. */
+.play-hero {
+    position: relative;
+    padding-top: calc(var(--nav-height) + var(--space-lg));
+    padding-bottom: var(--space-xl);
+    min-height: 82vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    isolation: isolate;
+    background-color: var(--color-bg-alt);
+}
+
+/* Soft, multi-colour wash behind the hero — playful but low-contrast
+   so the dark headline stays comfortably readable (WCAG AA). */
+.play-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+        radial-gradient(circle at 12% 18%, rgba(242, 179, 60, 0.35) 0%, transparent 42%),
+        radial-gradient(circle at 88% 12%, rgba(47, 163, 155, 0.28) 0%, transparent 40%),
+        radial-gradient(circle at 78% 88%, rgba(232, 100, 90, 0.22) 0%, transparent 45%);
+    pointer-events: none;
+}
+
+.play-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+    align-items: center;
+}
+
+.play-hero-content {
+    max-width: 580px;
+}
+
+/* Eyebrow gets a playful pill treatment (vs the plain Work eyebrow) */
+.play-eyebrow {
+    display: inline-block;
+    background-color: var(--play-coral);
+    color: var(--color-bg);
+    padding: 0.25rem 0.7rem;
+    border-radius: 100px;
+    margin-bottom: var(--space-sm);
+    transform: rotate(-2deg);
+}
+
+.play-hero-headline {
+    font-family: var(--font-display);
+    font-size: var(--typescale-display);
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    color: var(--color-text);
+    margin: 0 0 var(--space-md) 0;
+}
+
+/* A wonky, hand-set middle line */
+.play-wiggle {
+    display: inline-block;
+    font-style: italic;
+    color: var(--play-teal-dk);
+    transform: rotate(-1.5deg);
+}
+
+/* The "fun" word: highlighted like a marker swipe */
+.play-headline-pop {
+    position: relative;
+    display: inline-block;
+    color: var(--color-text);
+    z-index: 0;
+}
+.play-headline-pop::after {
+    content: '';
+    position: absolute;
+    left: -0.1em;
+    right: -0.1em;
+    bottom: 0.08em;
+    height: 0.42em;
+    background-color: var(--play-marigold);
+    border-radius: 4px;
+    transform: rotate(-1.5deg);
+    z-index: -1;
+}
+
+.play-hero-subhead {
+    font-family: var(--font-sans);
+    font-size: var(--typescale-body-large);
+    line-height: 1.65;
+    color: var(--color-text-muted);
+    margin: 0 0 var(--space-md) 0;
+    max-width: 50ch;
+}
+
+/* Hero CTA — borrows .btn-primary, just nudges it bouncier on hover */
+.play-cta:hover {
+    transform: translateY(-2px) rotate(-1deg);
+}
+
+
+/* ─── HERO IMAGE (sticker frame + tilt) ──────── */
+.play-hero-image {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin-left: auto;
+    border-radius: 28px;
+    overflow: visible;            /* let the star badge poke out */
+    transform: rotate(2deg);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.play-hero-image:hover {
+    transform: rotate(-1deg) scale(1.02);
+}
+
+/* The image / placeholder fills a rounded, bordered "sticker" */
+.play-hero-placeholder,
+.play-hero-image img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 28px;
+    border: 4px solid var(--color-bg);
+    box-shadow: var(--play-shadow);
+}
+
+/* Easter-egg trigger — the star badge in the corner */
+.play-egg-trigger {
+    position: absolute;
+    top: -16px;
+    right: -16px;
+    z-index: 4;
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--play-marigold);
+    color: var(--color-text);
+    border: 3px solid var(--color-bg);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(55, 27, 6, 0.18);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.play-egg-trigger:hover {
+    transform: rotate(20deg) scale(1.12);
+}
+
+.play-egg-star {
+    width: 26px;
+    height: 26px;
+    pointer-events: none;
+}
+
+/* JS adds .is-spinning briefly when the egg fires */
+.play-egg-star.is-spinning {
+    animation: play-spin 0.7s ease;
+}
+@keyframes play-spin {
+    to { transform: rotate(360deg); }
+}
+
+
+/* ─── FLOATING DOODLES ────────────────────────
+   Decorative SVG flourishes scattered behind the hero content.
+   Base positions are CSS; gentle drift is added by play.js and
+   removed entirely under prefers-reduced-motion. */
+.play-doodles {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.doodle {
+    position: absolute;
+    opacity: 0.85;
+    will-change: transform;
+}
+
+.doodle--1 { top: 16%;  left: 6%;   width: 84px; color: var(--play-teal);     animation: doodle-bob 6s ease-in-out infinite; }
+.doodle--2 { top: 64%;  left: 14%;  width: 40px; color: var(--play-coral);    animation: doodle-bob 5s ease-in-out infinite 0.6s; }
+.doodle--3 { top: 24%;  right: 8%;  width: 52px; color: var(--play-marigold); animation: doodle-bob 7s ease-in-out infinite 0.3s; }
+.doodle--4 { bottom: 14%; right: 18%; width: 70px; color: var(--play-teal-dk); animation: doodle-bob 5.5s ease-in-out infinite 0.9s; }
+
+@keyframes doodle-bob {
+    0%, 100% { transform: translateY(0)    rotate(0deg);  }
+    50%      { transform: translateY(-14px) rotate(6deg); }
+}
+
+/* When the easter egg fires, every doodle does one happy spin */
+.play-doodles.is-celebrating .doodle {
+    animation: doodle-celebrate 0.8s ease;
+}
+@keyframes doodle-celebrate {
+    0%   { transform: rotate(0deg)   scale(1);   }
+    50%  { transform: rotate(180deg) scale(1.3); }
+    100% { transform: rotate(360deg) scale(1);   }
+}
+
+
+/* ─── WAVY DIVIDER ────────────────────────────
+   Sits flush between the hero and the gallery. The SVG fill is set
+   inline to --play-gallery-bg so it blends into the next section. */
+.play-wave {
+    line-height: 0;            /* kills the inline-SVG descender gap */
+    margin-top: -1px;          /* hides any sub-pixel seam */
+    background-color: var(--color-bg-alt);
+}
+.play-wave svg {
+    display: block;
+    width: 100%;
+    height: 70px;
+}
+
+
+/* ─── GALLERY ─────────────────────────────────
+   Same skeleton as Work's .card-grid-4, recoloured and given a
+   tilt-and-pop hover personality. */
+.section-play-gallery {
+    padding: var(--space-xl) 0;
+    background-color: var(--play-gallery-bg);
+}
+
+.play-gallery-header {
+    margin-bottom: var(--space-lg);
+}
+.play-gallery-header h2 {
+    font-family: var(--font-display);
+    margin-bottom: 0;
+}
+
+.play-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-md);
+}
+
+
+/* ─── PLAY CARD ───────────────────────────────
+   <a> root so the whole card is clickable (matches .work-card). */
+.play-card {
+    position: relative;
+    background-color: var(--color-bg);
+    border-radius: 22px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    /* Each card sits at a slightly different jaunty angle (set per nth-child
+       below). The transition gives a springy feel on hover. */
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.35s ease;
+    box-shadow: 0 6px 18px rgba(55, 27, 6, 0.06);
+}
+
+/* Resting tilt — alternating so the grid feels hand-placed, not gridded.
+   Kept very subtle (≤1.2deg) so it reads as charm, not chaos. */
+.play-grid > .play-card:nth-child(4n+1) { transform: rotate(-1.2deg); }
+.play-grid > .play-card:nth-child(4n+2) { transform: rotate(0.8deg);  }
+.play-grid > .play-card:nth-child(4n+3) { transform: rotate(-0.6deg); }
+.play-grid > .play-card:nth-child(4n+4) { transform: rotate(1deg);    }
+
+/* Hover/focus — straighten up, lift, and pop a coloured shadow. */
+.play-card:hover,
+.play-card:focus-visible {
+    transform: rotate(0deg) translateY(-8px) scale(1.02);
+    box-shadow: var(--play-shadow);
+    color: inherit;
+    z-index: 2;
+}
+
+/* Thumbnail */
+.play-card-thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+}
+
+.play-card-thumb img,
+.play-thumb-art {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+/* The art zooms gently on hover */
+.play-card:hover .play-card-thumb img,
+.play-card:hover .play-thumb-art {
+    transform: scale(1.06) rotate(-1deg);
+}
+
+/* Colour-pop overlay — tints the thumbnail in the card's accent on hover.
+   Default is transparent so the photo shows true colour at rest. */
+.play-card-thumb::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    mix-blend-mode: multiply;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+}
+.play-card:hover .play-card-thumb::after { opacity: 0.22; }
+
+.play-card[data-color="coral"]    .play-card-thumb::after { background-color: var(--play-coral); }
+.play-card[data-color="marigold"] .play-card-thumb::after { background-color: var(--play-marigold); }
+.play-card[data-color="teal"]     .play-card-thumb::after { background-color: var(--play-teal); }
+.play-card[data-color="sage"]     .play-card-thumb::after { background-color: var(--color-green); }
+.play-card[data-color="blue"]     .play-card-thumb::after { background-color: var(--color-blue); }
+
+/* Card body */
+.play-card-body {
+    padding: var(--space-sm) var(--space-md) var(--space-md);
+}
+
+.play-card-eyebrow {
+    font-family: var(--font-sans);
+    font-size: var(--typescale-label-medium);
+    font-weight: var(--weight-label);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    display: block;
+    margin-bottom: 0.35rem;
+}
+
+/* Eyebrow inherits the card's accent (text-safe variants on light) */
+.play-card[data-color="coral"]    .play-card-eyebrow { color: var(--play-coral-dk); }
+.play-card[data-color="marigold"] .play-card-eyebrow { color: var(--color-accent-dk); } /* marigold fails AA as text → use brand brown */
+.play-card[data-color="teal"]     .play-card-eyebrow { color: var(--play-teal-dk); }
+.play-card[data-color="sage"]     .play-card-eyebrow { color: var(--color-green-text); }
+.play-card[data-color="blue"]     .play-card-eyebrow { color: var(--color-blue); }
+
+.play-card h3 {
+    font-family: var(--font-serif);   /* keep card titles in the brand serif for cohesion */
+    font-size: var(--typescale-headline-small);
+    line-height: 1.2;
+    margin-bottom: 0.4rem;
+    color: var(--color-text);
+}
+
+.play-card p {
+    font-size: var(--typescale-label-large);
+    line-height: 1.5;
+    color: var(--color-text-muted);
+    margin: 0;
+    max-width: none;
+}
+
+/* Coming-soon variant — dimmed, non-interactive (matches Work) */
+.play-card--coming-soon {
+    opacity: 0.5;
+    pointer-events: none;
+    transform: rotate(0deg) !important;
+}
+
+
+/* ─── CURRENTLY INTO (chips) ──────────────────
+   Replaces the testimonials carousel with a light, playful strip. */
+.section-play-now {
+    padding: var(--space-xl) 0;
+    background-color: var(--color-bg-alt);
+}
+.section-play-now h2 {
+    font-family: var(--font-display);
+}
+
+.play-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+    padding: 0;
+}
+
+.play-chip {
+    font-family: var(--font-sans);
+    font-size: var(--typescale-body-medium);
+    font-weight: 600;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    border: 2px solid currentColor;
+    padding: 0.5rem 1.1rem;
+    border-radius: 100px;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+                background-color 0.25s ease,
+                color 0.25s ease;
+    cursor: default;
+}
+
+/* Border colour comes from the chip's accent; text stays dark for contrast */
+.play-chip[data-color="coral"]    { border-color: var(--play-coral); }
+.play-chip[data-color="marigold"] { border-color: var(--play-marigold); }
+.play-chip[data-color="teal"]     { border-color: var(--play-teal); }
+.play-chip[data-color="sage"]     { border-color: var(--color-green); }
+.play-chip[data-color="blue"]     { border-color: var(--color-blue); }
+
+/* On hover the chip fills with its colour and gives a little hop */
+.play-chip:hover {
+    transform: translateY(-4px) rotate(-2deg);
+    color: var(--color-bg);
+}
+.play-chip[data-color="coral"]:hover    { background-color: var(--play-coral); }
+.play-chip[data-color="marigold"]:hover { background-color: var(--play-marigold); color: var(--color-text); }
+.play-chip[data-color="teal"]:hover     { background-color: var(--play-teal); }
+.play-chip[data-color="sage"]:hover     { background-color: var(--color-green); }
+.play-chip[data-color="blue"]:hover     { background-color: var(--color-blue); }
+
+
+/* ─── SCROLL-REVEAL HOOK ──────────────────────
+   play.js adds .is-visible as cards enter the viewport.
+   The resting tilt is preserved by re-declaring it in the reveal rules
+   so the entrance animation doesn't flatten the jaunty angles. */
+.play-card:not(.is-visible) {
+    opacity: 0;
+    transform: translateY(24px) rotate(0deg);
+}
+.play-card.is-visible { opacity: 1; }
+
+
+/* ─── RESPONSIVE: TABLET ──────────────────────── */
+@media (max-width: 1100px) {
+    .play-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 900px) {
+    .play-hero {
+        min-height: auto;
+        align-items: flex-start;
+        padding-top: calc(var(--nav-height) + var(--space-xl));
+    }
+    .play-hero-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+    }
+    .play-hero-content { max-width: 100%; }
+
+    /* Shrink the hero image and centre it under the text */
+    .play-hero-image {
+        max-width: 320px;
+        margin: 0 auto;
+    }
+
+    /* Doodles get busy on small screens — keep only two, pulled to the edges */
+    .doodle--2, .doodle--4 { display: none; }
+}
+
+
+/* ─── RESPONSIVE: MOBILE ──────────────────────── */
+@media (max-width: 640px) {
+    .play-grid { grid-template-columns: 1fr; }
+
+    /* Flatten the resting tilt on phones — angled cards waste width
+       and can clip on narrow screens. Hover/lift still applies. */
+    .play-grid > .play-card { transform: rotate(0deg); }
+
+    .play-hero-headline { font-size: var(--typescale-display-medium); }
+
+    /* Move the easter-egg star inside the frame so it can't cause
+       horizontal scroll at the screen edge */
+    .play-egg-trigger { top: 8px; right: 8px; }
+
+    .play-wave svg { height: 44px; }
+
+    .doodle { display: none; }   /* doodles off on phones to keep it clean */
+}
+
+
+/* ─── REDUCED MOTION ──────────────────────────
+   Kills drift, bob, tilt, and reveal offset. Colours and layout stay;
+   only motion is removed. (style.css also has a global reduced-motion
+   block; this adds Play-specific resets.) */
+@media (prefers-reduced-motion: reduce) {
+    .doodle { animation: none !important; }
+    .play-hero-image,
+    .play-grid > .play-card { transform: none !important; }
+    .play-card:not(.is-visible) { opacity: 1; transform: none; }
+    .play-egg-star.is-spinning,
+    .play-doodles.is-celebrating .doodle { animation: none !important; }
+}
+
+
+/* =============================================
+   PLAY CASE STUDY  (body.play-case-study)
+   Reuses the .cs-* structure from work-styles.css and gives it a
+   playful skin: Fraunces headings, bright section labels, diamond
+   bullets, tilted cover, and a couple of bobbing hero doodles.
+   Scoped to .play-case-study so Work's case studies are untouched.
+   LINK ORDER on the page: style.css → work-styles.css → play-styles.css
+   ============================================= */
+
+/* Wave-fill: themed fill for the divider path (var() can't live in an
+   SVG presentation attribute, so it's applied via CSS here). */
+.play-wave-fill { fill: var(--play-gallery-bg); }
+
+
+/* ─── Hero ─────────────────────────────────── */
+.play-case-study .cs-hero {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    background-color: var(--color-bg-alt);
+}
+
+/* Soft multi-colour wash, low-contrast so the dark title stays readable */
+.play-case-study .cs-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+        radial-gradient(circle at 90% 20%, rgba(47, 163, 155, 0.22) 0%, transparent 42%),
+        radial-gradient(circle at 10% 90%, rgba(242, 179, 60, 0.22) 0%, transparent 45%);
+    pointer-events: none;
+}
+
+/* Title + section headings in the playful display face */
+.play-case-study .cs-title,
+.play-case-study .cs-section h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+}
+
+/* Hero thumbnail: support an SVG placeholder, drop the blue tint, add tilt */
+.play-case-study .cs-hero-thumb {
+    transform: rotate(3deg);
+    border: 4px solid var(--color-bg);
+    box-shadow: var(--play-shadow);
+}
+.play-case-study .cs-hero-thumb svg { width: 100%; height: 100%; display: block; }
+.play-case-study .cs-hero-thumb::after { display: none; }  /* show true colour */
+
+
+/* ─── Cover ────────────────────────────────── */
+.play-case-study .cs-cover-inner {
+    transform: rotate(-1deg);
+    border: 5px solid var(--color-bg);
+    box-shadow: var(--play-shadow);
+}
+.play-case-study .cs-cover-inner::after { display: none; }  /* no brand tint — let placeholders pop */
+.play-case-study .cs-cover-inner svg { width: 100%; height: 100%; display: block; }
+
+
+/* ─── Snapshot ─────────────────────────────── */
+.play-case-study .cs-snapshot { background-color: var(--play-gallery-bg); }
+
+/* Cycle the item top-borders through the bright set */
+.play-case-study .cs-snapshot-item:nth-child(6n+1) { border-top-color: var(--play-coral); }
+.play-case-study .cs-snapshot-item:nth-child(6n+2) { border-top-color: var(--play-teal); }
+.play-case-study .cs-snapshot-item:nth-child(6n+3) { border-top-color: var(--play-marigold); }
+.play-case-study .cs-snapshot-item:nth-child(6n+4) { border-top-color: var(--color-green); }
+.play-case-study .cs-snapshot-item:nth-child(6n+5) { border-top-color: var(--color-blue); }
+.play-case-study .cs-snapshot-item:nth-child(6n+6) { border-top-color: var(--play-coral); }
+
+
+/* ─── Section labels (eyebrows) cycle the bright set ───
+   These sit in .cs-body on the near-white canvas, so text-safe
+   (darkened) variants are used to keep AA contrast. */
+.play-case-study .cs-section:nth-of-type(6n+1) .cs-section-label { color: var(--play-coral-dk); }
+.play-case-study .cs-section:nth-of-type(6n+2) .cs-section-label { color: var(--play-teal-dk); }
+.play-case-study .cs-section:nth-of-type(6n+3) .cs-section-label { color: var(--color-accent-dk); }
+.play-case-study .cs-section:nth-of-type(6n+4) .cs-section-label { color: var(--color-green-text); }
+.play-case-study .cs-section:nth-of-type(6n+5) .cs-section-label { color: var(--color-blue); }
+.play-case-study .cs-section:nth-of-type(6n+6) .cs-section-label { color: var(--play-coral-dk); }
+
+
+/* ─── List bullets → little diamonds in coral ─── */
+.play-case-study .cs-list li::before {
+    width: 9px;
+    height: 9px;
+    border-radius: 2px;
+    top: 0.5em;
+    background-color: var(--play-coral);
+    transform: rotate(45deg);   /* turn the square into a diamond */
+}
+
+
+/* ─── Inline + trio figures: SVG support, no brand tint ─── */
+.play-case-study .cs-img-wrap svg { width: 100%; height: 100%; display: block; }
+.play-case-study .cs-img-wrap::after { display: none; }
+.play-case-study .cs-img-wrap {
+    border: 4px solid var(--color-bg);
+    box-shadow: 0 8px 22px rgba(55, 27, 6, 0.08);
+}
+
+
+/* ─── Impact block: playful marigold panel, dashed coral edge ─── */
+.play-case-study .cs-section--impact {
+    background-color: rgba(242, 179, 60, 0.16);
+    border: 2px dashed var(--play-coral);
+    border-radius: 18px;
+}
+.play-case-study .cs-section--impact h2 { color: var(--play-coral-dk); }
+
+
+/* ─── Closing line: display face, marigold on the dark panel ─── */
+.play-case-study .cs-closing-text {
+    font-family: var(--font-display);
+    color: var(--play-marigold);
+}
+
+
+/* ─── Pagination accent → coral ─── */
+.play-case-study .cs-pagination-direction { color: var(--play-coral-dk); }
+
+
+/* ─── Hero doodles inside the case study (CSS-only bob) ───
+   These reuse .play-doodles / .doodle from above. No JS needed —
+   the bob keyframes are pure CSS and respect reduced motion. */
+.play-case-study .cs-hero .play-doodles { z-index: 0; }
+.play-case-study .cs-hero-inner { position: relative; z-index: 1; }
+
+@media (max-width: 640px) {
+    .play-case-study .cs-cover-inner,
+    .play-case-study .cs-hero-thumb { transform: none; }  /* flatten tilt on phones */
+}
