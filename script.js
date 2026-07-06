@@ -75,6 +75,35 @@ if (hamburger && mobileMenu) {
     });
 }
 
+/* ─── THEME TOGGLE ────────────────────────────
+   Reads/writes localStorage, flips data-theme on <html>, and keeps
+   every toggle button's icon + aria-pressed state in sync. The canvas
+   aura (Phase 1.4) already watches data-theme via MutationObserver,
+   so no extra wiring is needed here for that. */
+
+const themeToggles = document.querySelectorAll('.theme-toggle');
+
+function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+
+    themeToggles.forEach(btn => {
+        const isDark = theme === 'dark';
+        btn.setAttribute('aria-pressed', String(isDark));
+        btn.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+    });
+}
+
+themeToggles.forEach(btn => {
+    // Sync initial aria-pressed with whatever the no-flash script already set
+    const current = document.documentElement.getAttribute('data-theme');
+    btn.setAttribute('aria-pressed', String(current === 'dark'));
+
+    btn.addEventListener('click', () => {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        applyTheme(isDark ? 'light' : 'dark');
+    });
+});
 
 /* ─── ALL GSAP / SCROLLTRIGGER ANIMATIONS ────── */
 // Everything that relies on GSAP lives inside this

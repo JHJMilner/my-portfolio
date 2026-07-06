@@ -84,7 +84,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--color-blue);
+    background-color: var(--color-berry-text);
     mix-blend-mode: overlay;
     pointer-events: none;
     border-radius: 32px;
@@ -93,7 +93,7 @@
 
 /* Optional: change overlay colour on hover for a subtle effect */
 .work-hero-image:hover::after {
-    background-color: var(--color-blue-lt);
+    background-color: var(--color-berry);
 }
 
 /* Background gradient & texture behind hero content */
@@ -105,8 +105,8 @@
     z-index: -1;
     background: radial-gradient(
         circle at 80% 15%,
-        rgba(var(--color-blue-lt-rgb), 1) 0%,
-        rgba(var(--color-bg-blue-rgb), 0.8) 60%,
+        rgba(var(--color-berry-rgb), 1) 0%,
+        rgba(var(--color-berry-lt-rgb), 0.8) 60%,
         transparent 100%
     );
     pointer-events: none;
@@ -120,7 +120,7 @@
     z-index: -1;
     background-image: radial-gradient(
         circle at center,
-        var(--color-bg-blue) 1px,
+        var(--color-berry-lt) 1px,
         transparent 1px,
         rgba(var(--color-bg-alt-rgb), 0.03) 2px,
         rgba(var(--color-accent-dk-rgb), 0.03) 4px
@@ -414,7 +414,7 @@
 }
 
 .work-card[data-color="blue"] .work-card-thumb::after {
-    background-color: var(--color-blue-lt);
+    background-color: var(--color-berry);
 }
 
 .work-card[data-color="green"] .work-card-thumb::after {
@@ -879,7 +879,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background-color: var(--color-blue-lt);
+    background-color: var(--color-berry);
     mix-blend-mode: overlay;
     pointer-events: none;
     border-radius: 20px;
