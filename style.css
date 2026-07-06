@@ -4,39 +4,69 @@
 
 /* ─── CSS VARIABLES ─────────────────────────── */
 :root {
-    /* Colours */
-    --color-white:        #FFFFFF; /* Pure white for maximum contrast highlights*/
-    --color-bg:           #FDF9F4; /* Main: Clean and bright */
-    --color-bg-alt:       #F5E6D3; /* Brown - Soft section transitions */
-    --color-bg-tan:       #D9B38C; /* Brown - Card backgrounds or emphasized blocks */
-    --color-text:         #371B06; /* High-contrast body text */
-    --color-text-muted:   #5C402A; /* Secondary info and meta-text */
-    --color-accent:       #96633E; /* Brown - Primary brand color/Buttons */
-    --color-accent-dk:    #7A4D2E; /* Brown - Accessible icons, links, and bold UI */
-    --color-green-lt:     #A4AD6C; /* Green - soft backgrounds */
-    --color-green:        #79774D; /* Green - large UI elements/buttons */
-    --color-green-text:   #5B6043; /* Green - success messages and accessible text/icons */
-    --color-green-dk:     #4D5640; /* Green - high-contrast editorial moments */
-    --color-bg-blue:      #EBF2F5; /* Blue - soft backgrounds */ 
-    --color-blue-lt:      #8EABB8; /* Blue - large UI elements, borders, decorations */
-    --color-blue:         #4B6573; /* Blue - accessible text/icons */
-    --color-blue-dk:      #32424A; /* Blue - high-contrast editorial moments */
-    --color-grey:         #706e6c; /* Grey - outlines and subtle border ele*/
-    --color-red:          #91463D; /* Red - error states and critical accents */
+/* ---- COLOUR SYSTEM v2 ----
+       Naming: -lt (soft bg) / bare (large UI) / -text (accessible text) /
+       -dk (dark editorial moment). See brand-guidelines.md for full rationale.
+       Brown/accent only needs bare + -dk — it never carries a full-bleed
+       dark section of its own. */
+
+    /* Neutrals — page background, body text, structure */
+    --color-white:        #FFFFFF; /* Pure white — maximum-contrast highlights */
+    --color-bg:           #FDF9F4; /* Parchment — main background */
+    --color-bg-alt:       #F5E6D3; /* Soft section transitions */
+    --color-bg-tan:       #D9B38C; /* Card backgrounds / emphasised blocks */
+    --color-text:         #371B06; /* Dark Coffee — high-contrast body text */
+    --color-text-muted:   #5C402A; /* Secondary info, meta-text */
+
+    /* Brown (accent) — primary brand colour, buttons */
+    --color-accent:       #96633E; /* Toffee Brown */
+    --color-accent-dk:    #7A4D2E; /* Deeper brown — icons, links, bold UI */
+
+    /* Green (olive) */
+    --color-green-lt:     #BEC786; /* Dry Sage — soft backgrounds */
+    --color-green:        #717A39; /* Dusty Olive — large UI / buttons */
+    --color-green-text:   #3E4706; /* Olive Leaf — success states, accessible text/icons */
+    --color-green-dk:     #252E00; /* Black Forest — high-contrast editorial moment */
+
+    /* Berry — replaces the old Blue family */
+    --color-berry-lt:     #F3E8E9; /* Petal — soft backgrounds */
+    --color-berry:        #D09FA7; /* Dusty Rose — large UI, borders, decoration */
+    --color-berry-text:   #9D4355; /* Berry — accessible text/icons, link colour */
+    --color-berry-dk:     #53222E; /* Wine — high-contrast editorial moment */
+
+    /* Grey / Red — structural borders / error states only */
+    --color-grey:         #756E66; /* warmed up from the old #706e6c */
+    --color-red:          #8F3A2D; /* refined for distance from Wine on the colour wheel */
     --color-border:       rgba(59, 44, 27, 0.122);
 
-    /* RGB component versions (for rgba() use) */
-    --color-bg-rgb:         253, 249, 244;
-    --color-accent-rgb:     150, 99, 62;
-    --color-accent-dk-rgb:  122, 77, 46;
-    --color-bg-alt-rgb:     245, 230, 211;
-    --color-bg-tan-rgb:     217, 179, 140;
-    --color-bg-blue-rgb:    235, 242, 245;
-    --color-blue-lt-rgb:    142, 171, 184;
-    --color-blue-rgb:       75, 101, 115;
-    --color-grey-rgb:       112, 110, 108;
-    --color-blue-dk-rgb:    50, 66, 74;
+    /* Fixed anchors — deliberately NOT redefined in dark mode (§1.6) */
+    --color-ink:          #371B06; /* always dark, regardless of theme */
+    --color-paper:        #FDF9F4; /* always light, regardless of theme */
 
+    /* RGB component versions (for rgba() use) */
+    --color-bg-rgb:            253, 249, 244;
+    --color-bg-alt-rgb:        245, 230, 211;
+    --color-bg-tan-rgb:        217, 179, 140;
+    --color-text-rgb:          55, 27, 6;
+    --color-text-muted-rgb:    92, 64, 42;
+    --color-accent-rgb:        150, 99, 62;
+    --color-accent-dk-rgb:     122, 77, 46;
+    --color-green-lt-rgb:      190, 199, 134;
+    --color-green-rgb:         113, 122, 57;
+    --color-green-text-rgb:    62, 71, 6;
+    --color-green-dk-rgb:      37, 46, 0;
+    --color-berry-lt-rgb:      243, 232, 233;
+    --color-berry-rgb:         208, 159, 167;
+    --color-berry-text-rgb:    157, 67, 85;
+    --color-berry-dk-rgb:      83, 34, 46;
+    --color-grey-rgb:          117, 110, 102;
+    --color-red-rgb:           143, 58, 45;
+    --color-ink-rgb:           55, 27, 6;
+    --color-paper-rgb:         253, 249, 244;
+
+    /* Light mode is the default paint — dark mode overrides live below,
+       outside this :root block, so both can be swapped independently. */
+    color-scheme: light;
 
     /* Typography */
     --font-serif:         'Crimson Pro', 'Newsreader', Georgia, serif;
@@ -92,6 +122,55 @@
     --tracking-display:    -0.02em;  /* Tighten large text for a "locked-in" look */
     --tracking-body:        0.02em;  /* Slightly loosen body text for readability */
     --tracking-label:       0.04em;  /* Open up small labels for an airy feel */
+
+    /* ─── DARK MODE ──────────────────────────────
+   Role-based overrides, not a mechanical invert — some tokens brighten,
+   some invert entirely, some stay fixed. See brand-guidelines.md §1.5.
+   Activated by setting data-theme="dark" on <html> (wired in Phase 1.5). */
+:root[data-theme="dark"] {
+    color-scheme: dark;
+
+    --color-bg:           #1B1310;
+    --color-bg-alt:       #2C241E;
+    --color-bg-tan:       #3B2E22;
+    --color-text:         #F2EBE3; /* brightened for legibility on dark bg */
+    --color-text-muted:   #C6B7A9;
+
+    --color-accent:       #CFA681; /* brightened */
+    --color-accent-dk:    #C38555;
+
+    --color-green-lt:     #BEC786; /* unchanged — self-contained fill, works in both themes */
+    --color-green:        #717A39; /* unchanged — self-contained fill */
+    --color-green-text:   #D1DB9F; /* brightened — was tuned for dark-on-light */
+    --color-green-dk:     #DFE6B3; /* INVERTED — now the brightest "pop" fill; pair with --color-text on top */
+
+    --color-berry-lt:     #F3E8E9; /* unchanged — self-contained fill */
+    --color-berry:        #D09FA7; /* unchanged — self-contained fill */
+    --color-berry-text:   #D897A4; /* brightened */
+    --color-berry-dk:     #E4BEC4; /* INVERTED — now the brightest "pop" fill; pair with --color-text on top */
+
+    --color-grey:         #8E857B;
+    --color-red:          #DA8C81;
+    --color-border:       rgba(242, 235, 227, 0.14);
+
+    /* RGB equivalents for the tokens that changed above */
+    --color-bg-rgb:            27, 19, 16;
+    --color-bg-alt-rgb:        44, 36, 30;
+    --color-bg-tan-rgb:        59, 46, 34;
+    --color-text-rgb:          242, 235, 227;
+    --color-text-muted-rgb:    198, 183, 169;
+    --color-accent-rgb:        207, 166, 129;
+    --color-accent-dk-rgb:     195, 133, 85;
+    --color-green-text-rgb:    209, 219, 159;
+    --color-green-dk-rgb:      223, 230, 179;
+    --color-berry-text-rgb:    216, 151, 164;
+    --color-berry-dk-rgb:      228, 190, 196;
+    --color-grey-rgb:          142, 133, 123;
+    --color-red-rgb:           218, 140, 129;
+
+    /* --color-ink / --color-paper are intentionally absent here —
+       they never change between themes, by design (§1.6). */
+}
 }
 
 /* ─── RESET & BASE ───────────────────────────── */
