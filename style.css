@@ -232,6 +232,25 @@ a:hover {
     display: none;
 }
 
+/* ─── THEME TRANSITION ───────────────────────────
+   Eases the big colour surfaces when switching light/dark.
+   Deliberately scoped (not a universal * selector) to avoid
+   transitioning hundreds of elements and janking the toggle. */
+body,
+#main-nav,
+.card,
+.aura-mask,
+#footer {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Honour reduced-motion: no theme fade for those who opt out. */
+@media (prefers-reduced-motion: reduce) {
+    body, #main-nav, .card, .aura-mask, #footer {
+        transition: none;
+    }
+}
+
 /* ─── TYPOGRAPHY ─────────────────────────────── */
 h1 {
     font-family: var(--font-serif);
@@ -706,7 +725,7 @@ p {
     bottom: var(--space-md);
     left: 50%;
     transform: translateX(-50%);
-    color: var(--color-blue);
+    color: var(--color-berry-text);
     opacity: 0.8;
     z-index: 10;
     display: flex;
@@ -1031,7 +1050,7 @@ p {
     background-color: var(--color-green);
 }
 .project-card[data-color="blue"] .project-card-media::after {
-    background-color: var(--color-blue-lt);
+    background-color: var(--color-berry);
 }
 
 .project-card[data-color="brown"] .project-card-media::after {

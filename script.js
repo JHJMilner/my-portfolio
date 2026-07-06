@@ -107,151 +107,169 @@ document.addEventListener('DOMContentLoaded', () => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 
-    /* ─── AURA CANVAS ANIMATION ─────────────────── */
-    const canvas = document.getElementById('aura-canvas');
+    /* ─── AMBIENT AURA CANVASES ──────────────────────
+    One reusable "plasma field" powers both the hero and the contact
+    section. 
+    ------------------------------------------------------------------ */
 
-    if (canvas) {
-        const ctx = canvas.getContext('2d');
-        const W   = 32;
-        const H   = 32;
+    // Reduced-motion users get a single static frame, never a loop.
+    // (Reuses `prefersReduced`, already declared above.)
+    const prefersReducedMotion = prefersReduced.matches;
 
-        // Palette derived from site colour variables
-        // Each entry is [R, G, B]
-        const palette = [
-            [253, 249, 244],  // --color-bg
-            [245, 230, 211],  // --color-bg-alt
-            [253, 249, 244],  // --color-bg
-            [235, 242, 245],  // --color-bg-blue
-            [142, 171, 184],  // --color-blue-lt
-            [253, 249, 244],  // --color-bg
+    // Parse a CSS hex string ("#RRGGBB" or "#RGB") into [r, g, b].
+    // NB: the tokens passed to createAuraField must resolve to hex values.
+    function hexToRgb(hex) {
+        hex = hex.trim().replace('#', '');
+        if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+        const int = parseInt(hex, 16);
+        return [(int >> 16) & 255, (int >> 8) & 255, int & 255];
+    }
+
+    // Read an array of custom-property names into an array of [r, g, b].
+    function readPalette(tokenNames) {
+        const styles = getComputedStyle(document.documentElement);
+        return tokenNames.map(name => hexToRgb(styles.getPropertyValue(name)));
+    }
+
+    // Linear blend between two [r,g,b] colours by factor t (0–1).
+    function lerpRgb(a, b, t) {
+        return [
+            a[0] + (b[0] - a[0]) * t,
+            a[1] + (b[1] - a[1]) * t,
+            a[2] + (b[2] - a[2]) * t,
         ];
+    }
 
-        // Blend between two palette colours by a 0–1 factor
-        function lerpColor(a, b, t) {
-            return [
-                Math.round(a[0] + (b[0] - a[0]) * t),
-                Math.round(a[1] + (b[1] - a[1]) * t),
-                Math.round(a[2] + (b[2] - a[2]) * t),
-            ];
-        }
+    /**
+     * Soft animated plasma field on a small canvas that the browser
+     * upscales into gentle, blurred "aura" blobs.
+     *
+     * @param {HTMLCanvasElement} canvas
+     * @param {string[]} opts.tokens  custom-property names to blend between
+     * @param {number}   opts.res     buffer resolution (higher = finer texture)
+     * @param {number}   opts.speed   animation speed multiplier
+     */
+    function createAuraField(canvas, { tokens, res = 40, speed = 1 }) {
+        const ctx = canvas.getContext('2d');
+        canvas.width  = res;   // buffer size; CSS still scales it to 100%
+        canvas.height = res;
 
-        // Map a -1..1 sine value to a palette blend
-        function plasmaColor(v, t) {
-            const n     = (v + 1) * 0.5;
-            const shift = (Math.sin(t * 0.07) + 1) * 0.5;
-            const idxA  = Math.floor((n + shift) * (palette.length - 1)) % palette.length;
-            const idxB  = (idxA + 1) % palette.length;
-            const blend = ((n + shift) * (palette.length - 1)) % 1;
-            return lerpColor(palette[idxA], palette[idxB], blend);
-        }
-
-        let animTime  = 0;
-        let rafId     = null;
-        const imgData = ctx.createImageData(W, H);
+        const imgData = ctx.createImageData(res, res);
         const pixels  = imgData.data;
 
-        function drawFrame() {
-            animTime += 0.003;
-            const t = animTime;
+        // `current` is what we draw; `target` is where we're easing toward.
+        // A theme change only swaps `target`, so the palette cross-fades.
+        let current = readPalette(tokens);
+        let target  = current.map(c => c.slice());
 
-            for (let y = 0; y < H; y++) {
-                for (let x = 0; x < W; x++) {
+        let time    = 0;
+        let rafId   = null;
+        let running = false;
+
+        // Blend across the palette for a field value v (-1..1), offset by shift.
+        function sample(v, shift, pal) {
+            const pos = (((v + 1) * 0.5) + shift) % 1;   // wrapped 0..1
+            const f   = pos * (pal.length - 1);
+            const i   = Math.floor(f);
+            const j   = (i + 1) % pal.length;
+            return lerpRgb(pal[i], pal[j], f - i);
+        }
+
+        function renderOnce() {
+            time += 0.004 * speed;
+            const t = time;
+
+            // Ease the live palette toward the target (smooth theme cross-fade).
+            for (let k = 0; k < current.length; k++) {
+                current[k] = lerpRgb(current[k], target[k], 0.06);
+            }
+
+            const shift = (Math.sin(t * 0.07) + 1) * 0.5;
+
+            for (let y = 0; y < res; y++) {
+                for (let x = 0; x < res; x++) {
                     const cx  = x + 0.5 * Math.sin(t * 0.3);
                     const cy  = y + 0.5 * Math.cos(t * 0.2);
                     const v1  = Math.sin(cx * 0.3 + t);
                     const v2  = Math.sin(0.3 * (cx * Math.sin(t * 0.5) + cy * Math.cos(t * 0.33)) + t);
-                    const r   = Math.sqrt((cx - W * 0.5) ** 2 + (cy - H * 0.5) ** 2);
+                    const r   = Math.sqrt((cx - res * 0.5) ** 2 + (cy - res * 0.5) ** 2);
                     const v3  = Math.sin(Math.sqrt(r + 1) + t);
                     const val = (v1 + v2 + v3) / 3;
 
-                    const [R, G, B] = plasmaColor(val, t);
-                    const i = (y * W + x) * 4;
-                    pixels[i]     = R;
-                    pixels[i + 1] = G;
-                    pixels[i + 2] = B;
-                    pixels[i + 3] = 255;
+                    const [R, G, B] = sample(val, shift, current);
+                    const idx = (y * res + x) * 4;
+                    pixels[idx]     = R;
+                    pixels[idx + 1] = G;
+                    pixels[idx + 2] = B;
+                    pixels[idx + 3] = 255;
                 }
             }
-
             ctx.putImageData(imgData, 0, 0);
-            rafId = requestAnimationFrame(drawFrame);
         }
 
-        if (prefersReduced.matches) {
-            drawFrame();
-            cancelAnimationFrame(rafId); // single static frame
-        } else {
-            drawFrame();
+        function loop() {
+            renderOnce();
+            if (running) rafId = requestAnimationFrame(loop);
         }
 
-        // Pause animation when tab is not visible (saves CPU)
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                cancelAnimationFrame(rafId);
-            } else {
-                drawFrame();
+        function start() {
+            if (running) return;              // guard: never stack loops
+            running = true;
+            rafId = requestAnimationFrame(loop);
+        }
+
+        function stop() {
+            running = false;
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = null;
+        }
+
+        // Recolour when the theme attribute flips.
+        function refreshPalette() {
+            target = readPalette(tokens);
+            if (prefersReducedMotion) {       // no loop running — snap + redraw once
+                current = target.map(c => c.slice());
+                renderOnce();
             }
+        }
+        new MutationObserver(refreshPalette).observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['data-theme'],
+        });
+
+        if (prefersReducedMotion) {
+            renderOnce();                     // single static frame, never animates
+        } else {
+            start();
+            document.addEventListener('visibilitychange', () => {
+                document.hidden ? stop() : start();   // pause off-screen, resume on return
+            });
+        }
+    }
+
+    /* ── Hero aura ──
+    Neutrals dominate so the "Find clarity." headline keeps its contrast;
+    --color-accent adds a warm toffee bloom. Every token here flips cleanly
+    in dark mode, giving a moody warm glow on near-black. Want more colour?
+    Add --color-green-lt / --color-berry — but note those two are
+    "self-contained" fills that stay light in dark mode by design, so
+    they'll read as bright wisps rather than dark tones. */
+    const heroCanvas = document.getElementById('aura-canvas');
+    if (heroCanvas) {
+        createAuraField(heroCanvas, {
+            tokens: ['--color-bg', '--color-bg-alt', '--color-bg-tan', '--color-accent', '--color-bg-alt'],
+            res: 48,
+            speed: 1.35,
         });
     }
 
-
-    /* ─── CONTACT RIPPLE ANIMATION ───────────────── */
+    /* ── Contact ripple ── same field, calmer and warmer. */
     const contactCanvas = document.getElementById('contact-canvas');
-
     if (contactCanvas) {
-        const cCtx     = contactCanvas.getContext('2d');
-        const cW       = 32;
-        const cH       = 32;
-        const cImgData = cCtx.createImageData(cW, cH);
-        const cPixels  = cImgData.data;
-
-        const colorA = [253, 249, 244];  // --color-bg
-        const colorB = [217, 179, 140];  // --color-bg-tan
-
-        let cTime  = 0;
-        let cRafId = null;
-
-        function drawContactFrame() {
-            cTime += 0.008;
-            const t = cTime;
-
-            for (let y = 0; y < cH; y++) {
-                for (let x = 0; x < cW; x++) {
-                    const v1    = Math.sin(x * 0.4 + t);
-                    const v2    = Math.sin(y * 0.3 + t * 0.7);
-                    const v3    = Math.sin((x + y) * 0.2 + t * 0.5);
-                    const val   = (v1 + v2 + v3) / 3;
-                    const blend = (val + 1) * 0.5;
-
-                    const R = Math.round(colorA[0] + (colorB[0] - colorA[0]) * blend);
-                    const G = Math.round(colorA[1] + (colorB[1] - colorA[1]) * blend);
-                    const B = Math.round(colorA[2] + (colorB[2] - colorA[2]) * blend);
-
-                    const i = (y * cW + x) * 4;
-                    cPixels[i]     = R;
-                    cPixels[i + 1] = G;
-                    cPixels[i + 2] = B;
-                    cPixels[i + 3] = 255;
-                }
-            }
-
-            cCtx.putImageData(cImgData, 0, 0);
-            cRafId = requestAnimationFrame(drawContactFrame);
-        }
-
-        if (prefersReduced.matches) {
-            drawContactFrame();
-            cancelAnimationFrame(cRafId); // single static frame
-        } else {
-            drawContactFrame();
-        }
-
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                cancelAnimationFrame(cRafId);
-            } else {
-                drawContactFrame();
-            }
+        createAuraField(contactCanvas, {
+            tokens: ['--color-bg', '--color-bg-tan'],
+            res: 32,
+            speed: 1,
         });
     }
 
