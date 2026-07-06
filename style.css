@@ -122,6 +122,7 @@
     --tracking-display:    -0.02em;  /* Tighten large text for a "locked-in" look */
     --tracking-body:        0.02em;  /* Slightly loosen body text for readability */
     --tracking-label:       0.04em;  /* Open up small labels for an airy feel */
+}
 
     /* ─── DARK MODE ──────────────────────────────
    Role-based overrides, not a mechanical invert — some tokens brighten,
@@ -171,7 +172,7 @@
     /* --color-ink / --color-paper are intentionally absent here —
        they never change between themes, by design (§1.6). */
 }
-}
+
 
 /* ─── RESET & BASE ───────────────────────────── */
 *, *::before, *::after {
@@ -247,6 +248,66 @@ body,
 /* Honour reduced-motion: no theme fade for those who opt out. */
 @media (prefers-reduced-motion: reduce) {
     body, #main-nav, .card, .aura-mask, #footer {
+        transition: none;
+    }
+}
+
+/* ─── THEME TOGGLE BUTTON ────────────────────── */
+.theme-toggle {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.theme-toggle:hover {
+    background: rgba(var(--color-accent-rgb), 0.1);
+}
+
+/* Icon swap: show sun in light mode, moon in dark mode */
+.theme-toggle-icon {
+    position: absolute;
+    transition: opacity 0.2s ease, transform 0.3s ease;
+}
+
+.theme-toggle-icon--moon {
+    opacity: 0;
+    transform: scale(0.5) rotate(-30deg);
+}
+
+[data-theme="dark"] .theme-toggle-icon--sun {
+    opacity: 0;
+    transform: scale(0.5) rotate(30deg);
+}
+
+[data-theme="dark"] .theme-toggle-icon--moon {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+}
+
+.theme-toggle-icon--sun {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+}
+
+/* Mobile version sits centred in its own row, matching nav-mobile-links spacing */
+.theme-toggle--mobile {
+    width: 44px;
+    height: 44px;
+    margin-top: var(--space-md);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .theme-toggle-icon {
         transition: none;
     }
 }
